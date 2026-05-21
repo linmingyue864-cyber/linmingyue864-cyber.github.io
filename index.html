@@ -419,6 +419,57 @@
         </div>
       </section>
 
+      <section class="section" id="design-system">
+  <div class="section-inner fade-in">
+    <h2 class="section-title">BHDS v1.0 — Design System</h2>
+    <p class="about-text">
+      Đây là hệ thống ngôn ngữ thiết kế (Design Language) tôi tự xây dựng để vận hành toàn bộ các dự án. Thay vì dùng Figma, tôi quản lý <strong>Design Tokens</strong> và <strong>Components</strong> trực tiếp bằng CSS Variables.
+    </p>
+
+    <div class="ds-container">
+      <div class="ds-block">
+        <h3 class="ds-sub-title">01. Colors (Tokens)</h3>
+        <div class="ds-colors">
+          <div class="color-swatch" style="background: var(--primary);"><span>Primary<br>#2563eb</span></div>
+          <div class="color-swatch" style="background: var(--bg-alt); border: 1px solid var(--border);"><span>Surface<br>#ffffff</span></div>
+          <div class="color-swatch" style="background: var(--text);"><span>Text High<br>#1e293b</span></div>
+          <div class="color-swatch" style="background: var(--text-muted);"><span>Text Low<br>#64748b</span></div>
+          <div class="color-swatch" style="background: var(--accent);"><span>Accent<br>#f59e0b</span></div>
+        </div>
+      </div>
+
+      <div class="ds-block">
+        <h3 class="ds-sub-title">02. Typography</h3>
+        <div class="ds-type">
+          <p style="font-size: 2rem; font-weight: 800;">Heading 1 (32px)</p>
+          <p style="font-size: 1.5rem; font-weight: 700;">Heading 2 (24px)</p>
+          <p style="font-size: 1rem; font-weight: 400;">Body Text (16px) - "Segoe UI" System Font Stack</p>
+        </div>
+      </div>
+
+      <div class="ds-block">
+        <h3 class="ds-sub-title">03. Interactive Components</h3>
+        <div class="ds-components">
+          <div class="ds-comp-item">
+            <span>Buttons</span>
+            <div class="ds-flex">
+              <button class="btn-example primary">Primary</button>
+              <button class="btn-example ghost">Ghost</button>
+            </div>
+          </div>
+          <div class="ds-comp-item">
+            <span>Inputs & Feedback</span>
+            <div class="ds-flex column">
+              <input type="text" class="input-example" placeholder="Placeholder...">
+              <span class="badge-example success">Success Status</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       <!-- DỰ ÁN -->
       <section class="section section-alt" id="du-an">
         <div class="section-inner fade-in">
