@@ -22,6 +22,26 @@ darkToggle.addEventListener('click', () => {
 });
 
 
+/* ===== HAMBURGER MENU ===== */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  mobileNav.setAttribute('aria-hidden', !isOpen);
+});
+
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+  });
+});
+
 /* ===== STICKY NAV ===== */
 const navSticky = document.getElementById('nav-sticky');
 const heroNav = document.querySelector('.nav');
