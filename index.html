@@ -83,17 +83,39 @@
       </nav>
     </header>
 
-    <!-- STICKY NAV CLONE -->
+    <!-- STICKY NAV -->
     <nav class="nav-sticky" id="nav-sticky">
-      <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
-      <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
-      <a href="#ky-nang" class="nav-link">Kỹ năng</a>
-      <a href="#hanh-trinh" class="nav-link">Hành trình</a>
-      <a href="#du-an" class="nav-link">Dự án</a>
-      <a href="#ai" class="nav-link">AI</a>
-      <a href="#ve-toi" class="nav-link">Về tôi</a>
-      <a href="#lien-he" class="nav-link">Liên hệ</a>
+      <div class="nav-sticky-inner">
+        <span class="nav-sticky-name">Nguyễn Tiến Đạt</span>
+        <div class="nav-sticky-links" id="nav-sticky-links">
+          <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+          <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
+          <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+          <a href="#hanh-trinh" class="nav-link">Hành trình</a>
+          <a href="#du-an" class="nav-link">Dự án</a>
+          <a href="#ai" class="nav-link">AI</a>
+          <a href="#ve-toi" class="nav-link">Về tôi</a>
+          <a href="#lien-he" class="nav-link">Liên hệ</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Mở menu" aria-expanded="false">
+          <span class="ham-bar"></span>
+          <span class="ham-bar"></span>
+          <span class="ham-bar"></span>
+        </button>
+      </div>
     </nav>
+
+    <!-- MOBILE NAV DRAWER -->
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+      <a href="#gioi-thieu" class="mobile-nav-link">Giới thiệu</a>
+      <a href="#muc-tieu" class="mobile-nav-link">Mục tiêu</a>
+      <a href="#ky-nang" class="mobile-nav-link">Kỹ năng</a>
+      <a href="#hanh-trinh" class="mobile-nav-link">Hành trình</a>
+      <a href="#du-an" class="mobile-nav-link">Dự án</a>
+      <a href="#ai" class="mobile-nav-link">AI</a>
+      <a href="#ve-toi" class="mobile-nav-link">Về tôi</a>
+      <a href="#lien-he" class="mobile-nav-link">Liên hệ</a>
+    </div>
 
     <main class="main">
       <!-- GIỚI THIỆU -->
@@ -408,12 +430,14 @@
               <p class="project-desc">
                 Ứng dụng quản lý công việc thông minh: thêm task với mức độ ưu tiên,
                 lọc theo trạng thái, thanh tiến độ theo ngày và lưu dữ liệu với LocalStorage.
-                Giao diện kéo-thả, hỗ trợ xóa hàng loạt task đã hoàn thành.
+                Hỗ trợ kéo-thả và xóa hàng loạt task đã hoàn thành.
               </p>
-              <div class="project-tech">
-                <span>HTML5</span><span>CSS Grid</span><span>Vanilla JS</span><span>LocalStorage</span>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span>HTML5</span><span>CSS Grid</span><span>Vanilla JS</span><span>LocalStorage</span>
+                </div>
+                <a href="#" class="project-demo-btn" target="_blank" rel="noopener">▶ Xem demo</a>
               </div>
-              <a href="#" class="project-demo-btn" target="_blank" rel="noopener">▶ Xem demo</a>
             </article>
 
             <article class="project-card">
