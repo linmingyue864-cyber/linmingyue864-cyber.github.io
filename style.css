@@ -1879,3 +1879,30 @@ html {
   .ds-type-row { flex-direction: column; align-items: flex-start; gap: 8px; }
   .comp-box { grid-column: span 2 / auto !important; }
 }
+
+/* ===== STYLE NÚT LINK ĐẾN DESIGN SYSTEM LIVE ===== */
+.ds-live-btn {
+  display: inline-block;
+  background: var(--text); /* Hoặc dùng #000000 đúng chất Vercel tối giản */
+  color: var(--bg-alt); /* Màu chữ tương phản cao */
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  border: 1px solid var(--text);
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow);
+}
+
+.ds-live-btn:hover {
+  background: transparent;
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ds-live-btn:active {
+  transform: translateY(0);
+}
+
