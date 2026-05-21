@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV – Nguyễn Tiến Đạt | Frontend Developer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER / HỒ SƠ -->
+  <header class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="avatar-wrap">
+        <div class="avatar">NTĐ</div>
+      </div>
+      <h1 class="name">Nguyễn Tiến Đạt</h1>
+      <p class="title">Frontend Developer</p>
+      <p class="subtitle">HTML &nbsp;·&nbsp; CSS &nbsp;·&nbsp; JavaScript</p>
+      <div class="contact-row">
+        <a href="mailto:nguyentiendatdev@gmail.com" class="contact-item">
+          <span class="icon">✉</span> nguyentiendatdev@gmail.com
+        </a>
+        <a href="tel:+84900000000" class="contact-item">
+          <span class="icon">☎</span> +84 900 000 000
+        </a>
+        <span class="contact-item">
+          <span class="icon">📍</span> Hà Nội, Việt Nam
+        </span>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+      <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+      <a href="#kinh-nghiem" class="nav-link">Kinh nghiệm</a>
+      <a href="#du-an" class="nav-link">Dự án</a>
+      <a href="#hoc-van" class="nav-link">Học vấn</a>
+      <a href="#lien-he" class="nav-link">Liên hệ</a>
+    </nav>
+  </header>
+
+  <!-- STICKY NAV CLONE -->
+  <nav class="nav-sticky" id="nav-sticky">
+    <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+    <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+    <a href="#kinh-nghiem" class="nav-link">Kinh nghiệm</a>
+    <a href="#du-an" class="nav-link">Dự án</a>
+    <a href="#hoc-van" class="nav-link">Học vấn</a>
+    <a href="#lien-he" class="nav-link">Liên hệ</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- GIỚI THIỆU -->
+    <section class="section" id="gioi-thieu">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Giới thiệu</h2>
+        <p class="about-text">
+          Xin chào! Tôi là <strong>Nguyễn Tiến Đạt</strong> — một Frontend Developer đam mê tạo ra những giao diện web
+          đẹp, nhanh và thân thiện với người dùng. Tôi chuyên sâu về bộ ba nền tảng của web:
+          <span class="tag">HTML</span>, <span class="tag">CSS</span> và <span class="tag">JavaScript</span>.
+        </p>
+        <p class="about-text">
+          Tôi tin rằng một website tốt không chỉ cần hoạt động đúng — mà còn phải cảm thấy đúng.
+          Mỗi dòng code tôi viết đều hướng đến trải nghiệm người dùng mượt mà, code sạch và dễ bảo trì.
+        </p>
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-number" data-target="3">0</span>
+            <span class="stat-label">Năm kinh nghiệm</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-target="20">0</span>
+            <span class="stat-label">Dự án hoàn thành</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" data-target="3">0</span>
+            <span class="stat-label">Ngôn ngữ thành thạo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KỸ NĂNG -->
+    <section class="section section-alt" id="ky-nang">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Kỹ năng</h2>
+        <div class="skills-grid">
+
+          <div class="skill-block">
+            <div class="skill-header">
+              <span class="skill-icon html-icon">&#60;/&#62;</span>
+              <span class="skill-name">HTML5</span>
+              <span class="skill-pct">95%</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+            <ul class="skill-list">
+              <li>Semantic HTML &amp; Accessibility (ARIA)</li>
+              <li>SEO-friendly markup</li>
+              <li>Form validation &amp; HTML5 APIs</li>
+              <li>Canvas &amp; SVG cơ bản</li>
+            </ul>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-header">
+              <span class="skill-icon css-icon">✦</span>
+              <span class="skill-name">CSS3</span>
+              <span class="skill-pct">92%</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+            <ul class="skill-list">
+              <li>Flexbox &amp; CSS Grid</li>
+              <li>Responsive / Mobile-first</li>
+              <li>Animations &amp; Transitions</li>
+              <li>CSS Variables &amp; Custom Properties</li>
+            </ul>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-header">
+              <span class="skill-icon js-icon">JS</span>
+              <span class="skill-name">JavaScript (ES6+)</span>
+              <span class="skill-pct">88%</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+            <ul class="skill-list">
+              <li>DOM Manipulation &amp; Events</li>
+              <li>Fetch API &amp; JSON</li>
+              <li>ES6+ (Arrow, Destructuring, Modules)</li>
+              <li>Local Storage &amp; Web APIs</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="tools-section">
+          <h3 class="tools-title">Công cụ & Môi trường</h3>
+          <div class="tools-list">
+            <span class="tool-badge">VS Code</span>
+            <span class="tool-badge">Git &amp; GitHub</span>
+            <span class="tool-badge">Figma</span>
+            <span class="tool-badge">Chrome DevTools</span>
+            <span class="tool-badge">Postman</span>
+            <span class="tool-badge">npm / pnpm</span>
+            <span class="tool-badge">Webpack cơ bản</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KINH NGHIỆM -->
+    <section class="section" id="kinh-nghiem">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Kinh nghiệm làm việc</h2>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-date">01/2023 – Hiện tại</span>
+                <span class="timeline-badge current">Hiện tại</span>
+              </div>
+              <h3 class="timeline-role">Frontend Developer</h3>
+              <p class="timeline-company">Công ty TNHH Tech Việt &nbsp;–&nbsp; Hà Nội</p>
+              <ul class="timeline-desc">
+                <li>Xây dựng giao diện web hoàn chỉnh từ design Figma sang HTML/CSS/JS.</li>
+                <li>Tối ưu hiệu năng trang web, đạt điểm Lighthouse 90+ cho các dự án chính.</li>
+                <li>Đảm bảo giao diện responsive trên tất cả thiết bị từ mobile đến desktop.</li>
+                <li>Phối hợp chặt chẽ với nhóm backend để tích hợp API REST.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-date">06/2022 – 12/2022</span>
+              </div>
+              <h3 class="timeline-role">Frontend Intern</h3>
+              <p class="timeline-company">Startup XYZ &nbsp;–&nbsp; Hà Nội</p>
+              <ul class="timeline-desc">
+                <li>Hỗ trợ phát triển landing page và trang sản phẩm cho khách hàng.</li>
+                <li>Thực hiện chuyển đổi layout từ PSD/Figma sang code thực tế.</li>
+                <li>Tham gia code review và học quy trình làm việc Agile/Scrum.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <span class="timeline-date">2021 – 2022</span>
+              </div>
+              <h3 class="timeline-role">Freelance Web Developer</h3>
+              <p class="timeline-company">Tự do</p>
+              <ul class="timeline-desc">
+                <li>Nhận các dự án website nhỏ cho cá nhân và doanh nghiệp địa phương.</li>
+                <li>Phát triển kỹ năng giao tiếp với khách hàng và quản lý dự án độc lập.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DỰ ÁN -->
+    <section class="section section-alt" id="du-an">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Dự án tiêu biểu</h2>
+        <div class="projects-grid">
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Quản lý Công việc</h3>
+            <p class="project-desc">
+              Ứng dụng To-do list đầy đủ tính năng: thêm, sửa, xóa, đánh dấu hoàn thành,
+              lọc theo trạng thái và lưu dữ liệu với LocalStorage. Giao diện kéo-thả để sắp xếp công việc.
+            </p>
+            <div class="project-tech">
+              <span>HTML5</span><span>CSS Grid</span><span>Vanilla JS</span><span>LocalStorage</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Blog Cá nhân</h3>
+            <p class="project-desc">
+              Website blog tĩnh với hệ thống routing bằng hash URL, đọc dữ liệu bài viết từ JSON,
+              phân trang, tìm kiếm và dark mode. SEO-friendly với meta tag đầy đủ.
+            </p>
+            <div class="project-tech">
+              <span>HTML5</span><span>CSS Variables</span><span>Fetch API</span><span>JSON</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Weather App</h3>
+            <p class="project-desc">
+              Ứng dụng xem thời tiết kết nối API OpenWeatherMap, hỗ trợ tìm kiếm theo tên thành phố
+              và định vị tự động. Hiển thị dự báo 7 ngày với animation chuyển cảnh mượt mà.
+            </p>
+            <div class="project-tech">
+              <span>HTML5</span><span>CSS Animations</span><span>Fetch API</span><span>Geolocation</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Landing Page E-commerce</h3>
+            <p class="project-desc">
+              Trang landing page bán hàng với hiệu ứng scroll, gallery ảnh sản phẩm,
+              giỏ hàng mini, form đặt hàng có validate và countdown timer khuyến mãi.
+            </p>
+            <div class="project-tech">
+              <span>HTML5</span><span>CSS3</span><span>IntersectionObserver</span><span>Form Validation</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Quiz Game</h3>
+            <p class="project-desc">
+              Game trắc nghiệm nhiều chủ đề với đếm giờ, tính điểm, bảng xếp hạng lưu LocalStorage,
+              hiệu ứng đúng/sai và báo cáo kết quả chi tiết sau mỗi lượt chơi.
+            </p>
+            <div class="project-tech">
+              <span>HTML5</span><span>CSS Animations</span><span>Vanilla JS</span><span>LocalStorage</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">HTML · CSS · JS</div>
+            <h3 class="project-name">Music Player</h3>
+            <p class="project-desc">
+              Trình phát nhạc web với giao diện trực quan, thanh tiến trình tùy chỉnh,
+              playlist, shuffle, repeat và visualizer sóng âm bằng Canvas API.
+            </p>
+            <div class="project-tech">
+              <span>HTML5 Audio</span><span>Canvas API</span><span>CSS3</span><span>Web Audio API</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HỌC VẤN -->
+    <section class="section" id="hoc-van">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Học vấn & Chứng chỉ</h2>
+        <div class="edu-grid">
+
+          <div class="edu-card">
+            <span class="edu-icon">🎓</span>
+            <div class="edu-info">
+              <h3 class="edu-degree">Cử nhân Công nghệ Thông tin</h3>
+              <p class="edu-school">Đại học Bách Khoa Hà Nội</p>
+              <p class="edu-year">2018 – 2022</p>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <span class="edu-icon">🏅</span>
+            <div class="edu-info">
+              <h3 class="edu-degree">Responsive Web Design</h3>
+              <p class="edu-school">freeCodeCamp</p>
+              <p class="edu-year">2021</p>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <span class="edu-icon">🏅</span>
+            <div class="edu-info">
+              <h3 class="edu-degree">JavaScript Algorithms and Data Structures</h3>
+              <p class="edu-school">freeCodeCamp</p>
+              <p class="edu-year">2021</p>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <span class="edu-icon">📜</span>
+            <div class="edu-info">
+              <h3 class="edu-degree">The Web Developer Bootcamp</h3>
+              <p class="edu-school">Udemy – Colt Steele</p>
+              <p class="edu-year">2022</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LIÊN HỆ -->
+    <section class="section section-alt" id="lien-he">
+      <div class="section-inner fade-in">
+        <h2 class="section-title">Liên hệ với tôi</h2>
+        <p class="contact-intro">
+          Bạn có dự án cần một Frontend Developer? Hãy liên hệ — tôi luôn sẵn sàng lắng nghe!
+        </p>
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Họ và tên <span class="required">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Nguyễn Văn A" required />
+              <span class="form-error" id="name-error"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email <span class="required">*</span></label>
+              <input type="email" id="email" name="email" placeholder="example@email.com" required />
+              <span class="form-error" id="email-error"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Chủ đề</label>
+            <input type="text" id="subject" name="subject" placeholder="Dự án / Hợp tác / ..." />
+          </div>
+          <div class="form-group">
+            <label for="message">Tin nhắn <span class="required">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="Nội dung tin nhắn..." required></textarea>
+            <span class="form-error" id="message-error"></span>
+          </div>
+          <button type="submit" class="btn-submit" id="btn-submit">
+            <span class="btn-text">Gửi tin nhắn</span>
+            <span class="btn-spinner" id="btn-spinner" hidden>⏳</span>
+          </button>
+          <div class="form-success" id="form-success" hidden>
+            ✅ Cảm ơn bạn! Tôi sẽ phản hồi trong 24 giờ.
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Nguyễn Tiến Đạt &nbsp;·&nbsp; Thiết kế bằng HTML, CSS &amp; JavaScript thuần</p>
+    <a href="#top" class="back-to-top" id="back-to-top" aria-label="Lên đầu trang">↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
