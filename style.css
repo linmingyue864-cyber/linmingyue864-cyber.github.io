@@ -965,6 +965,39 @@ ul {
   color: var(--primary-dark);
 }
 
+/* ===== PDF BUTTON ===== */
+.pdf-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 80px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.35);
+  transition: opacity var(--transition), transform var(--transition);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pdf-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pdf-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
 /* ===== DARK MODE TOGGLE ===== */
 .dark-toggle {
   position: fixed;
@@ -1033,6 +1066,96 @@ ul {
 
 html {
   transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ===== PRINT / PDF ===== */
+@media print {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+
+  .nav-sticky,
+  .dark-toggle,
+  .pdf-btn,
+  .back-to-top,
+  .contact-form,
+  .contact-intro,
+  #lien-he {
+    display: none !important;
+  }
+
+  .hero {
+    padding: 36px 24px 0;
+    background: #1e3a8a !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .hero-logo {
+    height: 48px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  body {
+    font-size: 11pt;
+    color: #1e293b;
+    background: #fff;
+  }
+
+  .main {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .section,
+  .section-alt {
+    padding: 28px 0;
+    break-inside: avoid;
+  }
+
+  .section-inner {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .skill-fill {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .stat-card,
+  .skill-block,
+  .timeline-content,
+  .project-card,
+  .ai-card,
+  .edu-card {
+    break-inside: avoid;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .footer {
+    background: #1e293b !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @page {
+    margin: 14mm 12mm;
+    size: A4;
+  }
 }
 
 /* ===== RESPONSIVE ===== */
