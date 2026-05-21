@@ -1700,11 +1700,11 @@ html {
   .mindset-grid { grid-template-columns: 1fr; }
 }
 
-/* ===== DESIGN SYSTEM SHOWCASE ===== */
+/* ===== ĐÈ HOẶC BỔ SUNG VÀO STYLE DESIGN SYSTEM CŨ ===== */
 .ds-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 48px;
   background: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -1713,69 +1713,169 @@ html {
 }
 
 .ds-sub-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   color: var(--primary);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  border-left: 4px solid var(--primary);
+  padding-left: 12px;
 }
 
+/* Colors System */
 .ds-colors {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 16px;
 }
 
-.color-swatch {
-  height: 100px;
-  border-radius: var(--radius-sm);
+/* Typography System */
+.ds-type-table {
   display: flex;
-  align-items: flex-end;
-  padding: 10px;
+  flex-direction: column;
+  gap: 16px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
 
-.color-swatch span {
-  font-size: 0.65rem;
+.ds-type-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border);
+}
+.ds-type-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.ds-type-tag {
+  font-size: 0.75rem;
   font-weight: 700;
-  background: rgba(255,255,255,0.8);
+  color: var(--text-muted);
+  background: #f8fafc;
   padding: 4px 8px;
   border-radius: 4px;
-  color: #000;
-  width: 100%;
+  min-width: 60px;
+  text-align: center;
 }
 
-.ds-flex { display: flex; gap: 12px; flex-wrap: wrap; }
-.ds-flex.column { flex-direction: column; width: 100%; max-width: 300px; }
+.ds-type-row p { margin: 0; color: var(--text); }
 
-/* Các bản demo component trong DS */
-.btn-example {
-  padding: 8px 20px;
-  border-radius: 20px;
+/* Utilities Styles */
+.ds-utilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.util-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.util-card h4 { font-size: 0.9rem; margin-bottom: 16px; color: var(--text-muted); }
+.util-flex { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.util-box {
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  background: #f8fafc;
+}
+
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+
+/* Components Showcase Grid */
+.ds-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.comp-box {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.comp-box h5 { font-size: 0.85rem; font-weight: 700; margin-bottom: 14px; color: var(--text-muted); text-transform: uppercase; }
+.comp-flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.comp-flex-col { display: flex; flex-direction: column; gap: 12px; }
+
+/* Component Elements Styles */
+.ds-btn {
+  padding: 8px 16px;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
+  transition: all 0.2s;
 }
-.btn-example.primary { background: var(--primary); color: #fff; }
-.btn-example.ghost { background: var(--primary-light); color: var(--primary); }
+.ds-btn-primary { background: var(--primary); color: #fff; }
+.ds-btn-secondary { background: #64748b; color: #fff; }
+.ds-btn-outline { background: transparent; border-color: var(--border); color: var(--text); }
+.ds-btn-danger { background: #ef4444; color: #fff; }
+.ds-btn:hover { opacity: 0.9; }
 
-.input-example {
+.ds-input {
+  width: 100%;
   padding: 8px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  border-radius: 6px;
   font-size: 0.9rem;
 }
 
-.badge-example {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
+/* Badges */
+.ds-badge {
+  padding: 4px 10px;
+  border-radius: 9999px;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
 }
-.badge-example.success { background: #dcfce7; color: #16a34a; }
+.b-success { background: #dcfce7; color: #16a34a; }
+.b-warning { background: #fef9c3; color: #ca8a04; }
+.b-error { background: #fee2e2; color: #dc2626; }
+.b-info { background: #dbeafe; color: #2563eb; }
 
-@media (max-width: 640px) {
-  .ds-container { padding: 20px; }
+/* Alerts */
+.ds-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+.alert-danger { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+/* Switch Toggle */
+.ds-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.ds-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+.ds-switch input:checked + .slider { background-color: var(--primary); }
+.ds-switch input:checked + .slider:before { transform: translateX(20px); }
+
+/* SaaS Analytics Widget */
+.ds-metric-card {
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 6px;
+}
+.metric-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
+.metric-value { font-size: 1.75rem; font-weight: 800; margin: 12px 0 8px 0; color: var(--text); }
+.metric-value small { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+.ds-progress-bar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--primary); border-radius: 9999px; }
+
+@media (max-width: 768px) {
+  .ds-container { padding: 16px; gap: 32px; }
+  .ds-type-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .comp-box { grid-column: span 2 / auto !important; }
 }
