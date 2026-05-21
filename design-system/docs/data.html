@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dữ liệu — BHDS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231473E6'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='14' font-family='Source Sans 3,sans-serif' font-weight='700'>B</text></svg>" />
+  <style>
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .chart-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .chart-bar-col { width: 36px; background: var(--color-brand-200); border-radius: 4px 4px 0 0; position: relative; transition: background .15s; }
+    .chart-bar-col:hover { background: var(--color-brand-400); }
+    .chart-bar-label { font-size: 10px; font-family: monospace; color: var(--text-tertiary); }
+    .chart-bar-value { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: var(--color-brand-700); white-space: nowrap; opacity: 0; transition: opacity .15s; }
+    .chart-bar-col:hover .chart-bar-value { opacity: 1; }
+    [data-theme="dark"] .chart-bar-value { color: var(--color-brand-400); }
+    .kv-list { display: flex; flex-direction: column; gap: 0; }
+    .kv-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-default); font-size: 13px; }
+    .kv-row:last-child { border-bottom: none; }
+    .kv-key { color: var(--text-secondary); }
+    .kv-val { font-weight: 600; color: var(--text-primary); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="index.html">
+        <div class="sidebar-logo-mark"><svg viewBox="0 0 16 16"><path d="M2 2h5.5a4.5 4.5 0 0 1 0 9H2V2zm2 2v5h3.5a2.5 2.5 0 0 0 0-5H4zm0 5v3h3.5a1.5 1.5 0 1 0 0-3H4z"/></svg></div>
+        <div class="sidebar-logo-text"><span class="sidebar-logo-name">BHDS</span><span class="sidebar-logo-version">v1.0.0 · Nguyễn Tiến Đạt</span></div>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Bắt đầu</div>
+          <a class="sidebar-item" href="index.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5L1.5 7H3v7.5h4V11h2v3.5h4V7h1.5L8 1.5z"/></svg>Giới thiệu</a>
+          <a class="sidebar-item" href="principles.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 4.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm1 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 7.5z"/></svg>Nguyên tắc</a>
+          <a class="sidebar-item" href="branding.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 4.2 4.2.8-3 3 .7 4.3L8 11.5l-3.7 1.8.7-4.3-3-3 4.2-.8L8 1z"/></svg>Thương hiệu</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Nền tảng</div>
+          <a class="sidebar-item" href="colors.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"/><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="8" cy="11" r="1.5"/></svg>Màu sắc</a>
+          <a class="sidebar-item" href="typography.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3z"/></svg>Kiểu chữ</a>
+          <a class="sidebar-item" href="spacing.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 3h14v1H1zm0 9h14v1H1zM4 7h8v2H4z"/></svg>Khoảng cách</a>
+          <a class="sidebar-item" href="icons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Biểu tượng</a>
+          <a class="sidebar-item" href="motion.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm-1 5.5V5l4 3-4 3V9.5l2-1.5-2-1.5z"/></svg>Chuyển động</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Thành phần</div>
+          <a class="sidebar-item" href="components.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5v7L8 15l7-3.5v-7L8 1zm0 1.8 5 2.5v5.4l-5 2.5-5-2.5V5.3l5-2.5z"/></svg>Tất cả thành phần</a>
+          <a class="sidebar-item" href="buttons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="8" rx="2"/></svg>Button</a>
+          <a class="sidebar-item" href="forms.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="2" rx="1"/><rect x="1" y="8" width="10" height="2" rx="1"/><rect x="1" y="12" width="7" height="2" rx="1"/></svg>Form & Input</a>
+          <a class="sidebar-item" href="navigation.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 4h14v1.5H1zm0 5.5h14V11H1zM5 7h6v1.5H5z"/></svg>Điều hướng</a>
+          <a class="sidebar-item" href="feedback.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 5h2v4H7V5zm0 5h2v2H7v-2z"/></svg>Phản hồi</a>
+          <a class="sidebar-item active" href="data.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v2h8V4H4zm0 4v2h8V8H4zm0 4v1h8v-1H4z"/></svg>Dữ liệu</a>
+          <a class="sidebar-item" href="modals.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 3V2h6v1"/></svg>Hộp thoại</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Mẫu SaaS</div>
+          <a class="sidebar-item" href="patterns.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="4" rx="1"/><rect x="9" y="1" width="6" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>Mẫu giao diện</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Tài nguyên</div>
+          <a class="sidebar-item" href="tokens.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg>Design Tokens</a>
+          <a class="sidebar-item" href="changelog.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v1h8V4H4zm0 3v1h8V7H4zm0 3v1h5v-1H4z"/></svg>Nhật ký thay đổi</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">© 2025 Nguyễn Tiến Đạt</div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="hamburger" id="hamburger" aria-label="Mở menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><rect y="2" width="18" height="2" rx="1"/><rect y="8" width="18" height="2" rx="1"/><rect y="14" width="18" height="2" rx="1"/></svg></button>
+        <div class="topbar-breadcrumb"><span>BHDS</span><span>›</span><span>Thành phần</span><span>›</span><span class="current">Dữ liệu</span></div>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện" title="Giao diện sáng/tối">
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-eyebrow">Thành phần</div>
+          <h1 class="page-title">Dữ liệu</h1>
+          <p class="page-desc">Các thành phần hiển thị dữ liệu: stat card KPI, bảng dữ liệu, biểu đồ thanh tối giản và danh sách key-value — nền tảng của mọi trang dashboard SaaS.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="section">
+          <h2 class="section-title">Stat Card — KPI</h2>
+          <p class="section-desc">Hiển thị chỉ số quan trọng ở đầu trang dashboard. Mỗi card gồm nhãn, giá trị và delta (thay đổi so với kỳ trước).</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Doanh thu tháng</div>
+              <div class="stat-value">₫48,2M</div>
+              <div class="stat-delta up">↑ 12,4% so với tháng trước</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Người dùng hoạt động</div>
+              <div class="stat-value">2.847</div>
+              <div class="stat-delta up">↑ 8,1% 7 ngày qua</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Tỷ lệ chuyển đổi</div>
+              <div class="stat-value">3,72%</div>
+              <div class="stat-delta down">↓ 0,3% tháng này</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Churn rate</div>
+              <div class="stat-value">1,8%</div>
+              <div class="stat-delta up">↑ 0,2% — cần chú ý</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="section">
+          <h2 class="section-title">Biểu đồ thanh</h2>
+          <p class="section-desc">Biểu đồ thuần CSS — phù hợp cho hiển thị xu hướng đơn giản mà không cần thư viện ngoài.</p>
+          <div class="demo-box">
+            <div style="width:100%;">
+              <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:20px;">Doanh thu theo tháng (triệu đồng)</div>
+              <div style="display:flex;align-items:flex-end;gap:8px;height:180px;position:relative;padding-top:24px;">
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:60%"><div class="chart-bar-value">28,8</div></div>
+                  <div class="chart-bar-label">T1</div>
+                </div>
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:70%"><div class="chart-bar-value">33,6</div></div>
+                  <div class="chart-bar-label">T2</div>
+                </div>
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:55%"><div class="chart-bar-value">26,4</div></div>
+                  <div class="chart-bar-label">T3</div>
+                </div>
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:80%"><div class="chart-bar-value">38,4</div></div>
+                  <div class="chart-bar-label">T4</div>
+                </div>
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:90%"><div class="chart-bar-value">43,2</div></div>
+                  <div class="chart-bar-label">T5</div>
+                </div>
+                <div class="chart-bar-wrap" style="flex:1;">
+                  <div class="chart-bar-col" style="height:100%;background:var(--color-brand-500);"><div class="chart-bar-value" style="opacity:1;color:white;top:-22px;">48,2</div></div>
+                  <div class="chart-bar-label" style="font-weight:700;color:var(--color-brand-600);">T6</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="section">
+          <h2 class="section-title">Bảng dữ liệu</h2>
+          <p class="section-desc">Bảng dùng để hiển thị và so sánh dữ liệu có cấu trúc. Luôn có header cố định, row hover, và action khi cần.</p>
+          <div style="border:1px solid var(--border-default);border-radius:12px;overflow:hidden;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border-default);background:var(--surface-base);">
+              <div style="font-size:14px;font-weight:600;color:var(--text-primary);">Danh sách người dùng</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-secondary btn-sm">Lọc</button>
+                <button class="btn btn-primary btn-sm">+ Thêm</button>
+              </div>
+            </div>
+            <div class="table-wrap" style="border:none;border-radius:0;">
+              <table>
+                <thead><tr><th><input type="checkbox" style="accent-color:var(--color-brand-500);"></th><th>Người dùng</th><th>Vai trò</th><th>Gói</th><th>Doanh thu</th><th>Trạng thái</th><th></th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" style="accent-color:var(--color-brand-500);"></td>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="avatar avatar-sm" style="background:#1473E6;">NT</div><div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Nguyễn Tiến Đạt</div><div style="font-size:11px;color:var(--text-tertiary);">dat@example.com</div></div></div></td>
+                    <td><span style="font-size:13px;color:var(--text-secondary);">Admin</span></td>
+                    <td><span class="badge badge-purple">Business</span></td>
+                    <td><span style="font-size:13px;font-weight:600;color:var(--text-primary);">₫4,2M</span></td>
+                    <td><span class="badge badge-success">Hoạt động</span></td>
+                    <td><button class="btn btn-ghost btn-sm" style="font-size:16px;padding:2px 8px;">···</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" style="accent-color:var(--color-brand-500);"></td>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="avatar avatar-sm" style="background:#12B76A;">TH</div><div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Trần Minh Hoàng</div><div style="font-size:11px;color:var(--text-tertiary);">hoang@example.com</div></div></div></td>
+                    <td><span style="font-size:13px;color:var(--text-secondary);">Thành viên</span></td>
+                    <td><span class="badge badge-brand">Pro</span></td>
+                    <td><span style="font-size:13px;font-weight:600;color:var(--text-primary);">₫1,2M</span></td>
+                    <td><span class="badge badge-success">Hoạt động</span></td>
+                    <td><button class="btn btn-ghost btn-sm" style="font-size:16px;padding:2px 8px;">···</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" style="accent-color:var(--color-brand-500);"></td>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="avatar avatar-sm" style="background:#F59E0B;">LN</div><div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Lê Thị Nam</div><div style="font-size:11px;color:var(--text-tertiary);">nam@example.com</div></div></div></td>
+                    <td><span style="font-size:13px;color:var(--text-secondary);">Thành viên</span></td>
+                    <td><span class="badge badge-neutral">Free</span></td>
+                    <td><span style="font-size:13px;color:var(--text-tertiary);">—</span></td>
+                    <td><span class="badge badge-warning">Thử nghiệm</span></td>
+                    <td><button class="btn btn-ghost btn-sm" style="font-size:16px;padding:2px 8px;">···</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" style="accent-color:var(--color-brand-500);"></td>
+                    <td><div style="display:flex;align-items:center;gap:10px;"><div class="avatar avatar-sm" style="background:#F04438;">PD</div><div><div style="font-size:13px;font-weight:500;color:var(--text-primary);">Phạm Văn Dũng</div><div style="font-size:11px;color:var(--text-tertiary);">dung@example.com</div></div></div></td>
+                    <td><span style="font-size:13px;color:var(--text-secondary);">Khách</span></td>
+                    <td><span class="badge badge-neutral">Free</span></td>
+                    <td><span style="font-size:13px;color:var(--text-tertiary);">—</span></td>
+                    <td><span class="badge badge-danger">Đã hủy</span></td>
+                    <td><button class="btn btn-ghost btn-sm" style="font-size:16px;padding:2px 8px;">···</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="padding:12px 20px;border-top:1px solid var(--border-default);display:flex;align-items:center;justify-content:space-between;background:var(--surface-base);">
+              <span style="font-size:13px;color:var(--text-tertiary);">Hiển thị 4/148 người dùng</span>
+              <div class="pagination">
+                <button class="page-btn" disabled>‹</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">›</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key-Value List -->
+        <div class="section">
+          <h2 class="section-title">Danh sách Key-Value</h2>
+          <p class="section-desc">Dùng cho trang chi tiết, hồ sơ, hoặc thông tin cấu hình. Đơn giản và rõ ràng.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Thông tin tài khoản</span><button class="btn btn-ghost btn-sm">Chỉnh sửa</button></div>
+              <div class="card-body">
+                <div class="kv-list">
+                  <div class="kv-row"><span class="kv-key">Tên hiển thị</span><span class="kv-val">Nguyễn Tiến Đạt</span></div>
+                  <div class="kv-row"><span class="kv-key">Email</span><span class="kv-val">dat@example.com</span></div>
+                  <div class="kv-row"><span class="kv-key">Gói dịch vụ</span><span class="kv-val"><span class="badge badge-purple">Business</span></span></div>
+                  <div class="kv-row"><span class="kv-key">Ngày đăng ký</span><span class="kv-val">12/01/2025</span></div>
+                  <div class="kv-row"><span class="kv-key">Trạng thái</span><span class="kv-val"><span class="badge badge-success">Hoạt động</span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Thống kê sử dụng</span></div>
+              <div class="card-body">
+                <div class="kv-list">
+                  <div class="kv-row"><span class="kv-key">Số dự án</span><span class="kv-val">14</span></div>
+                  <div class="kv-row"><span class="kv-key">Thành viên nhóm</span><span class="kv-val">7</span></div>
+                  <div class="kv-row"><span class="kv-key">Storage đã dùng</span><span class="kv-val">4,2 GB / 20 GB</span></div>
+                  <div class="kv-row"><span class="kv-key">API requests (tháng)</span><span class="kv-val">148.203</span></div>
+                  <div class="kv-row"><span class="kv-key">Uptime tháng này</span><span class="kv-val" style="color:var(--color-success-600);">99,97%</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="section">
+          <h2 class="section-title">Empty State</h2>
+          <p class="section-desc">Hiển thị khi danh sách hoặc bảng chưa có dữ liệu. Luôn cung cấp CTA hành động rõ ràng.</p>
+          <div class="card">
+            <div class="empty-state">
+              <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div>
+              <div class="empty-title">Chưa có dữ liệu nào</div>
+              <p class="empty-desc">Bạn chưa có người dùng nào trong danh sách. Hãy thêm người dùng đầu tiên để bắt đầu.</p>
+              <button class="btn btn-primary">+ Thêm người dùng</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

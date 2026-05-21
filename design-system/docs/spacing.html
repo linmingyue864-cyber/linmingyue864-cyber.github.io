@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khoảng cách — BHDS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231473E6'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='14' font-family='Inter,sans-serif' font-weight='700'>B</text></svg>" />
+  <style>
+    .radius-demo { width: 64px; height: 64px; background: var(--color-brand-100); border: 2px solid var(--color-brand-300); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: monospace; color: var(--color-brand-700); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="index.html">
+        <div class="sidebar-logo-mark"><svg viewBox="0 0 16 16"><path d="M2 2h5.5a4.5 4.5 0 0 1 0 9H2V2zm2 2v5h3.5a2.5 2.5 0 0 0 0-5H4zm0 5v3h3.5a1.5 1.5 0 1 0 0-3H4z"/></svg></div>
+        <div class="sidebar-logo-text"><span class="sidebar-logo-name">BHDS</span><span class="sidebar-logo-version">v1.0.0 · Nguyễn Tiến Đạt</span></div>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Bắt đầu</div>
+          <a class="sidebar-item" href="index.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5L1.5 7H3v7.5h4V11h2v3.5h4V7h1.5L8 1.5z"/></svg>Giới thiệu</a>
+          <a class="sidebar-item" href="principles.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 4.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm1 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 7.5z"/></svg>Nguyên tắc</a>
+          <a class="sidebar-item" href="branding.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 4.2 4.2.8-3 3 .7 4.3L8 11.5l-3.7 1.8.7-4.3-3-3 4.2-.8L8 1z"/></svg>Thương hiệu</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Nền tảng</div>
+          <a class="sidebar-item" href="colors.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"/><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="8" cy="11" r="1.5"/></svg>Màu sắc</a>
+          <a class="sidebar-item" href="typography.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3z"/></svg>Kiểu chữ</a>
+          <a class="sidebar-item active" href="spacing.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 3h14v1H1zm0 9h14v1H1zM4 7h8v2H4z"/></svg>Khoảng cách</a>
+          <a class="sidebar-item" href="icons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Biểu tượng</a>
+          <a class="sidebar-item" href="motion.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm-1 5.5V5l4 3-4 3V9.5l2-1.5-2-1.5z"/></svg>Chuyển động</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Thành phần</div>
+          <a class="sidebar-item" href="components.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5v7L8 15l7-3.5v-7L8 1zm0 1.8 5 2.5v5.4l-5 2.5-5-2.5V5.3l5-2.5z"/></svg>Tất cả thành phần</a>
+          <a class="sidebar-item" href="buttons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="8" rx="2"/></svg>Button</a>
+          <a class="sidebar-item" href="forms.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="2" rx="1"/><rect x="1" y="8" width="10" height="2" rx="1"/><rect x="1" y="12" width="7" height="2" rx="1"/></svg>Form & Input</a>
+          <a class="sidebar-item" href="navigation.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 4h14v1.5H1zm0 5.5h14V11H1zM5 7h6v1.5H5z"/></svg>Điều hướng</a>
+          <a class="sidebar-item" href="feedback.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 5h2v4H7V5zm0 5h2v2H7v-2z"/></svg>Phản hồi</a>
+          <a class="sidebar-item" href="data.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v2h8V4H4zm0 4v2h8V8H4zm0 4v1h8v-1H4z"/></svg>Dữ liệu</a>
+          <a class="sidebar-item" href="modals.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 3V2h6v1"/></svg>Hộp thoại</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Mẫu SaaS</div>
+          <a class="sidebar-item" href="patterns.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="4" rx="1"/><rect x="9" y="1" width="6" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>Mẫu giao diện</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Tài nguyên</div>
+          <a class="sidebar-item" href="tokens.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg>Design Tokens</a>
+          <a class="sidebar-item" href="changelog.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v1h8V4H4zm0 3v1h8V7H4zm0 3v1h5v-1H4z"/></svg>Nhật ký thay đổi</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">© 2025 Nguyễn Tiến Đạt</div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="hamburger" id="hamburger" aria-label="Mở menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><rect y="2" width="18" height="2" rx="1"/><rect y="8" width="18" height="2" rx="1"/><rect y="14" width="18" height="2" rx="1"/></svg></button>
+        <div class="topbar-breadcrumb"><span>BHDS</span><span>›</span><span>Nền tảng</span><span>›</span><span class="current">Khoảng cách</span></div>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện" title="Giao diện sáng/tối">
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-eyebrow">Nền tảng</div>
+          <h1 class="page-title">Khoảng cách</h1>
+          <p class="page-desc">Hệ thống khoảng cách của BHDS dựa trên bội số 4px — đảm bảo sự nhất quán trong toàn bộ giao diện.</p>
+        </div>
+
+        <!-- Spacing scale -->
+        <div class="section">
+          <h2 class="section-title">Thang khoảng cách</h2>
+          <p class="section-desc">Tất cả giá trị khoảng cách đều là bội số của 2px hoặc 4px. Sử dụng các token này thay vì giá trị tùy ý.</p>
+          <div class="spacing-grid">
+            <div class="spacing-row"><div class="spacing-name">--space-50</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:2px;"></div></div><div class="spacing-value">2px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-100</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div></div><div class="spacing-value">4px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-150</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:6px;"></div></div><div class="spacing-value">6px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-200</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div></div><div class="spacing-value">8px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-250</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:10px;"></div></div><div class="spacing-value">10px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-300</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div></div><div class="spacing-value">12px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-400</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px;"></div></div><div class="spacing-value">16px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-500</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:20px;"></div></div><div class="spacing-value">20px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-600</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div></div><div class="spacing-value">24px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-700</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:28px;"></div></div><div class="spacing-value">28px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-800</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div></div><div class="spacing-value">32px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-900</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:36px;"></div></div><div class="spacing-value">36px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-1000</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:40px;"></div></div><div class="spacing-value">40px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-1200</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px;"></div></div><div class="spacing-value">48px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-1600</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px;"></div></div><div class="spacing-value">64px</div></div>
+            <div class="spacing-row"><div class="spacing-name">--space-2000</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px;"></div></div><div class="spacing-value">80px</div></div>
+          </div>
+        </div>
+
+        <!-- Border Radius -->
+        <div class="section">
+          <h2 class="section-title">Bo góc</h2>
+          <p class="section-desc">Các giá trị bo góc được định nghĩa sẵn. Không tự tạo giá trị tùy ý.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:0;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">none · 0</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:2px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">sm · 2px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:4px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">md · 4px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:6px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">lg · 6px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:8px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">xl · 8px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:12px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">2xl · 12px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:16px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">3xl · 16px</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+              <div class="radius-demo" style="border-radius:9999px;width:80px;height:36px;"></div>
+              <div style="font-size:11px;font-family:monospace;color:var(--color-neutral-600);">full · 9999px</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shadow -->
+        <div class="section">
+          <h2 class="section-title">Bóng đổ</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:24px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div style="width:120px;height:72px;background:white;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.1);"></div>
+              <div style="font-size:12px;font-family:monospace;color:var(--color-neutral-600);">--shadow-sm</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div style="width:120px;height:72px;background:white;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);"></div>
+              <div style="font-size:12px;font-family:monospace;color:var(--color-neutral-600);">--shadow-md</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div style="width:120px;height:72px;background:white;border-radius:8px;box-shadow:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);"></div>
+              <div style="font-size:12px;font-family:monospace;color:var(--color-neutral-600);">--shadow-lg</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+              <div style="width:120px;height:72px;background:white;border-radius:8px;box-shadow:0 20px 25px rgba(0,0,0,.1),0 10px 10px rgba(0,0,0,.04);"></div>
+              <div style="font-size:12px;font-family:monospace;color:var(--color-neutral-600);">--shadow-xl</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Usage Guide -->
+        <div class="section">
+          <h2 class="section-title">Hướng dẫn sử dụng</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Token</th><th>Giá trị</th><th>Ứng dụng điển hình</th></tr></thead>
+              <tbody>
+                <tr><td><code>--space-200</code></td><td>8px</td><td>Gap giữa các icon và text, padding badge/tag</td></tr>
+                <tr><td><code>--space-300</code></td><td>12px</td><td>Padding trong nút nhỏ, khoảng cách sidebar item</td></tr>
+                <tr><td><code>--space-400</code></td><td>16px</td><td>Khoảng cách cơ bản giữa các phần tử</td></tr>
+                <tr><td><code>--space-600</code></td><td>24px</td><td>Padding card, khoảng cách section trong card</td></tr>
+                <tr><td><code>--space-800</code></td><td>32px</td><td>Khoảng cách giữa các component lớn</td></tr>
+                <tr><td><code>--space-1200</code></td><td>48px</td><td>Padding page section</td></tr>
+                <tr><td><code>--space-1600</code></td><td>64px</td><td>Padding trang, khoảng cách giữa các section</td></tr>
+                <tr><td><code>--border-radius-lg</code></td><td>6px</td><td>Nút, input, thẻ nhỏ</td></tr>
+                <tr><td><code>--border-radius-xl</code></td><td>8px</td><td>Card, panel, dropdown</td></tr>
+                <tr><td><code>--border-radius-2xl</code></td><td>12px</td><td>Modal, dialog, card lớn</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

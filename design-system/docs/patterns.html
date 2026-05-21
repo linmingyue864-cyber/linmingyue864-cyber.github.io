@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mẫu giao diện — BHDS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231473E6'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='14' font-family='Inter,sans-serif' font-weight='700'>B</text></svg>" />
+  <style>
+    .pattern-card { border-radius:12px; border:1px solid var(--color-neutral-200); overflow:hidden; background:var(--color-neutral-0); margin-bottom:32px; }
+    [data-theme="dark"] .pattern-card { background:var(--color-neutral-900); border-color:var(--color-neutral-700); }
+    .pattern-preview { padding:32px; background:var(--color-neutral-50); border-bottom:1px solid var(--color-neutral-200); }
+    [data-theme="dark"] .pattern-preview { background:var(--color-neutral-800); border-color:var(--color-neutral-700); }
+    .pattern-meta { padding:20px 24px; }
+    .pattern-name { font-size:15px; font-weight:600; color:var(--color-neutral-900); margin-bottom:4px; }
+    [data-theme="dark"] .pattern-name { color:var(--color-neutral-50); }
+    .pattern-desc { font-size:13px; color:var(--color-neutral-500); line-height:1.6; }
+    .pattern-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+    .pattern-tag { font-size:11px; padding:2px 8px; border-radius:20px; background:var(--color-neutral-100); color:var(--color-neutral-600); font-weight:500; }
+    [data-theme="dark"] .pattern-tag { background:var(--color-neutral-800); color:var(--color-neutral-400); }
+
+    /* Empty state */
+    .empty-state { text-align:center; padding:48px 24px; }
+    .empty-state-icon { width:56px; height:56px; margin:0 auto 16px; background:var(--color-neutral-100); border-radius:16px; display:flex; align-items:center; justify-content:center; }
+    [data-theme="dark"] .empty-state-icon { background:var(--color-neutral-800); }
+    .empty-state-title { font-size:16px; font-weight:600; color:var(--color-neutral-900); margin-bottom:6px; }
+    [data-theme="dark"] .empty-state-title { color:var(--color-neutral-50); }
+    .empty-state-desc { font-size:13px; color:var(--color-neutral-500); max-width:280px; margin:0 auto 20px; line-height:1.6; }
+    .empty-state-actions { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+
+    /* Settings */
+    .settings-layout { display:grid; grid-template-columns:200px 1fr; gap:0; border-radius:10px; overflow:hidden; border:1px solid var(--color-neutral-200); }
+    [data-theme="dark"] .settings-layout { border-color:var(--color-neutral-700); }
+    .settings-nav { background:var(--color-neutral-50); border-right:1px solid var(--color-neutral-200); padding:12px; }
+    [data-theme="dark"] .settings-nav { background:var(--color-neutral-800); border-color:var(--color-neutral-700); }
+    .settings-nav-item { padding:7px 10px; border-radius:6px; font-size:13px; color:var(--color-neutral-700); cursor:pointer; display:flex; align-items:center; gap:8px; }
+    [data-theme="dark"] .settings-nav-item { color:var(--color-neutral-400); }
+    .settings-nav-item.active { background:var(--color-brand-50); color:var(--color-brand-600); font-weight:500; }
+    [data-theme="dark"] .settings-nav-item.active { background:rgba(20,115,230,.15); color:var(--color-brand-400); }
+    .settings-content { padding:20px 24px; background:var(--color-neutral-0); }
+    [data-theme="dark"] .settings-content { background:var(--color-neutral-900); }
+    .settings-section-title { font-size:13px; font-weight:600; color:var(--color-neutral-900); margin-bottom:12px; }
+    [data-theme="dark"] .settings-section-title { color:var(--color-neutral-50); }
+    .settings-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--color-neutral-100); }
+    [data-theme="dark"] .settings-row { border-color:var(--color-neutral-800); }
+    .settings-row:last-child { border-bottom:none; }
+    .settings-row-label { font-size:13px; color:var(--color-neutral-800); }
+    [data-theme="dark"] .settings-row-label { color:var(--color-neutral-200); }
+    .settings-row-desc { font-size:11px; color:var(--color-neutral-500); margin-top:2px; }
+    .toggle { width:36px; height:20px; border-radius:10px; background:var(--color-brand-500); border:none; cursor:pointer; position:relative; flex-shrink:0; }
+    .toggle::after { content:''; position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; top:2px; right:2px; }
+    .toggle.off { background:var(--color-neutral-300); }
+    .toggle.off::after { right:auto; left:2px; }
+
+    /* Onboarding */
+    .onboarding-steps { display:flex; gap:0; margin-bottom:0; }
+    .onboarding-step { flex:1; text-align:center; padding:16px 8px; position:relative; }
+    .onboarding-step::after { content:''; position:absolute; top:20px; right:0; width:100%; height:2px; background:var(--color-neutral-200); z-index:0; }
+    [data-theme="dark"] .onboarding-step::after { background:var(--color-neutral-700); }
+    .onboarding-step:last-child::after { display:none; }
+    .onboarding-step.done::after { background:var(--color-brand-400); }
+    .onboarding-step-circle { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; position:relative; z-index:1; font-size:13px; font-weight:600; }
+    .onboarding-step.done .onboarding-step-circle { background:var(--color-brand-500); color:#fff; }
+    .onboarding-step.active .onboarding-step-circle { background:var(--color-brand-50); color:var(--color-brand-600); border:2px solid var(--color-brand-500); }
+    .onboarding-step.pending .onboarding-step-circle { background:var(--color-neutral-100); color:var(--color-neutral-400); border:2px solid var(--color-neutral-200); }
+    [data-theme="dark"] .onboarding-step.active .onboarding-step-circle { background:rgba(20,115,230,.15); }
+    [data-theme="dark"] .onboarding-step.pending .onboarding-step-circle { background:var(--color-neutral-800); border-color:var(--color-neutral-700); }
+    .onboarding-step-label { font-size:11px; color:var(--color-neutral-500); }
+    .onboarding-step.active .onboarding-step-label { color:var(--color-brand-600); font-weight:500; }
+    .onboarding-step.done .onboarding-step-label { color:var(--color-neutral-600); }
+
+    /* Kanban */
+    .kanban { display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; }
+    .kanban-col { flex-shrink:0; width:200px; }
+    .kanban-col-header { font-size:12px; font-weight:600; color:var(--color-neutral-600); padding:8px 0 8px; display:flex; align-items:center; justify-content:space-between; }
+    [data-theme="dark"] .kanban-col-header { color:var(--color-neutral-400); }
+    .kanban-count { background:var(--color-neutral-200); border-radius:20px; padding:1px 7px; font-size:11px; color:var(--color-neutral-600); }
+    [data-theme="dark"] .kanban-count { background:var(--color-neutral-700); color:var(--color-neutral-400); }
+    .kanban-card { background:var(--color-neutral-0); border:1px solid var(--color-neutral-200); border-radius:8px; padding:10px; margin-bottom:8px; cursor:grab; }
+    [data-theme="dark"] .kanban-card { background:var(--color-neutral-900); border-color:var(--color-neutral-700); }
+    .kanban-card-title { font-size:12px; font-weight:500; color:var(--color-neutral-800); margin-bottom:6px; }
+    [data-theme="dark"] .kanban-card-title { color:var(--color-neutral-200); }
+    .kanban-card-meta { display:flex; align-items:center; justify-content:space-between; }
+    .kanban-avatar { width:20px; height:20px; border-radius:50%; background:linear-gradient(135deg,var(--color-brand-400),var(--color-brand-600)); font-size:9px; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; }
+
+    /* Command palette */
+    .command-palette { background:var(--color-neutral-0); border:1px solid var(--color-neutral-200); border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.12); overflow:hidden; }
+    [data-theme="dark"] .command-palette { background:var(--color-neutral-900); border-color:var(--color-neutral-700); }
+    .command-input-wrap { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--color-neutral-200); }
+    [data-theme="dark"] .command-input-wrap { border-color:var(--color-neutral-700); }
+    .command-input { flex:1; border:none; background:transparent; font-size:14px; color:var(--color-neutral-900); outline:none; font-family:inherit; }
+    [data-theme="dark"] .command-input { color:var(--color-neutral-50); }
+    .command-input::placeholder { color:var(--color-neutral-400); }
+    .command-list { padding:6px; }
+    .command-group-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--color-neutral-500); padding:8px 10px 4px; }
+    .command-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:6px; font-size:13px; color:var(--color-neutral-800); cursor:pointer; }
+    [data-theme="dark"] .command-item { color:var(--color-neutral-200); }
+    .command-item.active { background:var(--color-brand-50); color:var(--color-brand-700); }
+    [data-theme="dark"] .command-item.active { background:rgba(20,115,230,.2); color:var(--color-brand-300); }
+    .command-item-icon { width:28px; height:28px; border-radius:6px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    [data-theme="dark"] .command-item-icon { background:var(--color-neutral-800); }
+    .command-item.active .command-item-icon { background:var(--color-brand-100); }
+    [data-theme="dark"] .command-item.active .command-item-icon { background:rgba(20,115,230,.25); }
+    .command-kbd { margin-left:auto; font-size:10px; background:var(--color-neutral-100); padding:2px 5px; border-radius:4px; color:var(--color-neutral-500); font-family:'Source Code Pro',monospace; }
+    [data-theme="dark"] .command-kbd { background:var(--color-neutral-800); }
+  </style>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="index.html">
+        <div class="sidebar-logo-mark"><svg viewBox="0 0 16 16"><path d="M2 2h5.5a4.5 4.5 0 0 1 0 9H2V2zm2 2v5h3.5a2.5 2.5 0 0 0 0-5H4zm0 5v3h3.5a1.5 1.5 0 1 0 0-3H4z"/></svg></div>
+        <div class="sidebar-logo-text"><span class="sidebar-logo-name">BHDS</span><span class="sidebar-logo-version">v1.0.0 · Nguyễn Tiến Đạt</span></div>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Bắt đầu</div>
+          <a class="sidebar-item" href="index.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5L1.5 7H3v7.5h4V11h2v3.5h4V7h1.5L8 1.5z"/></svg>Giới thiệu</a>
+          <a class="sidebar-item" href="principles.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 4.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm1 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 7.5z"/></svg>Nguyên tắc</a>
+          <a class="sidebar-item" href="branding.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 4.2 4.2.8-3 3 .7 4.3L8 11.5l-3.7 1.8.7-4.3-3-3 4.2-.8L8 1z"/></svg>Thương hiệu</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Nền tảng</div>
+          <a class="sidebar-item" href="colors.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"/><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="8" cy="11" r="1.5"/></svg>Màu sắc</a>
+          <a class="sidebar-item" href="typography.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3z"/></svg>Kiểu chữ</a>
+          <a class="sidebar-item" href="spacing.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 3h14v1H1zm0 9h14v1H1zM4 7h8v2H4z"/></svg>Khoảng cách</a>
+          <a class="sidebar-item" href="icons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Biểu tượng</a>
+          <a class="sidebar-item" href="motion.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm-1 5.5V5l4 3-4 3V9.5l2-1.5-2-1.5z"/></svg>Chuyển động</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Thành phần</div>
+          <a class="sidebar-item" href="components.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5v7L8 15l7-3.5v-7L8 1zm0 1.8 5 2.5v5.4l-5 2.5-5-2.5V5.3l5-2.5z"/></svg>Tất cả thành phần</a>
+          <a class="sidebar-item" href="buttons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="8" rx="2"/></svg>Button</a>
+          <a class="sidebar-item" href="forms.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="2" rx="1"/><rect x="1" y="8" width="10" height="2" rx="1"/><rect x="1" y="12" width="7" height="2" rx="1"/></svg>Form & Input</a>
+          <a class="sidebar-item" href="navigation.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 4h14v1.5H1zm0 5.5h14V11H1zM5 7h6v1.5H5z"/></svg>Điều hướng</a>
+          <a class="sidebar-item" href="feedback.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 5h2v4H7V5zm0 5h2v2H7v-2z"/></svg>Phản hồi</a>
+          <a class="sidebar-item" href="data.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v2h8V4H4zm0 4v2h8V8H4zm0 4v1h8v-1H4z"/></svg>Dữ liệu</a>
+          <a class="sidebar-item" href="modals.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 3V2h6v1"/></svg>Hộp thoại</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Mẫu SaaS</div>
+          <a class="sidebar-item active" href="patterns.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="4" rx="1"/><rect x="9" y="1" width="6" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>Mẫu giao diện</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Tài nguyên</div>
+          <a class="sidebar-item" href="tokens.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg>Design Tokens</a>
+          <a class="sidebar-item" href="changelog.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v1h8V4H4zm0 3v1h8V7H4zm0 3v1h5v-1H4z"/></svg>Nhật ký thay đổi</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">© 2025 Nguyễn Tiến Đạt</div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="hamburger" id="hamburger" aria-label="Mở menu"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><rect y="2" width="18" height="2" rx="1"/><rect y="8" width="18" height="2" rx="1"/><rect y="14" width="18" height="2" rx="1"/></svg></button>
+        <div class="topbar-breadcrumb"><span>BHDS</span><span>›</span><span>Mẫu SaaS</span><span>›</span><span class="current">Mẫu giao diện</span></div>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện" title="Giao diện sáng/tối">
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div class="page-eyebrow">Mẫu SaaS</div>
+          <h1 class="page-title">Mẫu giao diện</h1>
+          <p class="page-desc">Các mẫu UI tổng hợp từ thành phần BHDS — được thiết kế đặc biệt cho sản phẩm SaaS. Mỗi mẫu giải quyết một vấn đề UX cụ thể và có thể tái sử dụng ngay.</p>
+        </div>
+
+        <!-- Empty State -->
+        <section class="section">
+          <h2 class="section-title">Trạng thái trống (Empty State)</h2>
+          <p class="section-desc">Xuất hiện khi một danh sách, trang hoặc khu vực chưa có dữ liệu. Hướng dẫn người dùng bước tiếp theo thay vì để trang trắng.</p>
+
+          <div class="pattern-card">
+            <div class="pattern-preview">
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-400)" stroke-width="1.5"><path d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2z"/></svg>
+                </div>
+                <div class="empty-state-title">Chưa có dự án nào</div>
+                <div class="empty-state-desc">Bắt đầu bằng cách tạo dự án đầu tiên của bạn. Chỉ mất vài giây.</div>
+                <div class="empty-state-actions">
+                  <button class="btn btn-primary">Tạo dự án</button>
+                  <button class="btn btn-ghost">Nhập từ file</button>
+                </div>
+              </div>
+            </div>
+            <div class="pattern-meta">
+              <div class="pattern-name">Empty State — First Use</div>
+              <div class="pattern-desc">Dùng khi người dùng lần đầu truy cập một tính năng. Icon gợi ý hành động, mô tả ngắn, CTA rõ ràng.</div>
+              <div class="pattern-tags">
+                <span class="pattern-tag">Empty State</span>
+                <span class="pattern-tag">First Use</span>
+                <span class="pattern-tag">Onboarding</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Layout -->
+        <section class="section">
+          <h2 class="section-title">Trang Cài đặt (Settings)</h2>
+          <p class="section-desc">Bố cục hai cột điển hình cho trang cài đặt SaaS — menu điều hướng dọc bên trái, nội dung chi tiết bên phải.</p>
+
+          <div class="pattern-card">
+            <div class="pattern-preview">
+              <div class="settings-layout">
+                <div class="settings-nav">
+                  <div class="settings-nav-item active">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3l2 2"/></svg>
+                    Tổng quan
+                  </div>
+                  <div class="settings-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 4.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/></svg>
+                    Hồ sơ
+                  </div>
+                  <div class="settings-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg>
+                    Bảo mật
+                  </div>
+                  <div class="settings-nav-item">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm6 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
+                    Thanh toán
+                  </div>
+                </div>
+                <div class="settings-content">
+                  <div class="settings-section-title">Thông báo</div>
+                  <div class="settings-row">
+                    <div>
+                      <div class="settings-row-label">Email tổng hợp hàng tuần</div>
+                      <div class="settings-row-desc">Nhận báo cáo tóm tắt vào mỗi thứ Hai</div>
+                    </div>
+                    <button class="toggle"></button>
+                  </div>
+                  <div class="settings-row">
+                    <div>
+                      <div class="settings-row-label">Thông báo hoàn thành</div>
+                      <div class="settings-row-desc">Khi một tác vụ được đánh dấu hoàn thành</div>
+                    </div>
+                    <button class="toggle off"></button>
+                  </div>
+                  <div class="settings-row">
+                    <div>
+                      <div class="settings-row-label">Cảnh báo bảo mật</div>
+                      <div class="settings-row-desc">Đăng nhập từ thiết bị mới</div>
+                    </div>
+                    <button class="toggle"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pattern-meta">
+              <div class="pattern-name">Settings Layout — Hai cột</div>
+              <div class="pattern-desc">Nav dọc bên trái giúp dễ mở rộng khi có nhiều nhóm cài đặt. Nội dung bên phải dùng rows có toggle.</div>
+              <div class="pattern-tags">
+                <span class="pattern-tag">Settings</span>
+                <span class="pattern-tag">Layout</span>
+                <span class="pattern-tag">Toggle</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Onboarding Steps -->
+        <section class="section">
+          <h2 class="section-title">Tiến trình Onboarding</h2>
+          <p class="section-desc">Chỉ dẫn người dùng qua các bước thiết lập ban đầu. Hiển thị tiến độ rõ ràng để giảm tỷ lệ bỏ dở.</p>
+
+          <div class="pattern-card">
+            <div class="pattern-preview">
+              <div class="card" style="max-width:500px;margin:0 auto;">
+                <div class="card-body" style="padding:0;">
+                  <div class="onboarding-steps">
+                    <div class="onboarding-step done">
+                      <div class="onboarding-step-circle">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 7l4 4 8-8"/></svg>
+                      </div>
+                      <div class="onboarding-step-label">Tạo tài khoản</div>
+                    </div>
+                    <div class="onboarding-step done">
+                      <div class="onboarding-step-circle">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 7l4 4 8-8"/></svg>
+                      </div>
+                      <div class="onboarding-step-label">Hồ sơ</div>
+                    </div>
+                    <div class="onboarding-step active">
+                      <div class="onboarding-step-circle">3</div>
+                      <div class="onboarding-step-label">Mời thành viên</div>
+                    </div>
+                    <div class="onboarding-step pending">
+                      <div class="onboarding-step-circle">4</div>
+                      <div class="onboarding-step-label">Dự án đầu tiên</div>
+                    </div>
+                  </div>
+                  <div style="padding:20px 24px;">
+                    <div style="font-size:15px;font-weight:600;color:var(--color-neutral-900);margin-bottom:6px;">Mời thành viên nhóm</div>
+                    <div style="font-size:13px;color:var(--color-neutral-500);margin-bottom:16px;">Cộng tác hiệu quả hơn khi có toàn bộ nhóm trên cùng một nền tảng.</div>
+                    <div style="display:flex;gap:8px;">
+                      <input class="input" style="flex:1;" placeholder="email@congty.vn" />
+                      <button class="btn btn-primary">Mời</button>
+                    </div>
+                    <div style="margin-top:12px;text-align:center;"><a href="#" style="font-size:12px;color:var(--color-neutral-400);">Bỏ qua bước này</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pattern-meta">
+              <div class="pattern-name">Onboarding — Step Wizard</div>
+              <div class="pattern-desc">Thanh tiến độ với trạng thái done/active/pending. Mỗi bước tập trung vào một tác vụ duy nhất. Luôn có tùy chọn bỏ qua.</div>
+              <div class="pattern-tags">
+                <span class="pattern-tag">Onboarding</span>
+                <span class="pattern-tag">Wizard</span>
+                <span class="pattern-tag">Progress</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Kanban -->
+        <section class="section">
+          <h2 class="section-title">Kanban Board</h2>
+          <p class="section-desc">Bảng quản lý công việc theo cột trạng thái — phù hợp cho project management, pipeline bán hàng và quy trình nội dung.</p>
+
+          <div class="pattern-card">
+            <div class="pattern-preview">
+              <div class="kanban">
+                <div class="kanban-col">
+                  <div class="kanban-col-header">Cần làm <span class="kanban-count">3</span></div>
+                  <div class="kanban-card">
+                    <div class="kanban-card-title">Thiết kế trang Landing mới</div>
+                    <div class="kanban-card-meta"><span class="badge badge-warning" style="font-size:10px;">Cao</span><div class="kanban-avatar">NT</div></div>
+                  </div>
+                  <div class="kanban-card">
+                    <div class="kanban-card-title">Viết docs API v2</div>
+                    <div class="kanban-card-meta"><span class="badge badge-neutral" style="font-size:10px;">Thấp</span><div class="kanban-avatar" style="background:linear-gradient(135deg,#9c27b0,#e91e63);">LM</div></div>
+                  </div>
+                </div>
+                <div class="kanban-col">
+                  <div class="kanban-col-header">Đang làm <span class="kanban-count">2</span></div>
+                  <div class="kanban-card" style="border-left:3px solid var(--color-brand-500);">
+                    <div class="kanban-card-title">Tích hợp Stripe thanh toán</div>
+                    <div class="kanban-card-meta"><span class="badge badge-danger" style="font-size:10px;">Khẩn</span><div class="kanban-avatar">ĐT</div></div>
+                  </div>
+                  <div class="kanban-card" style="border-left:3px solid var(--color-brand-500);">
+                    <div class="kanban-card-title">Fix bug login mobile</div>
+                    <div class="kanban-card-meta"><span class="badge badge-brand" style="font-size:10px;">TB</span><div class="kanban-avatar" style="background:linear-gradient(135deg,#ff9800,#f44336);">PH</div></div>
+                  </div>
+                </div>
+                <div class="kanban-col">
+                  <div class="kanban-col-header">Hoàn thành <span class="kanban-count">1</span></div>
+                  <div class="kanban-card" style="opacity:.65;">
+                    <div class="kanban-card-title" style="text-decoration:line-through;">Cập nhật bảng màu</div>
+                    <div class="kanban-card-meta"><span class="badge badge-success" style="font-size:10px;">Done</span><div class="kanban-avatar">NT</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pattern-meta">
+              <div class="pattern-name">Kanban Board — 3 cột</div>
+              <div class="pattern-desc">Thẻ có badge ưu tiên và avatar. Cột "Đang làm" có đường viền xanh nổi bật. Card hoàn thành mờ đi để giảm distraction.</div>
+              <div class="pattern-tags">
+                <span class="pattern-tag">Kanban</span>
+                <span class="pattern-tag">Task Management</span>
+                <span class="pattern-tag">Cards</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Command Palette -->
+        <section class="section">
+          <h2 class="section-title">Command Palette</h2>
+          <p class="section-desc">Hộp tìm kiếm toàn cục kích hoạt bằng Cmd+K — cho phép người dùng power truy cập mọi tính năng bằng bàn phím.</p>
+
+          <div class="pattern-card">
+            <div class="pattern-preview">
+              <div style="max-width:420px;margin:0 auto;">
+                <div class="command-palette">
+                  <div class="command-input-wrap">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--color-neutral-400)" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M13 13l-3-3"/></svg>
+                    <input class="command-input" placeholder="Tìm kiếm hoặc nhập lệnh..." value="da" readonly />
+                    <span style="font-size:11px;color:var(--color-neutral-400);background:var(--color-neutral-100);padding:2px 6px;border-radius:4px;font-family:'Source Code Pro',monospace;">Esc</span>
+                  </div>
+                  <div class="command-list">
+                    <div class="command-group-label">Trang</div>
+                    <div class="command-item active">
+                      <div class="command-item-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v2h8V4H4zm0 4v2h8V8H4zm0 4v1h8v-1H4z"/></svg></div>
+                      Dữ liệu & Bảng
+                      <span class="command-kbd">↵</span>
+                    </div>
+                    <div class="command-item">
+                      <div class="command-item-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg></div>
+                      Dashboard phân tích
+                    </div>
+                    <div class="command-group-label">Hành động</div>
+                    <div class="command-item">
+                      <div class="command-item-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1v14M1 8h14" stroke="currentColor" stroke-width="2"/></svg></div>
+                      Tạo dự án mới
+                      <span class="command-kbd">⌘N</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pattern-meta">
+              <div class="pattern-name">Command Palette — Cmd+K</div>
+              <div class="pattern-desc">Ô tìm kiếm với kết quả nhóm theo loại. Item được chọn nổi bật màu brand. Hỗ trợ điều hướng bằng phím mũi tên và Enter.</div>
+              <div class="pattern-tags">
+                <span class="pattern-tag">Command Palette</span>
+                <span class="pattern-tag">Search</span>
+                <span class="pattern-tag">Keyboard</span>
+                <span class="pattern-tag">Power User</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
