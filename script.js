@@ -295,3 +295,18 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.style.transform = '';
   });
 });
+
+/* ===== DESIGN SYSTEM: COPY COLOR ===== */
+document.querySelectorAll('.color-swatch').forEach(swatch => {
+  swatch.addEventListener('click', () => {
+    const text = swatch.querySelector('span').innerText.split('\n')[1];
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = swatch.querySelector('span').innerText;
+      swatch.querySelector('span').innerText = 'Copied!';
+      setTimeout(() => {
+        swatch.querySelector('span').innerText = originalText;
+      }, 1000);
+    });
+  });
+});
+
