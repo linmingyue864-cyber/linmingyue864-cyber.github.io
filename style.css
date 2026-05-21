@@ -647,6 +647,29 @@ ul {
   line-height: 1.6;
 }
 
+.project-card--featured {
+  grid-column: 1 / -1;
+}
+
+.project-screenshot {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
+
+.project-screenshot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-card--featured:hover .project-screenshot img {
+  transform: scale(1.02);
+}
+
 .project-tech {
   display: flex;
   flex-wrap: wrap;
