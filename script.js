@@ -1,5 +1,27 @@
 'use strict';
 
+/* ===== DARK MODE ===== */
+const darkToggle = document.getElementById('dark-toggle');
+const toggleIcon = document.getElementById('toggle-icon');
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  toggleIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', theme);
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+})();
+
+darkToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+
 /* ===== STICKY NAV ===== */
 const navSticky = document.getElementById('nav-sticky');
 const heroNav = document.querySelector('.nav');
