@@ -245,6 +245,24 @@ if (form) {
 })();
 
 
+/* ===== PDF BUTTON ===== */
+const pdfBtn = document.getElementById('pdf-btn');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) pdfBtn.classList.add('show');
+  else pdfBtn.classList.remove('show');
+}, { passive: true });
+
+pdfBtn.addEventListener('click', () => {
+  document.documentElement.removeAttribute('data-theme');
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      applyTheme(localStorage.getItem('theme') || 'light');
+    }, 500);
+  }, 100);
+});
+
 /* ===== PROJECT CARD — SUBTLE TILT EFFECT ===== */
 document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {
