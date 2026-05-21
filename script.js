@@ -96,8 +96,8 @@ const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      // Trigger skill bars when skills section becomes visible
-      const fills = entry.target.querySelectorAll('.skill-fill');
+      // Trigger skill bars & language bars when section becomes visible
+      const fills = entry.target.querySelectorAll('.skill-fill, .lang-fill');
       fills.forEach(fill => {
         const w = fill.getAttribute('data-width');
         if (w) fill.style.width = w + '%';
