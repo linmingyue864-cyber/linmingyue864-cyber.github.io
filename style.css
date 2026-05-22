@@ -169,23 +169,41 @@ ul {
 /* NAV inside hero */
 .nav {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2px;
+  justify-content: flex-start; /* Đổi từ center sang flex-start để bắt đầu cuộn từ trái */
+  align-items: center;
+  flex-wrap: nowrap;          /* KHÔNG cho phép rớt hàng dưới bất kỳ hình thức nào */
+  gap: 4px;
   position: relative;
   z-index: 1;
-  padding-bottom: 0;
+  padding-bottom: 4px;
+  
+  /* Bật tính năng cuộn mượt theo trục ngang */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Ẩn thanh scrollbar nhìn mất thẩm mỹ của trình duyệt nhưng vẫn giữ tính năng trượt */
+.nav::-webkit-scrollbar {
+  display: none;
+}
+.nav {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .nav-link {
-  padding: 10px 18px;
+  padding: 10px 20px;
   font-size: 0.875rem;
   font-weight: 600;
   color: rgba(255,255,255,0.78);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-radius: var(--radius-sm); /* Đổi bo góc đều để khi trượt nhìn đẹp hơn */
   transition: background var(--transition), color var(--transition);
+  white-space: nowrap; /* Ép chữ không được xuống dòng */
+  flex-shrink: 0;      /* Ngăn không cho menu bị bóp méo chiều rộng */
 }
-
 .nav-link:hover,
 .nav-link.active {
   background: rgba(255,255,255,0.15);
