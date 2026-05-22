@@ -2168,3 +2168,52 @@ html {
 
   .about-grid { grid-template-columns: 1fr; }
 }
+
+.nav-scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.scroll-trigger {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  user-select: none;
+}
+
+.nav-scroll-wrapper:hover .scroll-trigger {
+  opacity: 0.6;
+}
+.scroll-trigger:hover {
+  opacity: 1 !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.scroll-trigger-left { left: 0; }
+.scroll-trigger-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+}
+
+/* Biến tấu màu sắc vùng đệm cho phù hợp khi thanh Sticky Nav nền trắng */
+.nav-sticky .scroll-trigger {
+  color: #000;
+  background: linear-gradient(to right, rgba(255,255,255,0.9), transparent);
+}
+.nav-sticky .scroll-trigger-right {
+  background: linear-gradient(to left, rgba(255,255,255,0.9), transparent);
+}
