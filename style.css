@@ -2144,3 +2144,27 @@ html {
   line-height: 1.6;
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  /* Ẩn cụm menu trượt ngang của thanh Sticky khi xuống màn hình mobile để nhường chỗ cho Hamburger */
+  .nav-sticky-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-sticky-name { font-size: 0.85rem; }
+
+  .hero { padding: 52px 16px 0; }
+  
+  /* Trên Mobile, nếu bạn vẫn muốn thanh điều hướng ở phần Hero trượt ngang được thì đổi thành flex */
+  .hero .nav { 
+    display: flex; 
+    padding-bottom: 12px;
+  }
+
+  .social-row { gap: 8px; }
+  .social-btn { padding: 7px 13px; font-size: 0.78rem; }
+
+  .skills-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card--featured { grid-column: auto; }
+
+  .about-grid { grid-template-columns: 1fr; }
+}
