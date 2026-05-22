@@ -1103,16 +1103,15 @@
           </div>
         </div>
         <p class="ic-desc">
-          Nginx đóng vai trò reverse proxy phía trước Node.js app.
-          Cấu hình rate limiting, gzip/brotli compression, HTTP/2, và
-          serve static assets trực tiếp. PM2 quản lý Node.js process với
-          cluster mode tận dụng đa nhân CPU.
+          Nginx đóng vai trò web server và reverse proxy phía trước PHP-FPM.
+          Cấu hình rate limiting, gzip compression, HTTP/2, và
+          serve static assets (CSS, JS, ảnh) trực tiếp không qua PHP.
         </p>
         <div class="ic-chips">
           <span class="chip">Nginx</span>
           <span class="chip chip-g">HTTP/2</span>
-          <span class="chip">PM2 Cluster</span>
-          <span class="chip chip-a">Brotli</span>
+          <span class="chip chip-m">PHP-FPM</span>
+          <span class="chip chip-a">Gzip</span>
         </div>
       </div>
 
@@ -1120,21 +1119,20 @@
         <div class="ic-head">
           <div class="ic-icon">📦</div>
           <div>
-            <div class="ic-name">Container & Deploy</div>
-            <div class="ic-sub">Docker + GitHub Actions</div>
+            <div class="ic-name">Deploy</div>
+            <div class="ic-sub">Git + SSH</div>
           </div>
         </div>
         <p class="ic-desc">
-          Ứng dụng được đóng gói trong Docker container. Deploy tự động qua
-          GitHub Actions CI/CD: build image → push Docker Hub → SSH vào server
-          → pull & restart container. Zero-downtime deploy với Docker Compose
-          rolling update.
+          Deploy qua SSH vào VPS: <code>git pull</code> trên server rồi reload PHP-FPM.
+          File tĩnh (HTML/CSS/JS) phục vụ thẳng qua Nginx không cần build step.
+          Không cần Docker hay CI/CD pipeline phức tạp ở giai đoạn hiện tại.
         </p>
         <div class="ic-chips">
-          <span class="chip chip-d">Docker</span>
-          <span class="chip">Docker Compose</span>
-          <span class="chip chip-m">GitHub Actions</span>
-          <span class="chip chip-g">Zero Downtime</span>
+          <span class="chip chip-m">Git</span>
+          <span class="chip">SSH Deploy</span>
+          <span class="chip chip-g">PHP-FPM Reload</span>
+          <span class="chip chip-a">GitHub</span>
         </div>
       </div>
     </div>
@@ -1161,18 +1159,21 @@
     <span class="fn">ssl_protocols</span>       TLSv1.2 TLSv1.3;
     <span class="fn">add_header</span>          Strict-Transport-Security <span class="str">"max-age=31536000"</span> always;
 
-    <span class="cm"># API backend (Node.js)</span>
-    <span class="kw">location</span> /api/ {
-        <span class="fn">proxy_pass</span>         http://127.0.0.1:3001;
-        <span class="fn">proxy_set_header</span>   X-Real-IP $remote_addr;
-        <span class="fn">limit_req</span>          zone=api burst=<span class="num">20</span> nodelay;
+    <span class="cm"># Tất cả request → PHP-FPM</span>
+    <span class="fn">root</span>   /var/www/andrenna.io.vn;
+    <span class="fn">index</span>  index.php index.html;
+
+    <span class="kw">location</span> / {
+        <span class="fn">try_files</span> $uri $uri/ /index.php?$query_string;
+        <span class="fn">gzip</span>      on;
+        <span class="fn">gzip_types</span> text/css application/javascript;
+        <span class="fn">limit_req</span> zone=api burst=<span class="num">20</span> nodelay;
     }
 
-    <span class="cm"># Static frontend (Next.js build output)</span>
-    <span class="kw">location</span> / {
-        <span class="fn">proxy_pass</span>         http://127.0.0.1:3000;
-        <span class="fn">gzip</span>               on;
-        <span class="fn">gzip_types</span>         text/css application/javascript application/json;
+    <span class="kw">location</span> ~ \.php$ {
+        <span class="fn">fastcgi_pass</span>   unix:/run/php/php8.2-fpm.sock;
+        <span class="fn">fastcgi_param</span>  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        <span class="fn">include</span>        fastcgi_params;
     }
 }</pre>
     </div>
@@ -1278,45 +1279,45 @@
             <span style="background:#ffbd2e"></span>
             <span style="background:#27c93f"></span>
           </div>
-          <div class="code-title">lib/storage/b2-client.ts</div>
+          <div class="code-title">includes/b2-storage.php</div>
         </div>
-        <div class="code-lang">TypeScript</div>
+        <div class="code-lang">PHP</div>
       </div>
-<pre><span class="kw">import</span> { S3Client, PutObjectCommand, GetObjectCommand } <span class="kw">from</span> <span class="str">'@aws-sdk/client-s3'</span>;
-<span class="kw">import</span> { getSignedUrl } <span class="kw">from</span> <span class="str">'@aws-sdk/s3-request-presigner'</span>;
+<pre><span class="kw">&lt;?php</span>
+<span class="cm">// Backblaze B2 – S3-compatible API dùng cURL thuần</span>
+<span class="kw">define</span>(<span class="str">'B2_ENDPOINT'</span>, <span class="str">'https://s3.us-west-004.backblazeb2.com'</span>);
+<span class="kw">define</span>(<span class="str">'B2_BUCKET'</span>,   <span class="fn">getenv</span>(<span class="str">'B2_BUCKET_NAME'</span>));
+<span class="kw">define</span>(<span class="str">'B2_KEY_ID'</span>,  <span class="fn">getenv</span>(<span class="str">'B2_KEY_ID'</span>));
+<span class="kw">define</span>(<span class="str">'B2_APP_KEY'</span>, <span class="fn">getenv</span>(<span class="str">'B2_APP_KEY'</span>));
 
-<span class="cm">// Backblaze B2 – S3-compatible endpoint</span>
-<span class="kw">export const</span> <span class="fn">b2</span> = <span class="kw">new</span> <span class="pk">S3Client</span>({
-  region: <span class="str">'us-west-004'</span>, <span class="cm">// B2 region của bucket</span>
-  endpoint: <span class="str">'https://s3.us-west-004.backblazeb2.com'</span>,
-  credentials: {
-    accessKeyId:     process.env.<span class="pk">B2_KEY_ID</span>!,
-    secretAccessKey: process.env.<span class="pk">B2_APP_KEY</span>!,
-  },
-});
-
-<span class="kw">export async function</span> <span class="fn">uploadMedia</span>(key: <span class="pk">string</span>, body: <span class="pk">Buffer</span>, mimeType: <span class="pk">string</span>) {
-  <span class="kw">return</span> b2.send(<span class="kw">new</span> <span class="pk">PutObjectCommand</span>({
-    Bucket:      process.env.<span class="pk">B2_BUCKET_NAME</span>!,
-    Key:         key,
-    Body:        body,
-    ContentType: mimeType,
-    <span class="cm">// Cache 7 ngày – Cloudflare sẽ cache theo header này</span>
-    CacheControl: <span class="str">'public, max-age=604800, immutable'</span>,
-  }));
+<span class="cm">// Upload file lên B2 (dùng AWS Signature v4)</span>
+<span class="kw">function</span> <span class="fn">b2_upload</span>(<span class="pk">$key</span>, <span class="pk">$filePath</span>, <span class="pk">$mimeType</span>) {
+    <span class="pk">$url</span> = <span class="fn">B2_ENDPOINT</span> . <span class="str">'/'</span> . <span class="fn">B2_BUCKET</span> . <span class="str">'/'</span> . <span class="fn">urlencode</span>(<span class="pk">$key</span>);
+    <span class="pk">$ch</span>  = <span class="fn">curl_init</span>(<span class="pk">$url</span>);
+    <span class="fn">curl_setopt_array</span>(<span class="pk">$ch</span>, [
+        <span class="fn">CURLOPT_PUT</span>        =&gt; <span class="num">true</span>,
+        <span class="fn">CURLOPT_INFILE</span>     =&gt; <span class="fn">fopen</span>(<span class="pk">$filePath</span>, <span class="str">'r'</span>),
+        <span class="fn">CURLOPT_HTTPHEADER</span> =&gt; [
+            <span class="str">'Content-Type: '</span> . <span class="pk">$mimeType</span>,
+            <span class="str">'Cache-Control: public, max-age=604800, immutable'</span>,
+            <span class="fn">b2_auth_header</span>(<span class="str">'PUT'</span>, <span class="pk">$key</span>),
+        ],
+    ]);
+    <span class="kw">return</span> <span class="fn">curl_exec</span>(<span class="pk">$ch</span>);
 }
 
-<span class="kw">export async function</span> <span class="fn">getPrivateUrl</span>(key: <span class="pk">string</span>, expiresIn = <span class="num">3600</span>) {
-  <span class="cm">// Signed URL cho file private (Drive documents)</span>
-  <span class="kw">return</span> getSignedUrl(b2, <span class="kw">new</span> <span class="pk">GetObjectCommand</span>({
-    Bucket: process.env.<span class="pk">B2_BUCKET_NAME</span>!,
-    Key: key,
-  }), { expiresIn });
+<span class="cm">// URL công khai qua Cloudflare CDN (cho nhạc stream, ảnh bìa)</span>
+<span class="kw">function</span> <span class="fn">cdn_url</span>(<span class="pk">$key</span>) {
+    <span class="kw">return</span> <span class="str">'https://cdn.andrenna.io.vn/'</span> . <span class="fn">rawurlencode</span>(<span class="pk">$key</span>);
 }
 
-<span class="cm">// Public CDN URL (qua Cloudflare) cho media công khai như nhạc stream</span>
-<span class="kw">export const</span> <span class="fn">cdnUrl</span> = (key: <span class="pk">string</span>) =>
-  <span class="str">`https://cdn.andrenna.io.vn/<span class="num">${key}</span>`</span>; <span class="cm">// Cloudflare custom domain trỏ vào B2</span></pre>
+<span class="cm">// Signed URL tạm thời cho file private (Drive – HMAC-SHA256)</span>
+<span class="kw">function</span> <span class="fn">b2_signed_url</span>(<span class="pk">$key</span>, <span class="pk">$expiresIn</span> = <span class="num">3600</span>) {
+    <span class="pk">$expires</span> = <span class="fn">time</span>() + <span class="pk">$expiresIn</span>;
+    <span class="pk">$sig</span>     = <span class="fn">hash_hmac</span>(<span class="str">'sha256'</span>, <span class="pk">$key</span> . <span class="pk">$expires</span>, <span class="fn">B2_APP_KEY</span>);
+    <span class="kw">return</span> <span class="fn">B2_ENDPOINT</span> . <span class="str">'/'</span> . <span class="fn">B2_BUCKET</span> . <span class="str">'/'</span> . <span class="pk">$key</span>
+         . <span class="str">'?expires='</span> . <span class="pk">$expires</span> . <span class="str">'&sig='</span> . <span class="pk">$sig</span>;
+}</pre>
     </div>
 
     <div class="callout callout-warn fi">
@@ -1365,8 +1366,8 @@
       <span class="sec-num">// 04 — TECH STACK</span>
       <h2 class="sec-title">Kiến trúc & <span class="gduo">Công nghệ</span></h2>
       <p class="sec-desc">
-        Cả hai sản phẩm dùng chung authentication service và database layer. Mỗi sản phẩm có
-        API riêng và frontend riêng. Shared infra giúp giảm chi phí và công maintenance.
+        Cả hai sản phẩm xây dựng trên PHP + MySQL, chạy trên cùng VPS Việt Nam. Frontend do
+        team Andrenna GMDC phụ trách bằng HTML, CSS và JavaScript thuần.
       </p>
     </div>
 
@@ -1375,23 +1376,21 @@
       <div class="diagram-title">Kiến trúc hệ thống Andrenna Suite (Starter)</div>
       <div class="diagram-rows">
         <div class="diagram-row">
-          <div class="dbox dbox-m">andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+          <div class="dbox dbox-m">andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">HTML/CSS/JS + PHP</small></div>
           <div class="darrow"></div>
-          <div class="dbox dbox-d">drive.andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+          <div class="dbox dbox-d">drive.andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">HTML/CSS/JS + PHP</small></div>
         </div>
-        <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ HTTPS via Cloudflare + Nginx</div>
+        <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ HTTPS via Cloudflare + Nginx + PHP-FPM</div>
         <div class="diagram-row">
-          <div class="dbox dbox-m">Music API<br/><small style="font-weight:400;font-size:.7em">Node.js :3001</small></div>
+          <div class="dbox dbox-m">Music Backend<br/><small style="font-weight:400;font-size:.7em">PHP 8.2</small></div>
           <div class="darrow"></div>
-          <div class="dbox dbox-n">Auth Service<br/><small style="font-weight:400;font-size:.7em">Shared JWT :3003</small></div>
+          <div class="dbox dbox-n">Auth Shared<br/><small style="font-weight:400;font-size:.7em">PHP Session / JWT</small></div>
           <div class="darrow"></div>
-          <div class="dbox dbox-d">Drive API<br/><small style="font-weight:400;font-size:.7em">Node.js :3002</small></div>
+          <div class="dbox dbox-d">Drive Backend<br/><small style="font-weight:400;font-size:.7em">PHP 8.2</small></div>
         </div>
         <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ Data Layer</div>
         <div class="diagram-row">
-          <div class="dbox dbox-g">PostgreSQL<br/><small style="font-weight:400;font-size:.7em">Shared DB</small></div>
-          <div class="darrow"></div>
-          <div class="dbox dbox-n">Redis<br/><small style="font-weight:400;font-size:.7em">Cache & Queue</small></div>
+          <div class="dbox dbox-g">MySQL<br/><small style="font-weight:400;font-size:.7em">Shared DB</small></div>
           <div class="darrow"></div>
           <div class="dbox dbox-g">Backblaze B2<br/><small style="font-weight:400;font-size:.7em">Object Storage</small></div>
         </div>
@@ -1411,29 +1410,27 @@
         <div class="slayer">
           <div class="slayer-bar bar-m"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Frontend (Client)</div>
+            <div class="slayer-name">Frontend (HTML/CSS/JS)</div>
             <div class="slayer-chips">
-              <span class="chip chip-m">Next.js 14 App Router</span>
-              <span class="chip">TypeScript 5</span>
-              <span class="chip chip-m">TailwindCSS</span>
-              <span class="chip">Zustand</span>
-              <span class="chip chip-a">HLS.js (Stream player)</span>
+              <span class="chip chip-m">HTML5</span>
+              <span class="chip">CSS3 (Custom Properties, Flexbox, Grid)</span>
+              <span class="chip chip-a">JavaScript (Vanilla ES6+)</span>
+              <span class="chip chip-m">HLS.js (Stream player)</span>
               <span class="chip">Web Audio API (Waveform)</span>
-              <span class="chip">React Query</span>
+              <span class="chip chip-g">Fetch API (AJAX calls)</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar bar-m"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Backend API</div>
+            <div class="slayer-name">Backend</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">Node.js + Fastify</span>
-              <span class="chip">TypeScript</span>
-              <span class="chip chip-m">REST API (OpenAPI 3.1)</span>
-              <span class="chip chip-a">WebSocket (play events)</span>
-              <span class="chip">Zod Validation</span>
-              <span class="chip">Bull Queue (Transcode jobs)</span>
+              <span class="chip chip-g">PHP 8.2</span>
+              <span class="chip chip-m">REST API (JSON responses)</span>
+              <span class="chip chip-a">PHP Sessions / JWT Auth</span>
+              <span class="chip">PDO (MySQL queries)</span>
+              <span class="chip">cURL (B2 upload)</span>
             </div>
           </div>
         </div>
@@ -1442,11 +1439,9 @@
           <div class="slayer-inner">
             <div class="slayer-name">Media Processing</div>
             <div class="slayer-chips">
-              <span class="chip chip-a">FFmpeg (Transcode)</span>
+              <span class="chip chip-a">FFmpeg (Transcode qua shell_exec)</span>
               <span class="chip chip-m">HLS / Adaptive Bitrate</span>
-              <span class="chip">audiowaveform (Waveform)</span>
-              <span class="chip chip-g">WebP Artwork Compress</span>
-              <span class="chip">Sharp (Image)</span>
+              <span class="chip chip-g">GD / ImageMagick (Artwork resize)</span>
             </div>
           </div>
         </div>
@@ -1457,7 +1452,7 @@
             <div class="slayer-chips">
               <span class="chip chip-g">Backblaze B2 (Master audio + HLS)</span>
               <span class="chip chip-d">Cloudflare CDN (Serve)</span>
-              <span class="chip">AWS SDK v3 (B2 client)</span>
+              <span class="chip">PHP cURL (B2 S3-compatible API)</span>
             </div>
           </div>
         </div>
@@ -1466,10 +1461,9 @@
           <div class="slayer-inner">
             <div class="slayer-name">Data</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">PostgreSQL (Tracks, Users, Plays)</span>
-              <span class="chip chip-m">Redis (Play count cache, Sessions)</span>
-              <span class="chip">Elasticsearch (Search nhạc)</span>
-              <span class="chip">ClickHouse (Analytics)</span>
+              <span class="chip chip-g">MySQL (Tracks, Users, Plays)</span>
+              <span class="chip chip-m">PHP Sessions (Auth)</span>
+              <span class="chip">MySQL FULLTEXT (Search nhạc)</span>
             </div>
           </div>
         </div>
@@ -1482,41 +1476,39 @@
         <div class="slayer">
           <div class="slayer-bar bar-d"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Frontend (Client)</div>
+            <div class="slayer-name">Frontend (HTML/CSS/JS)</div>
             <div class="slayer-chips">
-              <span class="chip chip-d">Next.js 14 App Router</span>
-              <span class="chip">TypeScript 5</span>
-              <span class="chip chip-d">TailwindCSS</span>
-              <span class="chip">TanStack Query</span>
-              <span class="chip chip-a">TUS Upload Protocol</span>
+              <span class="chip chip-d">HTML5</span>
+              <span class="chip">CSS3 (Custom Properties, Flexbox, Grid)</span>
+              <span class="chip chip-a">JavaScript (Vanilla ES6+)</span>
+              <span class="chip chip-d">Drag & Drop API (Upload)</span>
               <span class="chip">PDF.js (Preview)</span>
-              <span class="chip">Monaco Editor (Code view)</span>
+              <span class="chip chip-g">Fetch API (AJAX calls)</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar bar-d"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Backend API</div>
+            <div class="slayer-name">Backend</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">Node.js + Express / Fastify</span>
-              <span class="chip">TypeScript</span>
-              <span class="chip chip-d">REST API (OpenAPI 3.1)</span>
-              <span class="chip chip-a">Chunked Upload API</span>
-              <span class="chip">Webhook Engine</span>
-              <span class="chip">Bull Queue (Thumbnail gen)</span>
+              <span class="chip chip-g">PHP 8.2</span>
+              <span class="chip chip-d">REST API (JSON responses)</span>
+              <span class="chip chip-a">Chunked Upload (PHP tmp + move_uploaded_file)</span>
+              <span class="chip">PDO (MySQL queries)</span>
+              <span class="chip">cURL (B2 upload)</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar bar-d"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Encryption</div>
+            <div class="slayer-name">Bảo mật file</div>
             <div class="slayer-chips">
-              <span class="chip chip-d">AES-256-GCM (File encrypt)</span>
-              <span class="chip chip-m">Client-side ZKE (Optional)</span>
-              <span class="chip chip-g">Node crypto (Server-side)</span>
-              <span class="chip">Web Crypto API (Browser)</span>
+              <span class="chip chip-d">AES-256 (openssl_encrypt – PHP)</span>
+              <span class="chip chip-m">Web Crypto API (Browser-side)</span>
+              <span class="chip chip-g">HMAC-SHA256 Signed URLs</span>
+              <span class="chip">finfo (Magic bytes validation)</span>
             </div>
           </div>
         </div>
@@ -1536,9 +1528,9 @@
           <div class="slayer-inner">
             <div class="slayer-name">Data</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">PostgreSQL (Files, Folders, Shares, Versions)</span>
-              <span class="chip chip-d">Redis (Cache metadata, Upload state)</span>
-              <span class="chip">Elasticsearch (Full-text file search)</span>
+              <span class="chip chip-g">MySQL (Files, Folders, Shares, Versions)</span>
+              <span class="chip chip-d">PHP Sessions (Upload state)</span>
+              <span class="chip">MySQL FULLTEXT (File search)</span>
             </div>
           </div>
         </div>
@@ -1553,23 +1545,22 @@
           <div class="slayer-inner">
             <div class="slayer-name">Authentication (Shared)</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">JWT Access Token (15 phút)</span>
-              <span class="chip chip-m">Refresh Token (30 ngày, HTTP-only cookie)</span>
-              <span class="chip chip-d">OAuth 2.0 (Google, GitHub)</span>
-              <span class="chip chip-a">Rate limit login attempts</span>
-              <span class="chip">Argon2 (Password hash)</span>
+              <span class="chip chip-g">PHP Sessions (HTTP-only cookie)</span>
+              <span class="chip chip-m">JWT (stateless API auth)</span>
+              <span class="chip chip-a">Rate limit đăng nhập (PHP counter + MySQL)</span>
+              <span class="chip">password_hash() bcrypt</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Database (PostgreSQL – Shared)</div>
+            <div class="slayer-name">Database (MySQL – Shared)</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">PostgreSQL 16</span>
-              <span class="chip chip-d">Drizzle ORM / Prisma</span>
-              <span class="chip">Connection Pooling (PgBouncer)</span>
-              <span class="chip chip-a">Daily backup (pg_dump → B2)</span>
+              <span class="chip chip-g">MySQL 8.0</span>
+              <span class="chip chip-d">PDO + Prepared Statements</span>
+              <span class="chip chip-m">phpMyAdmin (Admin)</span>
+              <span class="chip chip-a">Daily backup (mysqldump → B2)</span>
               <span class="chip">3-2-1 Backup strategy</span>
             </div>
           </div>
@@ -1577,36 +1568,33 @@
         <div class="slayer">
           <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">DevOps & CI/CD</div>
+            <div class="slayer-name">Deploy & Vận hành</div>
             <div class="slayer-chips">
-              <span class="chip chip-g">GitHub Actions (CI/CD)</span>
-              <span class="chip chip-d">Docker + Docker Compose</span>
-              <span class="chip">Nginx Reverse Proxy</span>
-              <span class="chip chip-m">PM2 (Process manager)</span>
-              <span class="chip">Watchtower (Auto-update containers)</span>
+              <span class="chip chip-g">Git + SSH</span>
+              <span class="chip chip-d">Nginx + PHP-FPM</span>
+              <span class="chip">Let's Encrypt SSL (Certbot)</span>
+              <span class="chip chip-m">GitHub (Source control)</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Monitoring & Observability</div>
+            <div class="slayer-name">Monitoring</div>
             <div class="slayer-chips">
-              <span class="chip chip-m">Uptime Kuma (Self-hosted monitoring)</span>
-              <span class="chip chip-d">Grafana + Prometheus</span>
-              <span class="chip chip-a">Loki (Log aggregation)</span>
-              <span class="chip">Sentry (Error tracking – free tier)</span>
+              <span class="chip chip-m">Uptime Kuma (Self-hosted)</span>
+              <span class="chip chip-a">PHP error_log + custom log file</span>
+              <span class="chip">Cloudflare Analytics (Traffic)</span>
             </div>
           </div>
         </div>
         <div class="slayer">
           <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
           <div class="slayer-inner">
-            <div class="slayer-name">Email & Notifications</div>
+            <div class="slayer-name">Email</div>
             <div class="slayer-chips">
               <span class="chip chip-g">Resend.com (Email – free 3k/tháng)</span>
-              <span class="chip chip-m">React Email (Templates)</span>
-              <span class="chip chip-d">Firebase FCM (Push notifications)</span>
+              <span class="chip chip-m">PHP mail() / SMTP</span>
             </div>
           </div>
         </div>
@@ -1641,12 +1629,12 @@
       <div class="sec-card">
         <div class="scc-icon">🎫</div>
         <div class="scc-title">Authentication</div>
-        <div class="scc-desc">JWT Access Token ngắn hạn (15 phút) + Refresh Token rotation (30 ngày, HTTP-only cookie). Password hash bằng Argon2id. OAuth 2.0 PKCE flow.</div>
+        <div class="scc-desc">PHP Sessions lưu trong HTTP-only cookie. Password hash bằng <code>password_hash()</code> bcrypt. JWT tùy chọn cho các API endpoint stateless. Rate limit login attempt ghi vào MySQL.</div>
       </div>
       <div class="sec-card">
         <div class="scc-icon">🛡️</div>
         <div class="scc-title">DDoS & Rate Limiting</div>
-        <div class="scc-desc">Cloudflare absorbs DDoS tầng network. Nginx rate limiting (50 req/phút per IP cho API). Redis-based distributed rate limiter cho auth endpoints.</div>
+        <div class="scc-desc">Cloudflare absorbs DDoS tầng network. Nginx rate limiting (50 req/phút per IP). PHP-side rate limiter cho auth endpoints: đếm attempt trong MySQL, khóa IP tạm thời khi vượt ngưỡng.</div>
       </div>
       <div class="sec-card">
         <div class="scc-icon">🔗</div>
@@ -1656,12 +1644,12 @@
       <div class="sec-card">
         <div class="scc-icon">🧹</div>
         <div class="scc-title">Input Validation</div>
-        <div class="scc-desc">Zod schema validation mọi input API. File type validation bằng magic bytes (không tin vào extension hay Content-Type). SQL injection prevention qua ORM parameterized queries.</div>
+        <div class="scc-desc">Validate tất cả input PHP bằng <code>filter_input()</code> và whitelist. File type validation bằng magic bytes qua <code>finfo</code> (không tin vào extension hay Content-Type). SQL injection prevention qua PDO prepared statements.</div>
       </div>
       <div class="sec-card">
         <div class="scc-icon">📋</div>
         <div class="scc-title">Tuân thủ NĐ 13/2023</div>
-        <div class="scc-desc">Dữ liệu cá nhân người dùng Việt Nam lưu trong PostgreSQL đặt tại IDC Việt Nam. Chính sách xóa dữ liệu khi người dùng yêu cầu (Right to Erasure). Audit log mọi hành động truy cập data.</div>
+        <div class="scc-desc">Dữ liệu cá nhân người dùng Việt Nam lưu trong MySQL đặt tại IDC Việt Nam. Chính sách xóa dữ liệu khi người dùng yêu cầu (Right to Erasure). Audit log mọi hành động truy cập data.</div>
       </div>
       <div class="sec-card">
         <div class="scc-icon">📊</div>
@@ -1671,7 +1659,7 @@
       <div class="sec-card">
         <div class="scc-icon">🔄</div>
         <div class="scc-title">Backup & Recovery</div>
-        <div class="scc-desc">Chiến lược backup 3-2-1: 3 bản sao, 2 loại media khác nhau, 1 bản offsite. PostgreSQL pg_dump tự động hàng ngày, upload lên B2 bucket riêng. RTO &lt; 4h, RPO &lt; 24h.</div>
+        <div class="scc-desc">Chiến lược backup 3-2-1: 3 bản sao, 2 loại media khác nhau, 1 bản offsite. <code>mysqldump</code> tự động hàng ngày qua cron job, upload lên B2 bucket riêng. RTO &lt; 4h, RPO &lt; 24h.</div>
       </div>
     </div>
   </div>
@@ -1877,12 +1865,12 @@
         <div class="rm-content">
           <div class="rm-quarter">Q4 2025 · Đang triển khai 🔵</div>
           <div class="rm-title">AI Features & Open API</div>
-          <div class="rm-desc">Whisper AI auto-transcribe lyrics, recommendation engine dùng vector embeddings (pgvector), smart search toàn văn cho Drive, auto-tagging nhạc. Public API v1 cho developers. Cả hai sản phẩm vẫn hoàn toàn miễn phí.</div>
+          <div class="rm-desc">Smart search toàn văn (MySQL FULLTEXT + PHP), tính năng playlist cộng tác cho Music, chia sẻ folder với quyền hạn chi tiết cho Drive, auto-thumbnail cho ảnh/PDF. Cả hai sản phẩm vẫn hoàn toàn miễn phí.</div>
           <div class="rm-chips">
-            <span class="chip chip-m">Whisper AI</span>
-            <span class="chip chip-d">pgvector</span>
+            <span class="chip chip-m">MySQL FULLTEXT</span>
+            <span class="chip chip-d">Collaborative Playlist</span>
             <span class="chip chip-g">Free forever</span>
-            <span class="chip">Public API v1</span>
+            <span class="chip">Auto Thumbnail</span>
           </div>
         </div>
       </div>
@@ -1892,10 +1880,10 @@
         <div class="rm-content">
           <div class="rm-quarter">Q1 – Q2 2026 · Kế hoạch</div>
           <div class="rm-title">AI Features & Scale</div>
-          <div class="rm-desc">Whisper AI auto-transcribe lyrics, recommendation engine dùng vector embeddings (pgvector), smart search toàn văn. Scale VPS lên server mạnh hơn, multi-region backup.</div>
+          <div class="rm-desc">Mobile-friendly PWA cho cả hai sản phẩm, cải thiện tốc độ PHP với opcode cache (OPcache), nâng cấp VPS, multi-region backup tự động.</div>
           <div class="rm-chips">
-            <span class="chip chip-m">Whisper AI</span>
-            <span class="chip chip-d">pgvector</span>
+            <span class="chip chip-m">PWA</span>
+            <span class="chip chip-d">OPcache</span>
             <span class="chip chip-g">Scale Infra</span>
             <span class="chip">Public API v1</span>
           </div>
@@ -1918,15 +1906,17 @@
         <div class="author-name">Nguyễn Tiến Đạt</div>
         <div class="author-nick">// The Billy Hunter</div>
         <p class="author-bio">
-          Người sáng lập và phát triển độc lập bộ đôi sản phẩm <strong>Andrenna Music</strong> và
-          <strong>Andrenna Drive</strong>. Tập trung xây dựng hạ tầng công nghệ phục vụ thị trường
-          Việt Nam và Đông Nam Á. Ưu tiên sản phẩm thực tế, chi phí hợp lý và trải nghiệm người
-          dùng chất lượng cao.
+          Frontend Developer của team <strong>Andrenna GMDC</strong>, chịu trách nhiệm giao diện và
+          trải nghiệm người dùng cho <strong>Andrenna Music</strong> và <strong>Andrenna Drive</strong>.
+          Xây dựng bằng HTML, CSS và JavaScript thuần — không framework, không TypeScript.
+          Ước mơ trở thành frontend developer chuyên nghiệp, từng bước hoàn thiện cả hai sản phẩm
+          phục vụ người dùng Việt Nam.
         </p>
         <div class="author-links">
           <span class="chip chip-m">Andrenna Music</span>
           <span class="chip chip-d">Andrenna Drive</span>
-          <span class="chip chip-g">Full-stack Developer</span>
+          <span class="chip chip-a">Frontend Dev · HTML/CSS/JS</span>
+          <span class="chip chip-g">Team Andrenna GMDC</span>
           <span class="chip">Việt Nam 🇻🇳</span>
         </div>
       </div>
