@@ -2027,3 +2027,36 @@ html {
   .endeavor-item { flex-direction: column; gap: 8px; }
 }
 
+/* ===== HERO AVATAR STYLE ===== */
+.hero-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Tạo khoảng cách dưới ảnh */
+  margin-top: 10px;
+}
+
+.hero-avatar {
+  width: 150px;         /* Chiều rộng cố định của ảnh */
+  height: 150px;        /* Chiều cao bằng chiều rộng để tạo hình vuông hoàn hảo */
+  border-radius: 50%;   /* Biến khung vuông thành hình tròn tuyệt đối */
+  object-fit: cover;    /* Giữ nguyên tỷ lệ khuôn mặt không bị méo khi thu phóng */
+  object-position: center top; /* Tập trung căn giữa và lấy phần từ trán xuống */
+  border: 3px solid var(--border); /* Viền mỏng đồng bộ với hệ thống thiết kế */
+  box-shadow: var(--shadow-md); /* Đổ bóng nhẹ giúp ảnh nổi bật trên nền */
+  transition: transform var(--transition);
+}
+
+/* Hiệu ứng tương tác nhỏ khi di chuột vào ảnh */
+.hero-avatar:hover {
+  transform: scale(1.03);
+}
+
+/* Tối ưu hiển thị trên các màn hình nhỏ/máy tính bảng */
+@media (max-width: 640px) {
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+  }
+}
+
