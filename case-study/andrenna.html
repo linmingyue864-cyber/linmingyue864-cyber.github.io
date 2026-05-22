@@ -3,24 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrenna – Hệ sinh thái số thế hệ mới</title>
+  <title>Phân tích Giải pháp Kỹ thuật · Andrenna Suite</title>
+  <meta name="description" content="Tài liệu phân tích giải pháp kỹ thuật dự án Andrenna – Andrenna Music (SoundCloud-like) & Andrenna Drive (Google Drive-like). Hạ tầng Việt Nam, lưu trữ Backblaze B2." />
+  <meta name="author" content="Nguyễn Tiến Đạt (The Billy Hunter)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ===================== RESET & BASE ===================== */
+    /* =================== RESET =================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:        #080c14;
-      --bg2:       #0d1220;
-      --bg3:       #111827;
-      --music:     #a855f7;
-      --music-glow:#7c3aed;
-      --drive:     #06b6d4;
-      --drive-glow:#0891b2;
-      --gold:      #f59e0b;
-      --text:      #f1f5f9;
-      --muted:     #94a3b8;
-      --border:    rgba(255,255,255,.07);
-      --radius:    16px;
-      --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
+      --bg:        #0a0a0a;
+      --bg-1:      #111111;
+      --bg-2:      #1a1a1a;
+      --bg-3:      #222222;
+      --border:    rgba(255,255,255,.08);
+      --border-2:  rgba(255,255,255,.12);
+      --text:      #ededed;
+      --text-2:    #a1a1a1;
+      --text-3:    #666666;
+      --music:     #9333ea;
+      --music-2:   #c084fc;
+      --music-bg:  rgba(147,51,234,.08);
+      --music-bd:  rgba(147,51,234,.2);
+      --drive:     #0ea5e9;
+      --drive-2:   #7dd3fc;
+      --drive-bg:  rgba(14,165,233,.08);
+      --drive-bd:  rgba(14,165,233,.2);
+      --green:     #22c55e;
+      --green-bg:  rgba(34,197,94,.08);
+      --green-bd:  rgba(34,197,94,.2);
+      --amber:     #f59e0b;
+      --amber-bg:  rgba(245,158,11,.08);
+      --amber-bd:  rgba(245,158,11,.2);
+      --red:       #ef4444;
+      --red-bg:    rgba(239,68,68,.08);
+      --red-bd:    rgba(239,68,68,.2);
+      --r:         8px;
+      --r-lg:      14px;
+      --r-xl:      20px;
+      --font:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono:      'JetBrains Mono', 'Fira Code', monospace;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -28,846 +51,1342 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
 
-    /* ===================== SCROLLBAR ===================== */
-    ::-webkit-scrollbar { width: 5px; }
+    /* =================== SCROLLBAR =================== */
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--music); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
 
-    /* ===================== UTILITIES ===================== */
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    .tag {
+    /* =================== LAYOUT =================== */
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .wrap-sm { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .wrap-lg { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* =================== TYPOGRAPHY =================== */
+    h1, h2, h3, h4 { line-height: 1.15; letter-spacing: -.025em; }
+    code, pre { font-family: var(--mono); }
+
+    /* =================== UTILS =================== */
+    .gm { background: linear-gradient(135deg, var(--music-2), var(--music)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gd { background: linear-gradient(135deg, var(--drive-2), var(--drive)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gduo { background: linear-gradient(135deg, var(--music-2) 20%, var(--drive-2) 80%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .badge {
       display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3);
-      color: var(--music); font-size: .7rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      padding: 4px 12px; border-radius: 99px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 99px;
+      border: 1px solid;
     }
-    .tag.drive {
-      background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.3);
-      color: var(--drive);
-    }
-    .section-label {
-      text-align: center; margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 800; text-align: center;
-      line-height: 1.2; margin-bottom: 12px;
-    }
-    .section-sub {
-      text-align: center; color: var(--muted);
-      font-size: 1rem; max-width: 600px; margin: 0 auto 60px;
-    }
-    .gradient-text-music {
-      background: linear-gradient(135deg, #c084fc, #7c3aed, #a855f7);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .gradient-text-drive {
-      background: linear-gradient(135deg, #67e8f9, #0891b2, #06b6d4);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .gradient-text-duo {
-      background: linear-gradient(135deg, #c084fc 20%, #06b6d4 80%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .glow-music { text-shadow: 0 0 40px rgba(168,85,247,.6); }
-    .glow-drive  { text-shadow: 0 0 40px rgba(6,182,212,.6); }
+    .badge-music  { background: var(--music-bg);  border-color: var(--music-bd);  color: var(--music-2); }
+    .badge-drive  { background: var(--drive-bg);  border-color: var(--drive-bd);  color: var(--drive-2); }
+    .badge-green  { background: var(--green-bg);  border-color: var(--green-bd);  color: var(--green);   }
+    .badge-amber  { background: var(--amber-bg);  border-color: var(--amber-bd);  color: var(--amber);   }
+    .badge-red    { background: var(--red-bg);    border-color: var(--red-bd);    color: var(--red);     }
+    .badge-mono   { background: var(--bg-2);      border-color: var(--border);    color: var(--text-2);  }
 
-    /* ===================== NAV ===================== */
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .76rem; font-weight: 500;
+      padding: 4px 12px; border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-2); color: var(--text-2);
+    }
+    .chip-m { background: var(--music-bg); border-color: var(--music-bd); color: var(--music-2); }
+    .chip-d { background: var(--drive-bg); border-color: var(--drive-bd); color: var(--drive-2); }
+    .chip-g { background: var(--green-bg); border-color: var(--green-bd); color: var(--green); }
+    .chip-a { background: var(--amber-bg); border-color: var(--amber-bd); color: var(--amber); }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 80px 0; }
+    .divider-sm { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* =================== NAV =================== */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 16px 0;
-      backdrop-filter: blur(20px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       border-bottom: 1px solid var(--border);
-      background: rgba(8,12,20,.8);
-      transition: padding .3s;
+      background: rgba(10,10,10,.85);
+      backdrop-filter: blur(16px) saturate(1.8);
     }
-    nav .inner {
+    .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
     }
+    .nav-left { display: flex; align-items: center; gap: 32px; }
     .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 1.2rem; font-weight: 800;
+      display: flex; align-items: center; gap: 9px;
+      font-size: .95rem; font-weight: 700;
     }
-    .nav-logo .logo-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 8px;
       background: linear-gradient(135deg, var(--music), var(--drive));
-      font-size: 1rem; font-weight: 900; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 900; color: #fff;
     }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links { display: flex; gap: 0; list-style: none; }
     .nav-links a {
-      color: var(--muted); font-size: .9rem; font-weight: 500;
-      transition: color .2s;
+      display: block; padding: 8px 14px;
+      font-size: .84rem; color: var(--text-2);
+      transition: color .15s;
     }
     .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      display: flex; gap: 10px;
-    }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; border-radius: 10px;
-      font-size: .88rem; font-weight: 700; cursor: pointer;
-      border: none; transition: all .2s; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 16px; border-radius: var(--r); border: none;
+      font-size: .84rem; font-weight: 600; cursor: pointer;
+      transition: all .15s; font-family: var(--font);
     }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    .btn-ghost:hover { border-color: var(--music); color: var(--music); }
-    .btn-music {
-      background: linear-gradient(135deg, var(--music-glow), var(--music));
-      color: #fff;
-      box-shadow: 0 0 24px rgba(168,85,247,.4);
-    }
-    .btn-music:hover { box-shadow: 0 0 40px rgba(168,85,247,.7); transform: translateY(-1px); }
-    .btn-drive {
-      background: linear-gradient(135deg, var(--drive-glow), var(--drive));
-      color: #fff;
-      box-shadow: 0 0 24px rgba(6,182,212,.4);
-    }
-    .btn-drive:hover { box-shadow: 0 0 40px rgba(6,182,212,.7); transform: translateY(-1px); }
-    .btn-outline-music {
-      background: transparent;
-      border: 1.5px solid var(--music);
-      color: var(--music);
-    }
-    .btn-outline-music:hover { background: rgba(168,85,247,.12); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
+    .btn-ghost:hover { border-color: var(--border-2); color: var(--text); }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { background: #d1d1d1; }
 
     @media (max-width: 768px) {
-      .nav-links, .nav-cta .btn-ghost { display: none; }
+      .nav-links { display: none; }
+      .btn-ghost { display: none; }
     }
 
-    /* ===================== HERO ===================== */
+    /* =================== HERO =================== */
     .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      padding: 140px 0 100px;
       position: relative; overflow: hidden;
-      padding: 120px 0 80px;
-      text-align: center;
     }
-    .hero-orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(100px); pointer-events: none;
+    .hero-noise {
+      position: absolute; inset: 0; pointer-events: none; opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
     }
-    .orb-m {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(168,85,247,.25), transparent 70%);
-      top: -200px; left: -100px;
-      animation: float1 8s ease-in-out infinite;
+    .hero-glow-m {
+      position: absolute; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(147,51,234,.12), transparent 70%);
+      top: -200px; left: -100px; pointer-events: none;
     }
-    .orb-d {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(6,182,212,.2), transparent 70%);
-      bottom: -150px; right: -50px;
-      animation: float2 10s ease-in-out infinite;
+    .hero-glow-d {
+      position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.1), transparent 70%);
+      bottom: -150px; right: -50px; pointer-events: none;
     }
-    @keyframes float1 {
-      0%,100% { transform: translate(0,0); }
-      50% { transform: translate(30px, 40px); }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .78rem; color: var(--text-3); margin-bottom: 24px;
     }
-    @keyframes float2 {
-      0%,100% { transform: translate(0,0); }
-      50% { transform: translate(-20px, -30px); }
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.05); border: 1px solid var(--border);
-      border-radius: 99px; padding: 6px 16px;
-      font-size: .75rem; color: var(--muted); margin-bottom: 28px;
-    }
-    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.5; transform:scale(1.3); } }
+    .hero-eyebrow span { width: 1px; height: 14px; background: var(--border-2); }
     .hero h1 {
-      font-size: clamp(2.4rem, 7vw, 5rem);
-      font-weight: 900; line-height: 1.05;
-      margin-bottom: 24px; letter-spacing: -.02em;
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 900; margin-bottom: 20px; max-width: 800px;
     }
     .hero-desc {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: var(--muted); max-width: 640px; margin: 0 auto 40px;
+      font-size: clamp(.95rem, 1.8vw, 1.1rem);
+      color: var(--text-2); max-width: 600px; margin-bottom: 40px; line-height: 1.75;
     }
-    .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
-    .hero-stats {
-      display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
-      border-top: 1px solid var(--border); padding-top: 40px;
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+      padding-top: 32px; border-top: 1px solid var(--border);
     }
-    .stat-item { text-align: center; }
-    .stat-num {
-      font-size: 1.8rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--music), var(--drive));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+    .meta-item { display: flex; align-items: center; gap: 8px; }
+    .meta-label { font-size: .78rem; color: var(--text-3); }
+    .meta-val { font-size: .84rem; font-weight: 600; color: var(--text-2); }
+    .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* ===================== PRODUCTS OVERVIEW ===================== */
-    .products { padding: 100px 0; }
-    .products-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    /* =================== TOC =================== */
+    .toc-section { padding: 0 0 80px; }
+    .toc-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: var(--r-xl); overflow: hidden;
     }
-    @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } }
-    .product-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px;
-      position: relative; overflow: hidden;
-      transition: transform .3s, border-color .3s;
+    @media (max-width: 768px) { .toc-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .toc-grid { grid-template-columns: 1fr; } }
+    .toc-item {
+      background: var(--bg-1); padding: 24px 28px;
+      display: flex; flex-direction: column; gap: 8px;
+      transition: background .15s; cursor: pointer;
     }
-    .product-card:hover { transform: translateY(-4px); }
-    .product-card.music-card:hover { border-color: rgba(168,85,247,.4); }
-    .product-card.drive-card:hover { border-color: rgba(6,182,212,.4); }
-    .card-glow {
-      position: absolute; width: 300px; height: 300px;
-      border-radius: 50%; filter: blur(80px); pointer-events: none;
-      top: -100px; right: -100px; opacity: .3;
+    .toc-item:hover { background: var(--bg-2); }
+    .toc-num { font-size: .7rem; font-weight: 700; color: var(--text-3); letter-spacing: .1em; font-family: var(--mono); }
+    .toc-title { font-size: .92rem; font-weight: 600; color: var(--text); }
+    .toc-sub { font-size: .78rem; color: var(--text-3); }
+
+    /* =================== SECTION HEADER =================== */
+    .sec-header { margin-bottom: 48px; }
+    .sec-num { font-family: var(--mono); font-size: .72rem; color: var(--text-3); margin-bottom: 10px; display: block; }
+    .sec-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin-bottom: 12px; }
+    .sec-desc { color: var(--text-2); font-size: .95rem; max-width: 600px; line-height: 1.75; }
+
+    /* =================== SECTIONS =================== */
+    .section { padding: 80px 0; }
+    .section-alt { padding: 80px 0; background: var(--bg-1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    /* =================== OVERVIEW CARDS =================== */
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .overview-grid { grid-template-columns: 1fr; } }
+    .overview-card {
+      border: 1px solid var(--border); border-radius: var(--r-xl);
+      padding: 36px; background: var(--bg-1); position: relative; overflow: hidden;
+      transition: border-color .2s;
     }
-    .music-card .card-glow { background: var(--music); }
-    .drive-card .card-glow { background: var(--drive); }
-    .card-icon {
-      width: 56px; height: 56px; border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; margin-bottom: 20px;
+    .overview-card:hover { border-color: var(--border-2); }
+    .oc-glow {
+      position: absolute; width: 250px; height: 250px; border-radius: 50%;
+      filter: blur(80px); top: -80px; right: -80px; pointer-events: none; opacity: .25;
     }
-    .music-card .card-icon { background: rgba(168,85,247,.15); }
-    .drive-card .card-icon { background: rgba(6,182,212,.15); }
-    .card-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; }
-    .card-sub { color: var(--muted); font-size: .95rem; margin-bottom: 28px; line-height: 1.7; }
-    .card-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .card-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: .9rem; color: var(--muted);
-    }
-    .feat-dot {
-      width: 18px; height: 18px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 2px; font-size: .65rem; font-weight: 800;
-    }
-    .music-card .feat-dot { background: rgba(168,85,247,.2); color: var(--music); }
-    .drive-card .feat-dot { background: rgba(6,182,212,.2); color: var(--drive); }
-    .card-compare {
-      margin-top: 28px; padding: 14px 18px;
-      background: rgba(255,255,255,.04); border-radius: 12px;
-      font-size: .82rem; color: var(--muted);
+    .oc-music .oc-glow { background: var(--music); }
+    .oc-drive .oc-glow { background: var(--drive); }
+    .oc-music { border-color: var(--music-bd); }
+    .oc-drive { border-color: var(--drive-bd); }
+    .oc-label { margin-bottom: 20px; }
+    .oc-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+    .oc-desc { font-size: .88rem; color: var(--text-2); line-height: 1.75; margin-bottom: 24px; }
+    .oc-ref {
       display: flex; align-items: center; gap: 8px;
+      font-size: .78rem; color: var(--text-3);
+      padding: 10px 14px; background: var(--bg-2);
+      border-radius: var(--r); border: 1px solid var(--border);
     }
-    .compare-icon { font-size: 1rem; }
-
-    /* ===================== ARCHITECTURE ===================== */
-    .arch { padding: 100px 0; background: var(--bg2); }
-    .arch-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-    }
-    @media (max-width: 900px) { .arch-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px) { .arch-grid { grid-template-columns: 1fr; } }
-    .arch-card {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 20px; padding: 28px;
-      transition: border-color .3s, transform .3s;
-    }
-    .arch-card:hover { transform: translateY(-3px); border-color: rgba(168,85,247,.3); }
-    .arch-icon {
-      font-size: 1.8rem; margin-bottom: 14px;
-      width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, rgba(168,85,247,.1), rgba(6,182,212,.1));
-      border-radius: 14px;
-    }
-    .arch-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .arch-card p { font-size: .85rem; color: var(--muted); line-height: 1.7; }
-    .arch-card .tech-pills {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
-    }
-    .pill {
-      font-size: .7rem; padding: 3px 10px; border-radius: 99px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--border);
-      color: var(--muted); font-weight: 600;
-    }
-    .pill.music { background: rgba(168,85,247,.1); border-color: rgba(168,85,247,.25); color: var(--music); }
-    .pill.drive  { background: rgba(6,182,212,.1);  border-color: rgba(6,182,212,.25);  color: var(--drive); }
-
-    /* ===================== STACK DIAGRAM ===================== */
-    .stack-section { padding: 100px 0; }
-    .stack-tabs {
-      display: flex; gap: 10px; justify-content: center;
-      margin-bottom: 40px; flex-wrap: wrap;
-    }
-    .tab-btn {
-      padding: 9px 22px; border-radius: 99px; border: 1.5px solid var(--border);
-      background: transparent; color: var(--muted);
-      font-size: .85rem; font-weight: 600; cursor: pointer;
-      transition: all .2s; font-family: var(--font);
-    }
-    .tab-btn.active-music {
-      background: rgba(168,85,247,.12);
-      border-color: rgba(168,85,247,.5);
-      color: var(--music);
-    }
-    .tab-btn.active-drive {
-      background: rgba(6,182,212,.12);
-      border-color: rgba(6,182,212,.5);
-      color: var(--drive);
-    }
-    .stack-panel { display: none; }
-    .stack-panel.active { display: block; }
-    .stack-layers { display: flex; flex-direction: column; gap: 16px; }
-    .layer {
-      display: flex; align-items: stretch; gap: 16px;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 18px; padding: 20px 24px;
-      position: relative; overflow: hidden;
-    }
-    .layer-label {
-      writing-mode: vertical-rl;
-      font-size: .65rem; font-weight: 800; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--muted);
-      flex-shrink: 0; width: 24px; display: flex; align-items: center; justify-content: center;
-    }
-    .layer-items {
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; flex: 1;
-    }
-    .layer-chip {
-      padding: 7px 16px; border-radius: 10px;
-      font-size: .82rem; font-weight: 600;
-      border: 1px solid;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .layer-stripe {
-      position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-    }
-    .music-stripe { background: linear-gradient(180deg, var(--music), var(--music-glow)); }
-    .drive-stripe  { background: linear-gradient(180deg, var(--drive), var(--drive-glow)); }
-
-    /* chip colors */
-    .chip-purple { background: rgba(168,85,247,.08); border-color: rgba(168,85,247,.2); color: #c084fc; }
-    .chip-cyan   { background: rgba(6,182,212,.08);  border-color: rgba(6,182,212,.2);  color: #67e8f9; }
-    .chip-green  { background: rgba(34,197,94,.08);  border-color: rgba(34,197,94,.2);  color: #4ade80; }
-    .chip-amber  { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); color: #fcd34d; }
-    .chip-rose   { background: rgba(244,63,94,.08);  border-color: rgba(244,63,94,.2);  color: #fb7185; }
-    .chip-slate  { background: rgba(148,163,184,.08);border-color: rgba(148,163,184,.2);color: #cbd5e1; }
-
-    /* ===================== COMPARISON TABLE ===================== */
-    .compare-section { padding: 100px 0; background: var(--bg2); }
-    .compare-table {
-      width: 100%; border-collapse: separate; border-spacing: 0;
-      border-radius: 20px; overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .compare-table th, .compare-table td {
-      padding: 16px 24px; text-align: left; font-size: .9rem;
-    }
-    .compare-table thead tr {
-      background: var(--bg3);
-    }
-    .compare-table thead th { font-weight: 700; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
-    .compare-table thead th:nth-child(2) { color: var(--music); }
-    .compare-table thead th:nth-child(3) { color: var(--drive); }
-    .compare-table thead th:nth-child(4) { color: var(--gold); }
-    .compare-table tbody tr { border-top: 1px solid var(--border); transition: background .2s; }
-    .compare-table tbody tr:hover { background: rgba(255,255,255,.025); }
-    .compare-table tbody td:first-child { font-weight: 600; font-size: .85rem; }
-    .check { font-size: 1rem; }
-    .check.yes-m { color: var(--music); }
-    .check.yes-d { color: var(--drive); }
-    .check.yes-b { color: var(--gold); }
-    .check.no    { color: var(--muted); opacity: .3; }
-
-    /* ===================== PRICING ===================== */
-    .pricing { padding: 100px 0; }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-      align-items: start;
-    }
-    @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
-    .price-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 24px; padding: 36px;
-      position: relative; overflow: hidden;
-      transition: transform .3s;
-    }
-    .price-card:hover { transform: translateY(-4px); }
-    .price-card.featured {
-      border-color: rgba(168,85,247,.4);
-      background: linear-gradient(160deg, rgba(168,85,247,.06), rgba(6,182,212,.04));
-    }
-    .price-card.featured::before {
-      content: 'Phổ biến nhất';
-      position: absolute; top: 16px; right: -28px;
-      background: linear-gradient(135deg, var(--music), var(--drive));
-      color: #fff; font-size: .65rem; font-weight: 800;
-      letter-spacing: .1em; text-transform: uppercase;
-      padding: 5px 36px; transform: rotate(35deg);
-    }
-    .price-name { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 8px; }
-    .price-val {
-      font-size: 2.6rem; font-weight: 900; margin-bottom: 4px;
-      line-height: 1;
-    }
-    .price-unit { font-size: .85rem; color: var(--muted); margin-bottom: 24px; }
-    .price-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 24px; }
-    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-    .price-features li {
+    .oc-ref svg { flex-shrink: 0; }
+    .oc-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+    .oc-features li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: .88rem; color: var(--muted);
+      font-size: .85rem; color: var(--text-2);
     }
-    .price-features li .ck { flex-shrink: 0; margin-top: 1px; }
-
-    /* ===================== SAAS METRICS ===================== */
-    .metrics { padding: 100px 0; background: var(--bg2); }
-    .metrics-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-    }
-    @media (max-width: 860px) { .metrics-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .metrics-grid { grid-template-columns: 1fr; } }
-    .metric-card {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 20px; padding: 28px;
-      text-align: center;
-      transition: transform .3s, border-color .3s;
-    }
-    .metric-card:hover { transform: translateY(-3px); border-color: rgba(168,85,247,.3); }
-    .metric-val {
-      font-size: 2.2rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--music), var(--drive));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; margin-bottom: 6px;
-    }
-    .metric-label { font-size: .8rem; color: var(--muted); font-weight: 600; }
-    .metric-trend { font-size: .72rem; color: #4ade80; margin-top: 4px; }
-
-    /* ===================== ROADMAP ===================== */
-    .roadmap { padding: 100px 0; }
-    .roadmap-timeline { position: relative; }
-    .timeline-line {
-      position: absolute; left: 24px; top: 0; bottom: 0;
-      width: 2px; background: linear-gradient(180deg, var(--music), var(--drive), transparent);
-    }
-    .timeline-items { display: flex; flex-direction: column; gap: 36px; padding-left: 64px; }
-    .timeline-item { position: relative; }
-    .timeline-dot {
-      position: absolute; left: -52px; top: 4px;
+    .feat-check {
       width: 16px; height: 16px; border-radius: 50%;
-      border: 2px solid;
       display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px; font-size: .6rem;
     }
-    .dot-done  { background: var(--music); border-color: var(--music); }
-    .dot-now   { background: transparent; border-color: var(--drive); animation: ring 1.5s infinite; }
-    .dot-next  { background: transparent; border-color: var(--border); }
-    @keyframes ring {
-      0%,100% { box-shadow: 0 0 0 0 rgba(6,182,212,.4); }
-      50% { box-shadow: 0 0 0 8px rgba(6,182,212,0); }
-    }
-    .timeline-quarter { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-    .timeline-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-    .timeline-desc { font-size: .88rem; color: var(--muted); line-height: 1.7; }
-    .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .oc-music .feat-check { background: var(--music-bg); color: var(--music-2); }
+    .oc-drive .feat-check { background: var(--drive-bg); color: var(--drive-2); }
 
-    /* ===================== CTA ===================== */
-    .cta-section {
-      padding: 120px 0;
-      text-align: center;
-      position: relative; overflow: hidden;
+    /* =================== INFRA =================== */
+    .infra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .infra-grid { grid-template-columns: 1fr; } }
+    .infra-card {
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 28px; background: var(--bg-1);
     }
-    .cta-glow {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(168,85,247,.12), transparent);
-      pointer-events: none;
+    .ic-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .ic-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--bg-2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
     }
-    .cta-section h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900; line-height: 1.1; margin-bottom: 20px;
-    }
-    .cta-section p {
-      color: var(--muted); font-size: 1.05rem; margin-bottom: 40px;
-    }
-    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn-xl { padding: 16px 36px; font-size: 1rem; border-radius: 14px; }
+    .ic-name { font-size: .95rem; font-weight: 700; }
+    .ic-sub  { font-size: .78rem; color: var(--text-3); }
+    .ic-desc { font-size: .84rem; color: var(--text-2); line-height: 1.75; margin-bottom: 16px; }
+    .ic-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
-    /* ===================== FOOTER ===================== */
+    /* =================== CODE BLOCKS =================== */
+    .code-block {
+      background: var(--bg-1); border: 1px solid var(--border);
+      border-radius: var(--r-lg); overflow: hidden; margin: 24px 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--bg-2);
+    }
+    .code-title { font-size: .76rem; color: var(--text-3); font-family: var(--mono); }
+    .code-lang { font-size: .7rem; color: var(--text-3); }
+    .code-dots { display: flex; gap: 5px; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    pre {
+      padding: 20px; font-size: .82rem; line-height: 1.8;
+      color: var(--text-2); overflow-x: auto;
+    }
+    .kw { color: #c084fc; }
+    .str { color: #86efac; }
+    .cm { color: #4b5563; font-style: italic; }
+    .num { color: #fcd34d; }
+    .fn  { color: #7dd3fc; }
+    .pk  { color: #f9a8d4; }
+
+    /* =================== STACK DIAGRAM =================== */
+    .stack-tabs {
+      display: flex; gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+      width: fit-content; margin-bottom: 32px;
+    }
+    .stab {
+      padding: 9px 20px; font-size: .83rem; font-weight: 600;
+      background: var(--bg-1); color: var(--text-3);
+      border: none; cursor: pointer; font-family: var(--font);
+      transition: all .15s;
+    }
+    .stab.on-m { background: var(--music-bg); color: var(--music-2); }
+    .stab.on-d { background: var(--drive-bg); color: var(--drive-2); }
+    .spanel { display: none; }
+    .spanel.show { display: block; }
+    .stack-layers { display: flex; flex-direction: column; gap: 12px; }
+    .slayer {
+      display: flex; gap: 16px; align-items: stretch;
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      background: var(--bg-1); overflow: hidden;
+    }
+    .slayer-bar { width: 3px; flex-shrink: 0; }
+    .bar-m { background: linear-gradient(180deg, var(--music), var(--music-2)); }
+    .bar-d { background: linear-gradient(180deg, var(--drive), var(--drive-2)); }
+    .slayer-inner { padding: 18px 20px 18px 4px; flex: 1; }
+    .slayer-name { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; font-family: var(--mono); }
+    .slayer-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    /* =================== COMPARISON TABLE =================== */
+    .cmp-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--r-xl); overflow: hidden; border: 1px solid var(--border); }
+    .cmp-table th, .cmp-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+    .cmp-table thead { background: var(--bg-2); }
+    .cmp-table th { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); }
+    .cmp-table th.hm { color: var(--music-2); }
+    .cmp-table th.hd { color: var(--drive-2); }
+    .cmp-table tbody tr { background: var(--bg-1); transition: background .15s; }
+    .cmp-table tbody tr:hover { background: var(--bg-2); }
+    .cmp-table tbody tr:last-child td { border-bottom: none; }
+    .cmp-table td:first-child { font-size: .84rem; font-weight: 600; color: var(--text-2); }
+    .cmp-table td { font-size: .83rem; color: var(--text-2); }
+    .yes-m { color: var(--music-2); font-weight: 600; }
+    .yes-d { color: var(--drive-2); font-weight: 600; }
+    .no    { color: var(--text-3); }
+
+    /* =================== CALLOUT =================== */
+    .callout {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 18px 20px; border-radius: var(--r-lg);
+      border: 1px solid; margin: 24px 0;
+    }
+    .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body h4 { font-size: .88rem; font-weight: 700; margin-bottom: 4px; }
+    .callout-body p { font-size: .83rem; line-height: 1.65; }
+    .callout-info    { background: rgba(14,165,233,.06);  border-color: var(--drive-bd);  color: var(--drive-2); }
+    .callout-info .callout-body p { color: var(--text-2); }
+    .callout-tip     { background: rgba(34,197,94,.06);   border-color: var(--green-bd);  color: var(--green); }
+    .callout-tip .callout-body p { color: var(--text-2); }
+    .callout-warn    { background: rgba(245,158,11,.06);  border-color: var(--amber-bd);  color: var(--amber); }
+    .callout-warn .callout-body p { color: var(--text-2); }
+
+    /* =================== COST TABLE =================== */
+    .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 640px) { .cost-grid { grid-template-columns: 1fr; } }
+    .cost-card {
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      background: var(--bg-1); overflow: hidden;
+    }
+    .cost-head {
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      background: var(--bg-2); display: flex; align-items: center; justify-content: space-between;
+    }
+    .cost-head-title { font-size: .85rem; font-weight: 700; }
+    .cost-body { padding: 4px 0; }
+    .cost-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 11px 20px; border-bottom: 1px solid var(--border);
+    }
+    .cost-row:last-child { border-bottom: none; }
+    .cost-row-label { font-size: .82rem; color: var(--text-2); }
+    .cost-row-val { font-size: .82rem; font-weight: 600; font-family: var(--mono); }
+    .cost-free { color: var(--green); }
+    .cost-paid { color: var(--amber); }
+    .cost-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 20px; background: var(--bg-2); border-top: 1px solid var(--border);
+    }
+    .cost-total-label { font-size: .84rem; font-weight: 700; }
+    .cost-total-val { font-size: 1rem; font-weight: 800; font-family: var(--mono); color: var(--green); }
+
+    /* =================== SECURITY =================== */
+    .sec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 900px) { .sec-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .sec-grid { grid-template-columns: 1fr; } }
+    .sec-card {
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 24px; background: var(--bg-1); transition: border-color .2s;
+    }
+    .sec-card:hover { border-color: var(--border-2); }
+    .scc-icon { font-size: 1.4rem; margin-bottom: 12px; }
+    .scc-title { font-size: .92rem; font-weight: 700; margin-bottom: 8px; }
+    .scc-desc { font-size: .82rem; color: var(--text-2); line-height: 1.7; }
+
+    /* =================== ROADMAP =================== */
+    .rm-list { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .rm-line {
+      position: absolute; left: 15px; top: 28px; bottom: 28px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--music), var(--drive), transparent);
+    }
+    .rm-item { display: flex; gap: 24px; padding: 0 0 36px; }
+    .rm-item:last-child { padding-bottom: 0; }
+    .rm-dot-wrap { position: relative; flex-shrink: 0; width: 32px; display: flex; justify-content: center; }
+    .rm-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid; background: var(--bg); margin-top: 4px; position: relative; z-index: 1;
+    }
+    .rd-done  { border-color: var(--music); background: var(--music); }
+    .rd-now   { border-color: var(--drive); background: transparent; box-shadow: 0 0 0 4px rgba(14,165,233,.15); animation: rpulse 2s infinite; }
+    .rd-next  { border-color: var(--border-2); }
+    @keyframes rpulse { 0%,100%{box-shadow: 0 0 0 4px rgba(14,165,233,.15)} 50%{box-shadow: 0 0 0 8px rgba(14,165,233,.05)} }
+    .rm-content {}
+    .rm-quarter { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; font-family: var(--mono); }
+    .rm-title { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .rm-desc { font-size: .85rem; color: var(--text-2); line-height: 1.75; margin-bottom: 10px; }
+    .rm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* =================== AUTHOR =================== */
+    .author-card {
+      border: 1px solid var(--border); border-radius: var(--r-xl);
+      padding: 40px; background: var(--bg-1); display: flex; gap: 32px; align-items: flex-start;
+    }
+    @media (max-width: 640px) { .author-card { flex-direction: column; gap: 20px; } }
+    .author-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--music), var(--drive));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 900; color: #fff; flex-shrink: 0;
+    }
+    .author-body {}
+    .author-name { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
+    .author-nick { font-size: .82rem; color: var(--text-3); margin-bottom: 12px; font-family: var(--mono); }
+    .author-bio { font-size: .88rem; color: var(--text-2); line-height: 1.75; margin-bottom: 16px; }
+    .author-links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* =================== FOOTER =================== */
     footer {
       border-top: 1px solid var(--border);
       padding: 48px 0 32px;
     }
     .footer-inner {
-      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 24px;
     }
-    .footer-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 800; font-size: 1.1rem;
+    .footer-logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: .95rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 0; }
+    .footer-links a {
+      padding: 4px 16px; font-size: .82rem; color: var(--text-3);
+      border-right: 1px solid var(--border); transition: color .15s;
     }
-    .footer-logo .logo-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--music), var(--drive));
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem; font-weight: 900; color: #fff;
-    }
-    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
-    .footer-links a { font-size: .85rem; color: var(--muted); transition: color .2s; }
+    .footer-links a:last-child { border-right: none; }
     .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: .78rem; color: var(--muted); text-align: center; }
+    .footer-copy { font-size: .76rem; color: var(--text-3); text-align: center; line-height: 1.9; }
 
-    /* ===================== ANIMATIONS ===================== */
-    .fade-up {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    /* =================== FADE IN =================== */
+    .fi { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .fi.in { opacity: 1; transform: none; }
 
-    /* ===================== WAVEFORM ANIMATION ===================== */
-    .wave-anim {
-      display: flex; align-items: center; gap: 3px;
-      height: 24px;
-    }
-    .wave-anim span {
-      display: block; width: 3px; border-radius: 99px;
-      background: var(--music); min-height: 4px;
-      animation: wave 1.2s ease-in-out infinite;
-    }
-    .wave-anim span:nth-child(2) { animation-delay: .1s; }
-    .wave-anim span:nth-child(3) { animation-delay: .2s; }
-    .wave-anim span:nth-child(4) { animation-delay: .3s; }
-    .wave-anim span:nth-child(5) { animation-delay: .15s; }
-    @keyframes wave {
-      0%,100% { height: 4px; } 50% { height: 20px; }
-    }
+    /* =================== HIGHLIGHT LINE =================== */
+    .hl { background: linear-gradient(90deg, rgba(147,51,234,.12), transparent); border-left: 2px solid var(--music); padding: 10px 16px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; font-size: .88rem; color: var(--text-2); }
 
-    /* counter */
-    .count-up { transition: all .5s; }
+    /* =================== DIAGRAM =================== */
+    .diagram {
+      border: 1px solid var(--border); border-radius: var(--r-xl);
+      background: var(--bg-1); padding: 32px; overflow-x: auto;
+    }
+    .diagram-row { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: nowrap; min-width: 600px; }
+    .dbox {
+      flex: 1; padding: 14px 16px; border: 1px solid; border-radius: var(--r);
+      text-align: center; font-size: .78rem; font-weight: 600;
+    }
+    .dbox-m { background: var(--music-bg); border-color: var(--music-bd); color: var(--music-2); }
+    .dbox-d { background: var(--drive-bg); border-color: var(--drive-bd); color: var(--drive-2); }
+    .dbox-n { background: var(--bg-2); border-color: var(--border); color: var(--text-2); }
+    .dbox-g { background: var(--green-bg); border-color: var(--green-bd); color: var(--green); }
+    .darrow { padding: 0 8px; color: var(--text-3); font-size: 1rem; flex-shrink: 0; }
+    .diagram-title { font-size: .72rem; color: var(--text-3); text-align: center; margin-bottom: 20px; font-family: var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .diagram-rows { display: flex; flex-direction: column; gap: 12px; }
+
+    /* =================== SPEC TABLE =================== */
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table tr { border-bottom: 1px solid var(--border); }
+    .spec-table tr:last-child { border-bottom: none; }
+    .spec-table td { padding: 12px 0; font-size: .85rem; }
+    .spec-table td:first-child { color: var(--text-3); width: 40%; font-weight: 500; }
+    .spec-table td:last-child { color: var(--text-2); font-family: var(--mono); font-size: .82rem; }
+
+    /* =================== TWO COL =================== */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* =================== INLINE CODE =================== */
+    code { font-family: var(--mono); font-size: .85em; background: var(--bg-2); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--music-2); }
   </style>
 </head>
 <body>
 
-<!-- ========== NAV ========== -->
+<!-- ======================================= NAV ======================================= -->
 <nav>
-  <div class="container inner">
-    <a href="#" class="nav-logo">
-      <div class="logo-icon">A</div>
-      <span class="gradient-text-duo">Andrenna</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#products">Sản phẩm</a></li>
-      <li><a href="#architecture">Kiến trúc</a></li>
-      <li><a href="#stack">Tech Stack</a></li>
-      <li><a href="#pricing">Bảng giá</a></li>
-      <li><a href="#roadmap">Lộ trình</a></li>
-    </ul>
-    <div class="nav-cta">
-      <a href="#" class="btn btn-ghost">Đăng nhập</a>
-      <a href="#" class="btn btn-music">Dùng thử miễn phí</a>
+  <div class="wrap nav-inner">
+    <div class="nav-left">
+      <a href="#" class="nav-logo">
+        <div class="logo-mark">A</div>
+        <span>Andrenna</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#overview">Tổng quan</a></li>
+        <li><a href="#infrastructure">Hạ tầng</a></li>
+        <li><a href="#storage">Lưu trữ</a></li>
+        <li><a href="#stack">Tech Stack</a></li>
+        <li><a href="#security">Bảo mật</a></li>
+        <li><a href="#cost">Chi phí</a></li>
+        <li><a href="#roadmap">Lộ trình</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <a href="https://tiendatweb.vercel.app/case-study/andrenna.html" target="_blank" class="btn btn-ghost">Case Study gốc ↗</a>
+      <a href="#author" class="btn btn-primary">Tác giả</a>
     </div>
   </div>
 </nav>
 
-<!-- ========== HERO ========== -->
+<!-- ======================================= HERO ======================================= -->
 <section class="hero">
-  <div class="hero-orb orb-m"></div>
-  <div class="hero-orb orb-d"></div>
-  <div class="container">
-    <div class="hero-badge">
+  <div class="hero-noise"></div>
+  <div class="hero-glow-m"></div>
+  <div class="hero-glow-d"></div>
+  <div class="wrap">
+    <div class="hero-eyebrow">
+      <span class="badge badge-mono">Phân tích kỹ thuật</span>
       <span></span>
-      Ra mắt phiên bản beta công khai · Andrenna Suite 2025
+      Tài liệu nội bộ · Nguyễn Tiến Đạt
     </div>
     <h1>
-      Âm nhạc &amp; Lưu trữ<br />
-      <span class="gradient-text-duo">Tái định nghĩa</span><br />
-      trên đám mây
+      Giải pháp kỹ thuật<br />
+      <span class="gduo">Andrenna Suite</span>
     </h1>
     <p class="hero-desc">
-      Andrenna là bộ đôi SaaS thế hệ mới: <strong>Andrenna Music</strong> – nền tảng âm nhạc số và
-      <strong>Andrenna Drive</strong> – kho lưu trữ thông minh. Cùng một tài khoản, cùng một hệ sinh thái.
+      Phân tích chi tiết kiến trúc, hạ tầng và công nghệ đằng sau hai sản phẩm
+      <strong>Andrenna Music</strong> (nền tảng âm nhạc số) và
+      <strong>Andrenna Drive</strong> (lưu trữ đám mây). Triển khai trên máy chủ
+      Việt Nam với tên miền <code>.vn</code>, dữ liệu và CDN lưu trên <strong>Backblaze B2</strong>.
     </p>
-    <div class="hero-actions">
-      <a href="#products" class="btn btn-music btn-xl">🎵 Khám phá Music</a>
-      <a href="#products" class="btn btn-drive btn-xl">☁️ Khám phá Drive</a>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px">
+      <span class="badge badge-music">Andrenna Music</span>
+      <span class="badge badge-drive">Andrenna Drive</span>
+      <span class="badge badge-green">Starter Project</span>
+      <span class="badge badge-amber">Backblaze B2 Free Tier</span>
+      <span class="badge badge-mono">Máy chủ .vn</span>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num count-up" data-target="2">0</div>
-        <div class="stat-label">Sản phẩm cốt lõi</div>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-dot"></div>
+        <div>
+          <div class="meta-label">Trạng thái</div>
+          <div class="meta-val">Đang phát triển</div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num count-up" data-target="99.9">0</div>
-        <div class="stat-label">% Uptime SLA</div>
+      <div class="meta-item">
+        <div>
+          <div class="meta-label">Tác giả</div>
+          <div class="meta-val">Nguyễn Tiến Đạt · The Billy Hunter</div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num count-up" data-target="256">0</div>
-        <div class="stat-label">bit AES Encryption</div>
+      <div class="meta-item">
+        <div>
+          <div class="meta-label">Phiên bản tài liệu</div>
+          <div class="meta-val" style="font-family:var(--mono)">v1.0.0 · 2025</div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num count-up" data-target="10">0</div>
-        <div class="stat-label">Datacenter toàn cầu</div>
+      <div class="meta-item">
+        <div>
+          <div class="meta-label">Giai đoạn</div>
+          <div class="meta-val">Starter / MVP</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== PRODUCTS ========== -->
-<section id="products" class="products">
-  <div class="container">
-    <div class="section-label"><span class="tag">Bộ đôi sản phẩm</span></div>
-    <h2 class="section-title">Hai nền tảng. <span class="gradient-text-duo">Một hệ sinh thái.</span></h2>
-    <p class="section-sub">Andrenna Music và Andrenna Drive được thiết kế để hoạt động độc lập hoặc kết hợp hoàn hảo với nhau.</p>
-    <div class="products-grid">
+<!-- ======================================= TOC ======================================= -->
+<div class="wrap toc-section">
+  <div class="toc-grid">
+    <a href="#overview" class="toc-item">
+      <div class="toc-num">01</div>
+      <div class="toc-title">Tổng quan sản phẩm</div>
+      <div class="toc-sub">Music vs Drive · Phân tích chức năng</div>
+    </a>
+    <a href="#infrastructure" class="toc-item">
+      <div class="toc-num">02</div>
+      <div class="toc-title">Hạ tầng Việt Nam</div>
+      <div class="toc-sub">Máy chủ .vn · DNS · SSL</div>
+    </a>
+    <a href="#storage" class="toc-item">
+      <div class="toc-num">03</div>
+      <div class="toc-title">Lưu trữ & CDN</div>
+      <div class="toc-sub">Backblaze B2 · Cloudflare · HLS</div>
+    </a>
+    <a href="#stack" class="toc-item">
+      <div class="toc-num">04</div>
+      <div class="toc-title">Tech Stack</div>
+      <div class="toc-sub">Frontend · Backend · Database · DevOps</div>
+    </a>
+    <a href="#security" class="toc-item">
+      <div class="toc-num">05</div>
+      <div class="toc-title">Bảo mật & Tuân thủ</div>
+      <div class="toc-sub">AES-256 · JWT · NĐ 13/2023</div>
+    </a>
+    <a href="#cost" class="toc-item">
+      <div class="toc-num">06</div>
+      <div class="toc-title">Phân tích chi phí</div>
+      <div class="toc-sub">B2 Free Tier · Tối ưu starter</div>
+    </a>
+  </div>
+</div>
+
+<!-- ======================================= OVERVIEW ======================================= -->
+<section id="overview" class="section">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 01 — TỔNG QUAN SẢN PHẨM</span>
+      <h2 class="sec-title">Andrenna Suite: <span class="gduo">Bộ đôi SaaS</span></h2>
+      <p class="sec-desc">
+        Andrenna là hai sản phẩm độc lập nhưng chia sẻ chung hạ tầng, hệ thống xác thực và lưu trữ.
+        Cùng một tài khoản, cùng một hệ sinh thái. Giao diện hoàn toàn bằng tiếng Anh.
+      </p>
+    </div>
+
+    <div class="overview-grid fi">
       <!-- Music -->
-      <div class="product-card music-card fade-up">
-        <div class="card-glow"></div>
-        <div class="card-icon">🎵</div>
-        <div class="tag" style="margin-bottom:16px">Andrenna Music</div>
-        <h3 class="card-title gradient-text-music">Nền tảng âm nhạc số</h3>
-        <p class="card-sub">
-          Giống SoundCloud nhưng được xây dựng lại từ đầu cho thị trường Đông Nam Á. Nghệ sĩ độc lập, label nhỏ và nhà sản xuất âm nhạc có nơi để chia sẻ, phân phối và kiếm tiền từ tác phẩm.
+      <div class="overview-card oc-music">
+        <div class="oc-glow"></div>
+        <div class="oc-label"><span class="badge badge-music">Andrenna Music</span></div>
+        <h3 class="oc-title"><span class="gm">Andrenna Music</span></h3>
+        <p class="oc-desc">
+          Nền tảng stream và phân phối âm nhạc số dành cho nghệ sĩ độc lập, nhà sản xuất và label nhỏ
+          tại Việt Nam và Đông Nam Á. Được xây dựng lại từ đầu với trải nghiệm người dùng ưu tiên
+          latency thấp cho khu vực SEA.
         </p>
-        <ul class="card-features">
-          <li><div class="feat-dot">✓</div> Upload, stream &amp; phân phối nhạc không giới hạn</li>
-          <li><div class="feat-dot">✓</div> Waveform visualizer + lyrics sync thời gian thực</li>
-          <li><div class="feat-dot">✓</div> Hệ thống follow, playlist &amp; discovery thuật toán AI</li>
-          <li><div class="feat-dot">✓</div> Monetization: Tipping, Pre-save, NFT Drop tích hợp</li>
-          <li><div class="feat-dot">✓</div> API mở cho third-party integration (Spotify, Apple Music)</li>
-          <li><div class="feat-dot">✓</div> Analytics chi tiết: stream, region, demographic</li>
+        <ul class="oc-features">
+          <li><div class="feat-check">✓</div> Upload, stream & phân phối nhạc với adaptive bitrate (HLS)</li>
+          <li><div class="feat-check">✓</div> Waveform visualizer & lyrics sync thời gian thực (Web Audio API)</li>
+          <li><div class="feat-check">✓</div> Hệ thống follow, playlist & discovery feed thuật toán</li>
+          <li><div class="feat-check">✓</div> Analytics: play count, region, demographic breakdown</li>
+          <li><div class="feat-check">✓</div> Monetization: Tipping, Pre-save campaign</li>
+          <li><div class="feat-check">✓</div> Tích hợp với Andrenna Drive – lưu file master trực tiếp</li>
         </ul>
-        <div class="card-compare">
-          <span class="compare-icon">🔄</span>
-          Tương tự SoundCloud nhưng tập trung vào thị trường Việt Nam &amp; SEA với hỗ trợ thanh toán nội địa
+        <div class="oc-ref">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          Tương tự SoundCloud – tập trung thị trường Việt Nam & SEA
         </div>
       </div>
       <!-- Drive -->
-      <div class="product-card drive-card fade-up">
-        <div class="card-glow"></div>
-        <div class="card-icon">☁️</div>
-        <div class="tag drive" style="margin-bottom:16px">Andrenna Drive</div>
-        <h3 class="card-title gradient-text-drive">Kho lưu trữ thông minh</h3>
-        <p class="card-sub">
-          Giống Google Drive nhưng được tối ưu cho dữ liệu nhạy cảm, nội dung sáng tạo và workflow cộng tác của các team nhỏ, studio và agency Việt Nam.
+      <div class="overview-card oc-drive">
+        <div class="oc-glow"></div>
+        <div class="oc-label"><span class="badge badge-drive">Andrenna Drive</span></div>
+        <h3 class="oc-title"><span class="gd">Andrenna Drive</span></h3>
+        <p class="oc-desc">
+          Dịch vụ lưu trữ đám mây được tối ưu cho nội dung sáng tạo: nhạc, video, file thiết kế.
+          Mã hóa end-to-end, chia sẻ link thông minh, preview trực tiếp trên trình duyệt. Dữ liệu
+          đặt tại Việt Nam, tuân thủ NĐ 13/2023/NĐ-CP.
         </p>
-        <ul class="card-features">
-          <li><div class="feat-dot">✓</div> Lưu trữ đám mây mã hóa end-to-end AES-256</li>
-          <li><div class="feat-dot">✓</div> Xem trước file: video, audio, PDF, PSD, Figma ngay trên web</li>
-          <li><div class="feat-dot">✓</div> Chia sẻ link thông minh với quyền hạn chi tiết &amp; expiry</li>
-          <li><div class="feat-dot">✓</div> Tích hợp tự động với Andrenna Music (lưu nhạc = chia sẻ thẳng)</li>
-          <li><div class="feat-dot">✓</div> Version control cho file sáng tạo (track thay đổi, rollback)</li>
-          <li><div class="feat-dot">✓</div> Offline sync desktop &amp; mobile, zero-knowledge encryption tùy chọn</li>
+        <ul class="oc-features">
+          <li><div class="feat-check">✓</div> Lưu trữ mã hóa AES-256, zero-knowledge tùy chọn</li>
+          <li><div class="feat-check">✓</div> Preview trực tiếp: audio, video, PDF, PSD, SVG, Office</li>
+          <li><div class="feat-check">✓</div> Chia sẻ link có quyền hạn & thời hạn (expiry)</li>
+          <li><div class="feat-check">✓</div> Version control – rollback file về phiên bản cũ</li>
+          <li><div class="feat-check">✓</div> Chunked upload (TUS protocol) cho file lớn ổn định</li>
+          <li><div class="feat-check">✓</div> Sync desktop & mobile, offline access</li>
         </ul>
-        <div class="card-compare">
-          <span class="compare-icon">🔄</span>
-          Tương tự Google Drive nhưng data center đặt tại Việt Nam, tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân
+        <div class="oc-ref">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          Tương tự Google Drive – data center Việt Nam, bảo mật cao hơn
         </div>
       </div>
+    </div>
+
+    <div class="divider-sm"></div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--text-2)">So sánh với các nền tảng tham chiếu</h3>
+    <div class="fi" style="overflow-x:auto">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th class="hm">Andrenna Music</th>
+            <th>SoundCloud</th>
+            <th class="hd">Andrenna Drive</th>
+            <th>Google Drive</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data center</td>
+            <td class="yes-m">Việt Nam (.vn)</td>
+            <td class="no">Berlin / USA</td>
+            <td class="yes-d">Việt Nam (.vn)</td>
+            <td class="no">USA / Multi-region</td>
+          </tr>
+          <tr>
+            <td>Latency SEA</td>
+            <td class="yes-m">&lt; 50ms (nội địa)</td>
+            <td class="no">150–300ms</td>
+            <td class="yes-d">&lt; 50ms (nội địa)</td>
+            <td class="no">80–200ms</td>
+          </tr>
+          <tr>
+            <td>Thanh toán nội địa</td>
+            <td class="yes-m">MoMo, VNPay, ZaloPay</td>
+            <td class="no">Thẻ quốc tế only</td>
+            <td class="yes-d">MoMo, VNPay, ZaloPay</td>
+            <td class="no">Thẻ quốc tế only</td>
+          </tr>
+          <tr>
+            <td>Tuân thủ NĐ 13/2023</td>
+            <td class="yes-m">✓ Có</td>
+            <td class="no">✗ Không</td>
+            <td class="yes-d">✓ Có</td>
+            <td class="no">Một phần</td>
+          </tr>
+          <tr>
+            <td>E2E Encryption</td>
+            <td class="yes-m">AES-256 (media)</td>
+            <td class="no">Không</td>
+            <td class="yes-d">AES-256 + ZKE</td>
+            <td class="no">Không (Google có key)</td>
+          </tr>
+          <tr>
+            <td>Object Storage</td>
+            <td class="yes-m">Backblaze B2</td>
+            <td class="no">AWS S3</td>
+            <td class="yes-d">Backblaze B2</td>
+            <td class="no">Google Cloud Storage</td>
+          </tr>
+          <tr>
+            <td>Ngôn ngữ giao diện</td>
+            <td class="yes-m">English</td>
+            <td class="no">English / Multi</td>
+            <td class="yes-d">English</td>
+            <td class="no">Multi-lang</td>
+          </tr>
+          <tr>
+            <td>Model kinh doanh</td>
+            <td class="yes-m">Freemium SaaS</td>
+            <td class="no">Freemium</td>
+            <td class="yes-d">Freemium SaaS</td>
+            <td class="no">Freemium</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- ========== ARCHITECTURE ========== -->
-<section id="architecture" class="arch">
-  <div class="container">
-    <div class="section-label"><span class="tag">Phân tích kỹ thuật</span></div>
-    <h2 class="section-title">Kiến trúc <span class="gradient-text-music">SaaS</span> hiện đại</h2>
-    <p class="section-sub">Mỗi sản phẩm được xây dựng trên nền tảng microservice độc lập, chia sẻ infrastructure chung để tối ưu chi phí.</p>
-    <div class="arch-grid">
-      <div class="arch-card fade-up">
-        <div class="arch-icon">⚡</div>
-        <h3>Microservice Architecture</h3>
-        <p>Mỗi domain (auth, storage, streaming, analytics) là một service độc lập. Scale riêng lẻ, deploy độc lập, fault isolation hoàn toàn.</p>
-        <div class="tech-pills">
-          <span class="pill music">gRPC</span>
-          <span class="pill">Kubernetes</span>
-          <span class="pill drive">Docker</span>
-          <span class="pill">Istio</span>
+<!-- ======================================= INFRASTRUCTURE ======================================= -->
+<section id="infrastructure" class="section-alt">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 02 — HẠ TẦNG VIỆT NAM</span>
+      <h2 class="sec-title">Máy chủ & Tên miền <span class="gd">.vn</span></h2>
+      <p class="sec-desc">
+        Toàn bộ hạ tầng ứng dụng đặt tại Việt Nam. Sử dụng tên miền <code>.vn</code> đăng ký
+        qua VNNIC để đảm bảo tuân thủ pháp lý và tối ưu latency cho người dùng nội địa.
+      </p>
+    </div>
+
+    <div class="callout callout-info fi">
+      <div class="callout-icon">ℹ️</div>
+      <div class="callout-body">
+        <h4>Tại sao phải đặt máy chủ tại Việt Nam?</h4>
+        <p>Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân yêu cầu dữ liệu của người dùng Việt Nam phải được xử lý và lưu trữ tại Việt Nam hoặc phải có cơ chế kiểm soát. Ngoài ra, latency từ IDC Hà Nội/TP.HCM xuống user nội địa đạt dưới 10ms, thấp hơn 10–20 lần so với server đặt tại Singapore hay Nhật.</p>
+      </div>
+    </div>
+
+    <div class="infra-grid fi">
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🏢</div>
+          <div>
+            <div class="ic-name">IDC / Hosting Provider</div>
+            <div class="ic-sub">Nhà cung cấp máy chủ nội địa</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          Sử dụng các nhà cung cấp VPS/Dedicated Server uy tín tại Việt Nam:
+          <strong>Vietnix</strong>, <strong>AZDIGI</strong>, hoặc <strong>Viettel IDC</strong>.
+          Data center đặt tại Hà Nội (DC1) và TP.HCM (DC2) để đảm bảo redundancy.
+        </p>
+        <div class="ic-chips">
+          <span class="chip chip-g">Vietnix VPS</span>
+          <span class="chip chip-d">AZDIGI Cloud</span>
+          <span class="chip">Viettel IDC</span>
+          <span class="chip chip-a">99.9% SLA</span>
         </div>
       </div>
-      <div class="arch-card fade-up">
-        <div class="arch-icon">🔐</div>
-        <h3>Zero-Trust Security</h3>
-        <p>Xác thực JWT + OAuth 2.0, mã hóa TLS 1.3 cho mọi kết nối, AES-256 cho dữ liệu tĩnh. Không tin tưởng bất kỳ request nào mặc định.</p>
-        <div class="tech-pills">
-          <span class="pill">JWT</span>
-          <span class="pill music">OAuth 2.0</span>
-          <span class="pill">TLS 1.3</span>
-          <span class="pill drive">AES-256</span>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🌐</div>
+          <div>
+            <div class="ic-name">Tên miền .vn</div>
+            <div class="ic-sub">Đăng ký qua VNNIC / PAVIETNAM</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          <code>andrenna.vn</code> — tên miền chính. Đăng ký qua PAVIETNAM hoặc VNPT.
+          Hai subdomain chính: <code>music.andrenna.vn</code> và <code>drive.andrenna.vn</code>.
+          DNS quản lý qua Cloudflare để tận dụng anycast routing.
+        </p>
+        <div class="ic-chips">
+          <span class="chip chip-m">andrenna.vn</span>
+          <span class="chip chip-m">music.andrenna.vn</span>
+          <span class="chip chip-d">drive.andrenna.vn</span>
+          <span class="chip">PAVIETNAM</span>
         </div>
       </div>
-      <div class="arch-card fade-up">
-        <div class="arch-icon">📡</div>
-        <h3>CDN &amp; Edge Delivery</h3>
-        <p>Audio/video được phục vụ qua CDN toàn cầu với PoP tại Hà Nội, TP.HCM, Singapore, Tokyo. Latency dưới 30ms cho 95% người dùng SEA.</p>
-        <div class="tech-pills">
-          <span class="pill music">Cloudflare R2</span>
-          <span class="pill">HLS/DASH</span>
-          <span class="pill drive">Edge Cache</span>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🔀</div>
+          <div>
+            <div class="ic-name">DNS & Proxy</div>
+            <div class="ic-sub">Cloudflare Free Plan</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          Dùng Cloudflare làm DNS resolver và reverse proxy miễn phí.
+          Kích hoạt Cloudflare Proxy (Orange Cloud) để ẩn IP thật của server,
+          tự động cấp SSL/TLS Let's Encrypt, DDoS protection cơ bản và cache tĩnh.
+        </p>
+        <div class="ic-chips">
+          <span class="chip">Cloudflare Free</span>
+          <span class="chip chip-g">SSL Auto</span>
+          <span class="chip">DDoS Basic</span>
+          <span class="chip chip-a">Orange Cloud</span>
         </div>
       </div>
-      <div class="arch-card fade-up">
-        <div class="arch-icon">🗃️</div>
-        <h3>Data &amp; Storage Layer</h3>
-        <p>PostgreSQL cho relational data, Redis cho session &amp; cache, MinIO-compatible object storage cho file nhạc và tài liệu. Backup 3-2-1.</p>
-        <div class="tech-pills">
-          <span class="pill">PostgreSQL</span>
-          <span class="pill music">Redis</span>
-          <span class="pill drive">MinIO</span>
-          <span class="pill">ClickHouse</span>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🔒</div>
+          <div>
+            <div class="ic-name">SSL / TLS</div>
+            <div class="ic-sub">Let's Encrypt + Cloudflare</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          TLS 1.3 bắt buộc cho mọi endpoint. Chứng chỉ SSL được cấp tự động qua
+          Let's Encrypt (Certbot) và renew tự động mỗi 90 ngày. Strict HSTS header
+          đảm bảo HTTPS luôn được dùng.
+        </p>
+        <div class="ic-chips">
+          <span class="chip chip-g">TLS 1.3</span>
+          <span class="chip">Let's Encrypt</span>
+          <span class="chip chip-d">HSTS</span>
+          <span class="chip">Auto-renew</span>
         </div>
       </div>
-      <div class="arch-card fade-up">
-        <div class="arch-icon">🤖</div>
-        <h3>AI / ML Pipeline</h3>
-        <p>Recommendation engine cho Music, auto-tagging &amp; transcription, smart search với vector embeddings, anomaly detection bảo mật tự động.</p>
-        <div class="tech-pills">
-          <span class="pill music">Whisper AI</span>
-          <span class="pill">pgvector</span>
-          <span class="pill drive">PyTorch</span>
-          <span class="pill">FAISS</span>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">⚙️</div>
+          <div>
+            <div class="ic-name">Web Server</div>
+            <div class="ic-sub">Nginx Reverse Proxy</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          Nginx đóng vai trò reverse proxy phía trước Node.js app.
+          Cấu hình rate limiting, gzip/brotli compression, HTTP/2, và
+          serve static assets trực tiếp. PM2 quản lý Node.js process với
+          cluster mode tận dụng đa nhân CPU.
+        </p>
+        <div class="ic-chips">
+          <span class="chip">Nginx</span>
+          <span class="chip chip-g">HTTP/2</span>
+          <span class="chip">PM2 Cluster</span>
+          <span class="chip chip-a">Brotli</span>
         </div>
       </div>
-      <div class="arch-card fade-up">
-        <div class="arch-icon">📊</div>
-        <h3>Observability Stack</h3>
-        <p>OpenTelemetry tracing, Prometheus metrics, Grafana dashboard, Loki log aggregation. SLA monitoring real-time với alert đa kênh.</p>
-        <div class="tech-pills">
-          <span class="pill">Prometheus</span>
-          <span class="pill music">Grafana</span>
-          <span class="pill drive">Loki</span>
-          <span class="pill">OTel</span>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">📦</div>
+          <div>
+            <div class="ic-name">Container & Deploy</div>
+            <div class="ic-sub">Docker + GitHub Actions</div>
+          </div>
+        </div>
+        <p class="ic-desc">
+          Ứng dụng được đóng gói trong Docker container. Deploy tự động qua
+          GitHub Actions CI/CD: build image → push Docker Hub → SSH vào server
+          → pull & restart container. Zero-downtime deploy với Docker Compose
+          rolling update.
+        </p>
+        <div class="ic-chips">
+          <span class="chip chip-d">Docker</span>
+          <span class="chip">Docker Compose</span>
+          <span class="chip chip-m">GitHub Actions</span>
+          <span class="chip chip-g">Zero Downtime</span>
         </div>
       </div>
+    </div>
+
+    <div class="code-block fi" style="margin-top:32px">
+      <div class="code-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="code-dots">
+            <span style="background:#ff5f56"></span>
+            <span style="background:#ffbd2e"></span>
+            <span style="background:#27c93f"></span>
+          </div>
+          <div class="code-title">nginx/sites-available/andrenna.conf</div>
+        </div>
+        <div class="code-lang">nginx</div>
+      </div>
+<pre><span class="cm"># Andrenna Music – music.andrenna.vn</span>
+<span class="kw">server</span> {
+    <span class="fn">listen</span> <span class="num">443</span> ssl http2;
+    <span class="fn">server_name</span> <span class="str">music.andrenna.vn</span>;
+
+    <span class="fn">ssl_certificate</span>     /etc/letsencrypt/live/andrenna.vn/fullchain.pem;
+    <span class="fn">ssl_certificate_key</span> /etc/letsencrypt/live/andrenna.vn/privkey.pem;
+    <span class="fn">ssl_protocols</span>       TLSv1.2 TLSv1.3;
+    <span class="fn">add_header</span>          Strict-Transport-Security <span class="str">"max-age=31536000"</span> always;
+
+    <span class="cm"># API backend (Node.js)</span>
+    <span class="kw">location</span> /api/ {
+        <span class="fn">proxy_pass</span>         http://127.0.0.1:3001;
+        <span class="fn">proxy_set_header</span>   X-Real-IP $remote_addr;
+        <span class="fn">limit_req</span>          zone=api burst=<span class="num">20</span> nodelay;
+    }
+
+    <span class="cm"># Static frontend (Next.js build output)</span>
+    <span class="kw">location</span> / {
+        <span class="fn">proxy_pass</span>         http://127.0.0.1:3000;
+        <span class="fn">gzip</span>               on;
+        <span class="fn">gzip_types</span>         text/css application/javascript application/json;
+    }
+}</pre>
     </div>
   </div>
 </section>
 
-<!-- ========== TECH STACK ========== -->
-<section id="stack" class="stack-section">
-  <div class="container">
-    <div class="section-label"><span class="tag">Deep Dive</span></div>
-    <h2 class="section-title">Tech Stack <span class="gradient-text-duo">chi tiết</span></h2>
-    <p class="section-sub">Chọn sản phẩm để xem stack kỹ thuật từng layer.</p>
-    <div class="stack-tabs">
-      <button class="tab-btn active-music" onclick="showStack('music', this)">🎵 Andrenna Music</button>
-      <button class="tab-btn" onclick="showStack('drive', this)">☁️ Andrenna Drive</button>
+<!-- ======================================= STORAGE ======================================= -->
+<section id="storage" class="section">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 03 — LƯU TRỮ & CDN</span>
+      <h2 class="sec-title">Backblaze B2 + <span class="gd">Cloudflare CDN</span></h2>
+      <p class="sec-desc">
+        Toàn bộ media (file nhạc, artwork, video, file người dùng upload) và CDN đều lưu trên
+        <strong>Backblaze B2</strong> — dịch vụ object storage S3-compatible với free tier hào phóng.
+        Kết hợp với <strong>Cloudflare</strong> để serve CDN miễn phí (băng thông B2 ↔ Cloudflare
+        là <em>free egress</em> theo Bandwidth Alliance).
+      </p>
     </div>
 
-    <!-- MUSIC STACK -->
-    <div id="stack-music" class="stack-panel active">
+    <div class="callout callout-tip fi">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <h4>Bandwidth Alliance: Bí quyết tiết kiệm chi phí chủ chốt</h4>
+        <p>Backblaze và Cloudflare là thành viên của <strong>Bandwidth Alliance</strong> — nghĩa là băng thông từ B2 đến Cloudflare CDN hoàn toàn <strong>miễn phí</strong>. Đây là lý do cốt lõi chọn B2 thay vì AWS S3 (S3 tính tiền egress 0.09$/GB). Với một dự án starter, đây là mức tiết kiệm đáng kể.</p>
+      </div>
+    </div>
+
+    <div class="two-col fi" style="margin-top:28px">
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🪣</div>
+          <div>
+            <div class="ic-name">Backblaze B2 – Free Tier</div>
+            <div class="ic-sub">Object Storage S3-Compatible</div>
+          </div>
+        </div>
+        <p class="ic-desc">Lưu trữ tất cả file media, audio master, artwork và file người dùng upload. API hoàn toàn tương thích S3 nên có thể dùng AWS SDK hoặc bất kỳ S3-compatible client nào.</p>
+        <table class="spec-table" style="margin-top:4px">
+          <tr><td>Lưu trữ miễn phí</td><td>10 GB</td></tr>
+          <tr><td>Egress miễn phí</td><td>1 GB/ngày (non-CF)</td></tr>
+          <tr><td>B2 → Cloudflare</td><td>Free (Bandwidth Alliance)</td></tr>
+          <tr><td>API tương thích</td><td>AWS S3 API</td></tr>
+          <tr><td>Giá lưu trữ</td><td>$0.006/GB/tháng (sau free)</td></tr>
+          <tr><td>Giá download</td><td>$0.01/GB (sau free)</td></tr>
+        </table>
+      </div>
+
+      <div class="infra-card">
+        <div class="ic-head">
+          <div class="ic-icon">🌍</div>
+          <div>
+            <div class="ic-name">Cloudflare CDN</div>
+            <div class="ic-sub">Free Plan – Global Edge Cache</div>
+          </div>
+        </div>
+        <p class="ic-desc">Cloudflare Workers + Cache Rules đứng trước B2 bucket. Khi user request file nhạc, Cloudflare cache tại PoP gần nhất (Hà Nội / TP.HCM / Singapore) — lần sau không cần hit B2.</p>
+        <table class="spec-table" style="margin-top:4px">
+          <tr><td>PoP gần nhất VN</td><td>Hà Nội, TP.HCM, SG</td></tr>
+          <tr><td>Cache TTL</td><td>Audio: 7 ngày, Image: 30 ngày</td></tr>
+          <tr><td>Băng thông CDN</td><td>Không giới hạn (Free plan)</td></tr>
+          <tr><td>Transformations</td><td>Image resize on-the-fly</td></tr>
+          <tr><td>Signed URLs</td><td>Cloudflare Workers + HMAC</td></tr>
+          <tr><td>Workers free</td><td>100k req/ngày</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="divider-sm"></div>
+
+    <!-- Luồng media -->
+    <h3 class="fi" style="font-size:1rem;font-weight:700;margin-bottom:20px;color:var(--text-2)">Luồng xử lý & phân phối media</h3>
+    <div class="diagram fi">
+      <div class="diagram-title">Andrenna Music · Audio Upload & Streaming Flow</div>
+      <div class="diagram-rows">
+        <div class="diagram-row">
+          <div class="dbox dbox-m">🎵 Artist Upload<br/><small style="font-weight:400;font-size:.7em">Chunked via TUS</small></div>
+          <div class="darrow">→</div>
+          <div class="dbox dbox-n">API Server (VN)<br/><small style="font-weight:400;font-size:.7em">Validate + Queue</small></div>
+          <div class="darrow">→</div>
+          <div class="dbox dbox-n">FFmpeg Worker<br/><small style="font-weight:400;font-size:.7em">Transcode HLS</small></div>
+          <div class="darrow">→</div>
+          <div class="dbox dbox-g">Backblaze B2<br/><small style="font-weight:400;font-size:.7em">Store .m3u8 + .ts</small></div>
+        </div>
+        <div style="text-align:center;font-size:.72rem;color:var(--text-3);padding:4px 0;">↓ Khi listener stream</div>
+        <div class="diagram-row">
+          <div class="dbox dbox-m">🎧 Listener<br/><small style="font-weight:400;font-size:.7em">HLS.js Player</small></div>
+          <div class="darrow">→</div>
+          <div class="dbox dbox-d">Cloudflare CDN<br/><small style="font-weight:400;font-size:.7em">Edge Cache (VN PoP)</small></div>
+          <div class="darrow">→</div>
+          <div class="dbox dbox-g">B2 (Cache miss)<br/><small style="font-weight:400;font-size:.7em">Free egress to CF</small></div>
+          <div class="darrow">+</div>
+          <div class="dbox dbox-n">Signed URL<br/><small style="font-weight:400;font-size:.7em">CF Workers HMAC</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block fi">
+      <div class="code-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="code-dots">
+            <span style="background:#ff5f56"></span>
+            <span style="background:#ffbd2e"></span>
+            <span style="background:#27c93f"></span>
+          </div>
+          <div class="code-title">lib/storage/b2-client.ts</div>
+        </div>
+        <div class="code-lang">TypeScript</div>
+      </div>
+<pre><span class="kw">import</span> { S3Client, PutObjectCommand, GetObjectCommand } <span class="kw">from</span> <span class="str">'@aws-sdk/client-s3'</span>;
+<span class="kw">import</span> { getSignedUrl } <span class="kw">from</span> <span class="str">'@aws-sdk/s3-request-presigner'</span>;
+
+<span class="cm">// Backblaze B2 – S3-compatible endpoint</span>
+<span class="kw">export const</span> <span class="fn">b2</span> = <span class="kw">new</span> <span class="pk">S3Client</span>({
+  region: <span class="str">'us-west-004'</span>, <span class="cm">// B2 region của bucket</span>
+  endpoint: <span class="str">'https://s3.us-west-004.backblazeb2.com'</span>,
+  credentials: {
+    accessKeyId:     process.env.<span class="pk">B2_KEY_ID</span>!,
+    secretAccessKey: process.env.<span class="pk">B2_APP_KEY</span>!,
+  },
+});
+
+<span class="kw">export async function</span> <span class="fn">uploadMedia</span>(key: <span class="pk">string</span>, body: <span class="pk">Buffer</span>, mimeType: <span class="pk">string</span>) {
+  <span class="kw">return</span> b2.send(<span class="kw">new</span> <span class="pk">PutObjectCommand</span>({
+    Bucket:      process.env.<span class="pk">B2_BUCKET_NAME</span>!,
+    Key:         key,
+    Body:        body,
+    ContentType: mimeType,
+    <span class="cm">// Cache 7 ngày – Cloudflare sẽ cache theo header này</span>
+    CacheControl: <span class="str">'public, max-age=604800, immutable'</span>,
+  }));
+}
+
+<span class="kw">export async function</span> <span class="fn">getPrivateUrl</span>(key: <span class="pk">string</span>, expiresIn = <span class="num">3600</span>) {
+  <span class="cm">// Signed URL cho file private (Drive documents)</span>
+  <span class="kw">return</span> getSignedUrl(b2, <span class="kw">new</span> <span class="pk">GetObjectCommand</span>({
+    Bucket: process.env.<span class="pk">B2_BUCKET_NAME</span>!,
+    Key: key,
+  }), { expiresIn });
+}
+
+<span class="cm">// Public CDN URL (qua Cloudflare) cho media công khai như nhạc stream</span>
+<span class="kw">export const</span> <span class="fn">cdnUrl</span> = (key: <span class="pk">string</span>) =>
+  <span class="str">`https://cdn.andrenna.vn/<span class="num">${key}</span>`</span>; <span class="cm">// Cloudflare custom domain trỏ vào B2</span></pre>
+    </div>
+
+    <div class="callout callout-warn fi">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <h4>Lưu ý về giới hạn Free Tier của B2</h4>
+        <p>Free tier của Backblaze B2 bao gồm 10GB lưu trữ và 1GB egress/ngày (với non-Cloudflare). Khi dự án vượt ngưỡng này, chi phí rất cạnh tranh: $0.006/GB lưu trữ và $0.01/GB download. Với Andrenna ở giai đoạn starter, 10GB là đủ cho vài nghìn bài nhạc (MP3 128kbps ~4MB/bài = ~2500 bài).</p>
+      </div>
+    </div>
+
+    <!-- B2 Bucket Structure -->
+    <div class="code-block fi">
+      <div class="code-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="code-dots">
+            <span style="background:#ff5f56"></span>
+            <span style="background:#ffbd2e"></span>
+            <span style="background:#27c93f"></span>
+          </div>
+          <div class="code-title">Cấu trúc Backblaze B2 bucket</div>
+        </div>
+        <div class="code-lang">tree</div>
+      </div>
+<pre><span class="cm">andrenna-media/               (public bucket – qua Cloudflare CDN)</span>
+├── <span class="fn">music/</span>
+│   ├── <span class="str">tracks/{trackId}/</span>
+│   │   ├── master.m3u8       <span class="cm"># HLS playlist</span>
+│   │   ├── 128k/             <span class="cm"># Segment files .ts (128kbps)</span>
+│   │   ├── 320k/             <span class="cm"># Segment files .ts (320kbps – Pro users)</span>
+│   │   └── artwork.webp      <span class="cm"># Cover art (WebP optimized)</span>
+│   └── <span class="str">waveforms/{trackId}.json</span>  <span class="cm"># Pre-computed waveform data</span>
+└── <span class="fn">shared/</span>
+    └── <span class="str">avatars/{userId}.webp</span>
+
+<span class="cm">andrenna-drive/               (private bucket – Signed URLs only)</span>
+├── <span class="fn">files/{userId}/{fileId}</span>    <span class="cm"># Encrypted user files</span>
+└── <span class="fn">thumbnails/{fileId}.webp</span>   <span class="cm"># Preview thumbnails</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================= STACK ======================================= -->
+<section id="stack" class="section-alt">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 04 — TECH STACK</span>
+      <h2 class="sec-title">Kiến trúc & <span class="gduo">Công nghệ</span></h2>
+      <p class="sec-desc">
+        Cả hai sản phẩm dùng chung authentication service và database layer. Mỗi sản phẩm có
+        API riêng và frontend riêng. Shared infra giúp giảm chi phí và công maintenance.
+      </p>
+    </div>
+
+    <!-- Architecture diagram -->
+    <div class="diagram fi" style="margin-bottom:32px">
+      <div class="diagram-title">Kiến trúc hệ thống Andrenna Suite (Starter)</div>
+      <div class="diagram-rows">
+        <div class="diagram-row">
+          <div class="dbox dbox-m">music.andrenna.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+          <div class="darrow"></div>
+          <div class="dbox dbox-d">drive.andrenna.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+        </div>
+        <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ HTTPS via Cloudflare + Nginx</div>
+        <div class="diagram-row">
+          <div class="dbox dbox-m">Music API<br/><small style="font-weight:400;font-size:.7em">Node.js :3001</small></div>
+          <div class="darrow"></div>
+          <div class="dbox dbox-n">Auth Service<br/><small style="font-weight:400;font-size:.7em">Shared JWT :3003</small></div>
+          <div class="darrow"></div>
+          <div class="dbox dbox-d">Drive API<br/><small style="font-weight:400;font-size:.7em">Node.js :3002</small></div>
+        </div>
+        <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ Data Layer</div>
+        <div class="diagram-row">
+          <div class="dbox dbox-g">PostgreSQL<br/><small style="font-weight:400;font-size:.7em">Shared DB</small></div>
+          <div class="darrow"></div>
+          <div class="dbox dbox-n">Redis<br/><small style="font-weight:400;font-size:.7em">Cache & Queue</small></div>
+          <div class="darrow"></div>
+          <div class="dbox dbox-g">Backblaze B2<br/><small style="font-weight:400;font-size:.7em">Object Storage</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stack tabs -->
+    <div class="stack-tabs fi">
+      <button class="stab on-m" onclick="setTab('music',this)">🎵 Andrenna Music</button>
+      <button class="stab" onclick="setTab('drive',this)">☁️ Andrenna Drive</button>
+      <button class="stab" onclick="setTab('shared',this)">⚙️ Shared Infra</button>
+    </div>
+
+    <!-- Music Stack -->
+    <div id="spanel-music" class="spanel show fi">
       <div class="stack-layers">
-        <div class="layer">
-          <div class="layer-stripe music-stripe"></div>
-          <div class="layer-label">CLIENT</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-purple">⚛️ Next.js 14 (App Router)</div>
-            <div class="layer-chip chip-slate">TypeScript 5</div>
-            <div class="layer-chip chip-purple">TailwindCSS</div>
-            <div class="layer-chip chip-slate">Zustand (State)</div>
-            <div class="layer-chip chip-amber">Web Audio API (Waveform)</div>
-            <div class="layer-chip chip-slate">HLS.js (Streaming)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-m"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Frontend (Client)</div>
+            <div class="slayer-chips">
+              <span class="chip chip-m">Next.js 14 App Router</span>
+              <span class="chip">TypeScript 5</span>
+              <span class="chip chip-m">TailwindCSS</span>
+              <span class="chip">Zustand</span>
+              <span class="chip chip-a">HLS.js (Stream player)</span>
+              <span class="chip">Web Audio API (Waveform)</span>
+              <span class="chip">React Query</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe music-stripe"></div>
-          <div class="layer-label">API</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-green">Node.js + Fastify</div>
-            <div class="layer-chip chip-slate">GraphQL (Apollo)</div>
-            <div class="layer-chip chip-purple">REST Fallback</div>
-            <div class="layer-chip chip-amber">WebSocket (Real-time plays)</div>
-            <div class="layer-chip chip-slate">Zod Validation</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-m"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Backend API</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">Node.js + Fastify</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip chip-m">REST API (OpenAPI 3.1)</span>
+              <span class="chip chip-a">WebSocket (play events)</span>
+              <span class="chip">Zod Validation</span>
+              <span class="chip">Bull Queue (Transcode jobs)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe music-stripe"></div>
-          <div class="layer-label">MEDIA</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-rose">FFmpeg Transcoding</div>
-            <div class="layer-chip chip-purple">HLS / DASH (Adaptive Bitrate)</div>
-            <div class="layer-chip chip-slate">Cloudflare Stream</div>
-            <div class="layer-chip chip-amber">DRM (Widevine + FairPlay)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-m"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Media Processing</div>
+            <div class="slayer-chips">
+              <span class="chip chip-a">FFmpeg (Transcode)</span>
+              <span class="chip chip-m">HLS / Adaptive Bitrate</span>
+              <span class="chip">audiowaveform (Waveform)</span>
+              <span class="chip chip-g">WebP Artwork Compress</span>
+              <span class="chip">Sharp (Image)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe music-stripe"></div>
-          <div class="layer-label">DATA</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-green">PostgreSQL (Track metadata)</div>
-            <div class="layer-chip chip-purple">Redis (Listen count cache)</div>
-            <div class="layer-chip chip-slate">ClickHouse (Analytics)</div>
-            <div class="layer-chip chip-cyan">Elasticsearch (Search)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-m"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Storage</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">Backblaze B2 (Master audio + HLS)</span>
+              <span class="chip chip-d">Cloudflare CDN (Serve)</span>
+              <span class="chip">AWS SDK v3 (B2 client)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe music-stripe"></div>
-          <div class="layer-label">INFRA</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-slate">Kubernetes (GKE / self-hosted)</div>
-            <div class="layer-chip chip-amber">Terraform (IaC)</div>
-            <div class="layer-chip chip-green">GitHub Actions CI/CD</div>
-            <div class="layer-chip chip-purple">ArgoCD (GitOps)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-m"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Data</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">PostgreSQL (Tracks, Users, Plays)</span>
+              <span class="chip chip-m">Redis (Play count cache, Sessions)</span>
+              <span class="chip">Elasticsearch (Search nhạc)</span>
+              <span class="chip">ClickHouse (Analytics)</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- DRIVE STACK -->
-    <div id="stack-drive" class="stack-panel">
+    <!-- Drive Stack -->
+    <div id="spanel-drive" class="spanel fi">
       <div class="stack-layers">
-        <div class="layer">
-          <div class="layer-stripe drive-stripe"></div>
-          <div class="layer-label">CLIENT</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-cyan">⚛️ Next.js 14 (App Router)</div>
-            <div class="layer-chip chip-slate">TypeScript 5</div>
-            <div class="layer-chip chip-cyan">TailwindCSS</div>
-            <div class="layer-chip chip-slate">TanStack Query</div>
-            <div class="layer-chip chip-amber">TUS Upload Protocol</div>
-            <div class="layer-chip chip-slate">pdf.js / Office Preview</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-d"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Frontend (Client)</div>
+            <div class="slayer-chips">
+              <span class="chip chip-d">Next.js 14 App Router</span>
+              <span class="chip">TypeScript 5</span>
+              <span class="chip chip-d">TailwindCSS</span>
+              <span class="chip">TanStack Query</span>
+              <span class="chip chip-a">TUS Upload Protocol</span>
+              <span class="chip">PDF.js (Preview)</span>
+              <span class="chip">Monaco Editor (Code view)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe drive-stripe"></div>
-          <div class="layer-label">API</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-green">Go + Gin Framework</div>
-            <div class="layer-chip chip-slate">REST (OpenAPI 3.1)</div>
-            <div class="layer-chip chip-cyan">gRPC (Internal services)</div>
-            <div class="layer-chip chip-amber">Chunked Upload API</div>
-            <div class="layer-chip chip-slate">Webhook Engine</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-d"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Backend API</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">Node.js + Express / Fastify</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip chip-d">REST API (OpenAPI 3.1)</span>
+              <span class="chip chip-a">Chunked Upload API</span>
+              <span class="chip">Webhook Engine</span>
+              <span class="chip">Bull Queue (Thumbnail gen)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe drive-stripe"></div>
-          <div class="layer-label">STORAGE</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-cyan">MinIO (S3-compatible)</div>
-            <div class="layer-chip chip-rose">Client-side Encryption (E2E)</div>
-            <div class="layer-chip chip-slate">Deduplication (Content Hash)</div>
-            <div class="layer-chip chip-amber">Cold Storage → Glacier tier</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-d"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Encryption</div>
+            <div class="slayer-chips">
+              <span class="chip chip-d">AES-256-GCM (File encrypt)</span>
+              <span class="chip chip-m">Client-side ZKE (Optional)</span>
+              <span class="chip chip-g">Node crypto (Server-side)</span>
+              <span class="chip">Web Crypto API (Browser)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe drive-stripe"></div>
-          <div class="layer-label">DATA</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-green">PostgreSQL (File tree)</div>
-            <div class="layer-chip chip-cyan">Redis (Temp share links)</div>
-            <div class="layer-chip chip-slate">ClickHouse (Usage analytics)</div>
-            <div class="layer-chip chip-purple">Meilisearch (File search)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-d"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Storage</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">Backblaze B2 (User files – private bucket)</span>
+              <span class="chip chip-d">Signed URLs (Time-limited access)</span>
+              <span class="chip chip-d">Cloudflare CDN (Thumbnails)</span>
+            </div>
           </div>
         </div>
-        <div class="layer">
-          <div class="layer-stripe drive-stripe"></div>
-          <div class="layer-label">INFRA</div>
-          <div class="layer-items">
-            <div class="layer-chip chip-slate">Kubernetes + Helm</div>
-            <div class="layer-chip chip-amber">Terraform (IaC)</div>
-            <div class="layer-chip chip-green">GitHub Actions CI/CD</div>
-            <div class="layer-chip chip-cyan">Longhorn (PVC Storage)</div>
+        <div class="slayer">
+          <div class="slayer-bar bar-d"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Data</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">PostgreSQL (Files, Folders, Shares, Versions)</span>
+              <span class="chip chip-d">Redis (Cache metadata, Upload state)</span>
+              <span class="chip">Elasticsearch (Full-text file search)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shared Stack -->
+    <div id="spanel-shared" class="spanel fi">
+      <div class="stack-layers">
+        <div class="slayer">
+          <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Authentication (Shared)</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">JWT Access Token (15 phút)</span>
+              <span class="chip chip-m">Refresh Token (30 ngày, HTTP-only cookie)</span>
+              <span class="chip chip-d">OAuth 2.0 (Google, GitHub)</span>
+              <span class="chip chip-a">Rate limit login attempts</span>
+              <span class="chip">Argon2 (Password hash)</span>
+            </div>
+          </div>
+        </div>
+        <div class="slayer">
+          <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Database (PostgreSQL – Shared)</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">PostgreSQL 16</span>
+              <span class="chip chip-d">Drizzle ORM / Prisma</span>
+              <span class="chip">Connection Pooling (PgBouncer)</span>
+              <span class="chip chip-a">Daily backup (pg_dump → B2)</span>
+              <span class="chip">3-2-1 Backup strategy</span>
+            </div>
+          </div>
+        </div>
+        <div class="slayer">
+          <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">DevOps & CI/CD</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">GitHub Actions (CI/CD)</span>
+              <span class="chip chip-d">Docker + Docker Compose</span>
+              <span class="chip">Nginx Reverse Proxy</span>
+              <span class="chip chip-m">PM2 (Process manager)</span>
+              <span class="chip">Watchtower (Auto-update containers)</span>
+            </div>
+          </div>
+        </div>
+        <div class="slayer">
+          <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Monitoring & Observability</div>
+            <div class="slayer-chips">
+              <span class="chip chip-m">Uptime Kuma (Self-hosted monitoring)</span>
+              <span class="chip chip-d">Grafana + Prometheus</span>
+              <span class="chip chip-a">Loki (Log aggregation)</span>
+              <span class="chip">Sentry (Error tracking – free tier)</span>
+            </div>
+          </div>
+        </div>
+        <div class="slayer">
+          <div class="slayer-bar" style="background:linear-gradient(180deg,var(--music),var(--drive))"></div>
+          <div class="slayer-inner">
+            <div class="slayer-name">Email & Notifications</div>
+            <div class="slayer-chips">
+              <span class="chip chip-g">Resend.com (Email – free 3k/tháng)</span>
+              <span class="chip chip-m">React Email (Templates)</span>
+              <span class="chip chip-d">Firebase FCM (Push notifications)</span>
+            </div>
           </div>
         </div>
       </div>
@@ -875,384 +1394,392 @@
   </div>
 </section>
 
-<!-- ========== COMPARISON TABLE ========== -->
-<section class="compare-section">
-  <div class="container">
-    <div class="section-label"><span class="tag">So sánh</span></div>
-    <h2 class="section-title">Andrenna vs <span class="gradient-text-duo">đối thủ</span></h2>
-    <p class="section-sub">Tại sao chọn Andrenna thay vì các giải pháp nước ngoài?</p>
-    <div style="overflow-x:auto">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Tính năng / Tiêu chí</th>
-          <th>🎵 Andrenna Music</th>
-          <th>☁️ Andrenna Drive</th>
-          <th>Đối thủ (SC / GDrive)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Ngôn ngữ &amp; hỗ trợ tiếng Việt</td>
-          <td><span class="check yes-m">✦ Đầy đủ</span></td>
-          <td><span class="check yes-d">✦ Đầy đủ</span></td>
-          <td><span class="check no">✕ Hạn chế</span></td>
-        </tr>
-        <tr>
-          <td>Thanh toán VND nội địa (MoMo, ZaloPay, VNPay)</td>
-          <td><span class="check yes-m">✦ Có</span></td>
-          <td><span class="check yes-d">✦ Có</span></td>
-          <td><span class="check no">✕ Không</span></td>
-        </tr>
-        <tr>
-          <td>Data center tại Việt Nam</td>
-          <td><span class="check yes-m">✦ Có (HN + HCM)</span></td>
-          <td><span class="check yes-d">✦ Có (HN + HCM)</span></td>
-          <td><span class="check no">✕ Nước ngoài</span></td>
-        </tr>
-        <tr>
-          <td>Tuân thủ Nghị định 13/2023/NĐ-CP</td>
-          <td><span class="check yes-m">✦ Có</span></td>
-          <td><span class="check yes-d">✦ Có</span></td>
-          <td><span class="check no">✕ Không cam kết</span></td>
-        </tr>
-        <tr>
-          <td>Tích hợp Music ↔ Drive</td>
-          <td><span class="check yes-b">✦ Có (Native)</span></td>
-          <td><span class="check yes-b">✦ Có (Native)</span></td>
-          <td><span class="check no">✕ Không</span></td>
-        </tr>
-        <tr>
-          <td>End-to-end Encryption tùy chọn</td>
-          <td><span class="check no">– N/A</span></td>
-          <td><span class="check yes-d">✦ Có</span></td>
-          <td><span class="check no">✕ Google không E2E</span></td>
-        </tr>
-        <tr>
-          <td>Monetization cho nghệ sĩ nội địa</td>
-          <td><span class="check yes-m">✦ Tipping + NFT + Pre-save</span></td>
-          <td><span class="check no">– N/A</span></td>
-          <td><span class="check no">✕ Rất giới hạn</span></td>
-        </tr>
-        <tr>
-          <td>Giá gói cơ bản (người dùng cá nhân)</td>
-          <td><span class="check yes-m">✦ Free + 49K/tháng</span></td>
-          <td><span class="check yes-d">✦ Free + 29K/tháng</span></td>
-          <td><span class="check no">USD (đắt hơn)</span></td>
-        </tr>
-        <tr>
-          <td>API công khai cho developer</td>
-          <td><span class="check yes-m">✦ Có</span></td>
-          <td><span class="check yes-d">✦ Có</span></td>
-          <td><span class="check yes-b">✦ Có</span></td>
-        </tr>
-        <tr>
-          <td>SLA 99.9% uptime cam kết</td>
-          <td><span class="check yes-m">✦ Có</span></td>
-          <td><span class="check yes-d">✦ Có</span></td>
-          <td><span class="check yes-b">✦ Có</span></td>
-        </tr>
-      </tbody>
-    </table>
+<!-- ======================================= SECURITY ======================================= -->
+<section id="security" class="section">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 05 — BẢO MẬT & TUÂN THỦ</span>
+      <h2 class="sec-title">Bảo mật <span class="gm">đa lớp</span></h2>
+      <p class="sec-desc">
+        Andrenna áp dụng mô hình bảo mật defense-in-depth: mỗi lớp độc lập, nếu một lớp bị vượt qua
+        thì các lớp còn lại vẫn bảo vệ. Tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.
+      </p>
     </div>
-  </div>
-</section>
 
-<!-- ========== PRICING ========== -->
-<section id="pricing" class="pricing">
-  <div class="container">
-    <div class="section-label"><span class="tag">Bảng giá</span></div>
-    <h2 class="section-title">Minh bạch. <span class="gradient-text-music">Không ẩn phí.</span></h2>
-    <p class="section-sub">Thanh toán bằng VND. Hủy bất kỳ lúc nào. Gói miễn phí mãi mãi.</p>
-    <div class="pricing-grid">
-
-      <!-- Free -->
-      <div class="price-card fade-up">
-        <div class="price-name">Starter</div>
-        <div class="price-val gradient-text-duo">Miễn phí</div>
-        <div class="price-unit">Mãi mãi</div>
-        <hr class="price-divider">
-        <ul class="price-features">
-          <li><span class="ck" style="color:var(--music)">✦</span> Music: Upload đến 30 bài/tháng</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Drive: 5GB lưu trữ</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Stream nhạc chất lượng 128kbps</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Chia sẻ link cơ bản</li>
-          <li><span class="ck" style="color:var(--muted)">○</span> <span style="opacity:.4">Analytics nâng cao</span></li>
-          <li><span class="ck" style="color:var(--muted)">○</span> <span style="opacity:.4">Custom domain</span></li>
-        </ul>
-        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center">Bắt đầu miễn phí</a>
+    <div class="sec-grid fi">
+      <div class="sec-card">
+        <div class="scc-icon">🔐</div>
+        <div class="scc-title">Mã hóa dữ liệu tĩnh</div>
+        <div class="scc-desc">File trên B2 được mã hóa AES-256-GCM phía server trước khi upload. Andrenna Drive hỗ trợ tùy chọn Zero-Knowledge Encryption (ZKE) – key chỉ client giữ.</div>
       </div>
-
-      <!-- Pro -->
-      <div class="price-card featured fade-up">
-        <div class="price-name">Pro</div>
-        <div class="price-val gradient-text-music">69K</div>
-        <div class="price-unit">đồng / tháng</div>
-        <hr class="price-divider">
-        <ul class="price-features">
-          <li><span class="ck" style="color:var(--music)">✦</span> Music: Upload không giới hạn</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Drive: 100GB lưu trữ</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Stream 320kbps + Lossless FLAC</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Analytics chi tiết theo tuần</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Monetization: Tipping mở khóa</li>
-          <li><span class="ck" style="color:var(--music)">✦</span> Drive: Preview mọi định dạng</li>
-        </ul>
-        <a href="#" class="btn btn-music" style="width:100%;justify-content:center">Nâng cấp Pro</a>
+      <div class="sec-card">
+        <div class="scc-icon">🚇</div>
+        <div class="scc-title">Mã hóa truyền dẫn</div>
+        <div class="scc-desc">TLS 1.3 bắt buộc cho mọi kết nối. HSTS header với max-age 1 năm. Không có HTTP fallback. Certificate Transparency monitoring tự động.</div>
       </div>
-
-      <!-- Studio -->
-      <div class="price-card fade-up">
-        <div class="price-name">Studio / Team</div>
-        <div class="price-val gradient-text-drive">249K</div>
-        <div class="price-unit">đồng / tháng · đến 5 thành viên</div>
-        <hr class="price-divider">
-        <ul class="price-features">
-          <li><span class="ck" style="color:var(--drive)">✦</span> Tất cả tính năng Pro</li>
-          <li><span class="ck" style="color:var(--drive)">✦</span> Drive: 1TB shared storage</li>
-          <li><span class="ck" style="color:var(--drive)">✦</span> Label dashboard &amp; roster quản lý</li>
-          <li><span class="ck" style="color:var(--drive)">✦</span> Custom domain cho Music profile</li>
-          <li><span class="ck" style="color:var(--drive)">✦</span> White-label embed player</li>
-          <li><span class="ck" style="color:var(--drive)">✦</span> Priority support 24/7</li>
-        </ul>
-        <a href="#" class="btn btn-drive" style="width:100%;justify-content:center">Liên hệ Studio</a>
+      <div class="sec-card">
+        <div class="scc-icon">🎫</div>
+        <div class="scc-title">Authentication</div>
+        <div class="scc-desc">JWT Access Token ngắn hạn (15 phút) + Refresh Token rotation (30 ngày, HTTP-only cookie). Password hash bằng Argon2id. OAuth 2.0 PKCE flow.</div>
       </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ========== SAAS METRICS ========== -->
-<section class="metrics">
-  <div class="container">
-    <div class="section-label"><span class="tag">SaaS Metrics</span></div>
-    <h2 class="section-title">Chỉ số <span class="gradient-text-drive">tăng trưởng</span> mục tiêu</h2>
-    <p class="section-sub">Các KPI quan trọng mà Andrenna hướng tới trong 18 tháng đầu vận hành.</p>
-    <div class="metrics-grid">
-      <div class="metric-card fade-up">
-        <div class="metric-val">MRR</div>
-        <div class="metric-label">Monthly Recurring Revenue</div>
-        <div class="metric-trend">↑ Tăng 15% MoM (target)</div>
+      <div class="sec-card">
+        <div class="scc-icon">🛡️</div>
+        <div class="scc-title">DDoS & Rate Limiting</div>
+        <div class="scc-desc">Cloudflare absorbs DDoS tầng network. Nginx rate limiting (50 req/phút per IP cho API). Redis-based distributed rate limiter cho auth endpoints.</div>
       </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">&lt; 5%</div>
-        <div class="metric-label">Monthly Churn Rate</div>
-        <div class="metric-trend">↓ Dưới mức trung bình ngành</div>
+      <div class="sec-card">
+        <div class="scc-icon">🔗</div>
+        <div class="scc-title">Signed URLs cho Media</div>
+        <div class="scc-desc">File riêng tư chỉ accessible qua Signed URL có thời hạn (1–24h). Cloudflare Workers ký HMAC-SHA256. Không thể chia sẻ link vĩnh viễn cho file private.</div>
       </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">NPS 60+</div>
-        <div class="metric-label">Net Promoter Score</div>
-        <div class="metric-trend">↑ Mức "Excellent" cho SaaS</div>
+      <div class="sec-card">
+        <div class="scc-icon">🧹</div>
+        <div class="scc-title">Input Validation</div>
+        <div class="scc-desc">Zod schema validation mọi input API. File type validation bằng magic bytes (không tin vào extension hay Content-Type). SQL injection prevention qua ORM parameterized queries.</div>
       </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">&lt; 30ms</div>
-        <div class="metric-label">P95 API Latency (SEA)</div>
-        <div class="metric-trend">→ CDN Edge tại HN, HCM, SG</div>
+      <div class="sec-card">
+        <div class="scc-icon">📋</div>
+        <div class="scc-title">Tuân thủ NĐ 13/2023</div>
+        <div class="scc-desc">Dữ liệu cá nhân người dùng Việt Nam lưu trong PostgreSQL đặt tại IDC Việt Nam. Chính sách xóa dữ liệu khi người dùng yêu cầu (Right to Erasure). Audit log mọi hành động truy cập data.</div>
       </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">LTV/CAC</div>
-        <div class="metric-label">Tỷ lệ giá trị vòng đời / chi phí</div>
-        <div class="metric-trend">↑ Mục tiêu LTV:CAC ≥ 3:1</div>
+      <div class="sec-card">
+        <div class="scc-icon">📊</div>
+        <div class="scc-title">Audit Log</div>
+        <div class="scc-desc">Mọi hành động quan trọng (đăng nhập, upload, xóa, chia sẻ) được ghi vào immutable audit log lưu tách biệt. Retention 90 ngày. Không thể xóa từ application layer.</div>
       </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">99.9%</div>
-        <div class="metric-label">Uptime SLA cam kết</div>
-        <div class="metric-trend">→ Multi-AZ failover tự động</div>
-      </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">DAU/MAU</div>
-        <div class="metric-label">Daily / Monthly Active Users</div>
-        <div class="metric-trend">↑ Mục tiêu DAU/MAU ≥ 30%</div>
-      </div>
-      <div class="metric-card fade-up">
-        <div class="metric-val">&lt; 2s</div>
-        <div class="metric-label">Time-to-First-Byte (TTFB)</div>
-        <div class="metric-trend">→ Chuẩn Core Web Vitals</div>
+      <div class="sec-card">
+        <div class="scc-icon">🔄</div>
+        <div class="scc-title">Backup & Recovery</div>
+        <div class="scc-desc">Chiến lược backup 3-2-1: 3 bản sao, 2 loại media khác nhau, 1 bản offsite. PostgreSQL pg_dump tự động hàng ngày, upload lên B2 bucket riêng. RTO &lt; 4h, RPO &lt; 24h.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== ROADMAP ========== -->
-<section id="roadmap" class="roadmap">
-  <div class="container">
-    <div class="section-label"><span class="tag">Lộ trình phát triển</span></div>
-    <h2 class="section-title">Roadmap <span class="gradient-text-duo">2025–2026</span></h2>
-    <p class="section-sub">Kế hoạch rõ ràng, minh bạch với người dùng. Cập nhật mỗi quý.</p>
-    <div class="roadmap-timeline">
-      <div class="timeline-line"></div>
-      <div class="timeline-items">
+<!-- ======================================= COST ======================================= -->
+<section id="cost" class="section-alt">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 06 — PHÂN TÍCH CHI PHÍ</span>
+      <h2 class="sec-title">Chi phí vận hành <span class="gd">Starter</span></h2>
+      <p class="sec-desc">
+        Toàn bộ infrastructure được tối ưu để chạy với chi phí thấp nhất có thể ở giai đoạn MVP.
+        Tận dụng tối đa các free tier và open source self-hosted tools.
+      </p>
+    </div>
 
-        <div class="timeline-item fade-up">
-          <div class="timeline-dot dot-done"></div>
-          <div class="timeline-quarter">Q1 2025 · Hoàn thành ✓</div>
-          <div class="timeline-title">MVP Launch – Andrenna Music Beta</div>
-          <div class="timeline-desc">Upload &amp; stream nhạc, waveform visualizer, hệ thống follow, analytics cơ bản. Onboard 500 nghệ sĩ đầu tiên tại Hà Nội và TP.HCM.</div>
-          <div class="timeline-tags">
-            <span class="tag">Music</span>
-            <span class="pill music">Streaming</span>
-            <span class="pill">Auth</span>
+    <div class="callout callout-tip fi">
+      <div class="callout-icon">💰</div>
+      <div class="callout-body">
+        <h4>Tổng chi phí ước tính giai đoạn Starter: ~500.000 – 800.000 VNĐ/tháng</h4>
+        <p>Phần lớn chi phí nằm ở VPS Việt Nam. Storage (B2), CDN (Cloudflare), monitoring, email đều nằm trong free tier. Tên miền .vn tính theo năm ~300.000 VNĐ/năm.</p>
+      </div>
+    </div>
+
+    <div class="cost-grid fi">
+      <div class="cost-card">
+        <div class="cost-head">
+          <div class="cost-head-title">🖥️ Compute & Hosting</div>
+          <span class="badge badge-amber">Chi phí chính</span>
+        </div>
+        <div class="cost-body">
+          <div class="cost-row">
+            <div class="cost-row-label">VPS Việt Nam (2 vCPU, 4GB RAM)</div>
+            <div class="cost-row-val cost-paid">~400.000 VNĐ/tháng</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Tên miền andrenna.vn</div>
+            <div class="cost-row-val cost-paid">~25.000 VNĐ/tháng</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">SSL Certificate (Let's Encrypt)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
           </div>
         </div>
+        <div class="cost-total-row">
+          <div class="cost-total-label">Subtotal</div>
+          <div class="cost-total-val">~425.000 VNĐ/tháng</div>
+        </div>
+      </div>
 
-        <div class="timeline-item fade-up">
-          <div class="timeline-dot dot-done"></div>
-          <div class="timeline-quarter">Q2 2025 · Hoàn thành ✓</div>
-          <div class="timeline-title">MVP Launch – Andrenna Drive Beta</div>
-          <div class="timeline-desc">Upload &amp; lưu trữ file, chia sẻ link, preview video/PDF/audio. Tích hợp Music ↔ Drive: lưu bài nhạc thẳng lên Drive, stream từ Drive link.</div>
-          <div class="timeline-tags">
-            <span class="tag drive">Drive</span>
-            <span class="pill drive">E2E Encryption</span>
-            <span class="pill">Sync</span>
+      <div class="cost-card">
+        <div class="cost-head">
+          <div class="cost-head-title">🪣 Storage & CDN</div>
+          <span class="badge badge-green">Free Tier</span>
+        </div>
+        <div class="cost-body">
+          <div class="cost-row">
+            <div class="cost-row-label">Backblaze B2 (dưới 10GB)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Cloudflare CDN (Free plan)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Egress B2 → Cloudflare</div>
+            <div class="cost-row-val cost-free">Miễn phí (Alliance)</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">CF Workers (100k req/ngày)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
           </div>
         </div>
+        <div class="cost-total-row">
+          <div class="cost-total-label">Subtotal</div>
+          <div class="cost-total-val">0 VNĐ/tháng</div>
+        </div>
+      </div>
 
-        <div class="timeline-item fade-up">
-          <div class="timeline-dot dot-now"></div>
-          <div class="timeline-quarter">Q3 2025 · Đang triển khai 🔵</div>
-          <div class="timeline-title">Monetization &amp; Payments</div>
-          <div class="timeline-desc">Tích hợp cổng thanh toán VNPay, MoMo, ZaloPay. Ra mắt tính năng Tipping cho nghệ sĩ, Pre-save campaign, kế hoạch trả phí subscription. Target 1000 paying users.</div>
-          <div class="timeline-tags">
-            <span class="tag">Music</span>
-            <span class="pill amber">MoMo</span>
-            <span class="pill amber">VNPay</span>
-            <span class="pill music">Tipping</span>
+      <div class="cost-card">
+        <div class="cost-head">
+          <div class="cost-head-title">🔧 Dev Tools & Services</div>
+          <span class="badge badge-green">Phần lớn miễn phí</span>
+        </div>
+        <div class="cost-body">
+          <div class="cost-row">
+            <div class="cost-row-label">GitHub (Repo + Actions)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Resend.com (Email – 3k/tháng)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Sentry (Error tracking)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Uptime Kuma (Self-hosted)</div>
+            <div class="cost-row-val cost-free">Miễn phí</div>
           </div>
         </div>
+        <div class="cost-total-row">
+          <div class="cost-total-label">Subtotal</div>
+          <div class="cost-total-val">0 VNĐ/tháng</div>
+        </div>
+      </div>
 
-        <div class="timeline-item fade-up">
-          <div class="timeline-dot dot-next"></div>
-          <div class="timeline-quarter">Q4 2025 · Kế hoạch</div>
-          <div class="timeline-title">AI Features &amp; Open API</div>
-          <div class="timeline-desc">AI recommendation engine cho Music, smart search toàn văn cho Drive, auto-tagging nhạc, tích hợp Whisper AI để transcribe lyrics. Public API v1 cho developers.</div>
-          <div class="timeline-tags">
-            <span class="pill">AI/ML</span>
-            <span class="pill music">Whisper</span>
-            <span class="pill drive">Search</span>
-            <span class="pill">API</span>
+      <div class="cost-card">
+        <div class="cost-head">
+          <div class="cost-head-title">📈 Scale-up (khi vượt free tier)</div>
+          <span class="badge badge-amber">Tương lai</span>
+        </div>
+        <div class="cost-body">
+          <div class="cost-row">
+            <div class="cost-row-label">B2 lưu trữ (mỗi 10GB thêm)</div>
+            <div class="cost-row-val cost-paid">~1.400 VNĐ/tháng</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">B2 egress non-CF</div>
+            <div class="cost-row-val cost-paid">~250 VNĐ/GB</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">VPS nâng cấp (4 vCPU, 8GB)</div>
+            <div class="cost-row-val cost-paid">~700.000 VNĐ/tháng</div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-row-label">Resend.com (50k email/tháng)</div>
+            <div class="cost-row-val cost-paid">~500.000 VNĐ/tháng</div>
           </div>
         </div>
-
-        <div class="timeline-item fade-up">
-          <div class="timeline-dot dot-next"></div>
-          <div class="timeline-quarter">Q1–Q2 2026 · Tầm nhìn</div>
-          <div class="timeline-title">Scale SEA &amp; Enterprise Tier</div>
-          <div class="timeline-desc">Mở rộng sang Thailand, Indonesia. Gói Enterprise với SSO, audit log, HIPAA-compliant storage, SLA tùy chỉnh. Andrenna for Teams – workspace cộng tác real-time.</div>
-          <div class="timeline-tags">
-            <span class="pill drive">Enterprise</span>
-            <span class="pill">SEA Expansion</span>
-            <span class="pill music">Teams</span>
-          </div>
+        <div class="cost-total-row">
+          <div class="cost-total-label">Dự kiến khi 1000+ users</div>
+          <div class="cost-total-val cost-paid">~1.5M VNĐ/tháng</div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== CTA ========== -->
-<section class="cta-section">
-  <div class="cta-glow"></div>
-  <div class="container">
-    <div style="margin-bottom:20px">
-      <div class="wave-anim" style="justify-content:center">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
+<!-- ======================================= ROADMAP ======================================= -->
+<section id="roadmap" class="section">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 07 — LỘ TRÌNH KỸ THUẬT</span>
+      <h2 class="sec-title">Roadmap <span class="gduo">2025 – 2026</span></h2>
+      <p class="sec-desc">
+        Các milestone kỹ thuật theo từng quý. Ưu tiên core product stability trước khi scale.
+      </p>
     </div>
-    <h2>
-      Sẵn sàng trải nghiệm<br />
-      <span class="gradient-text-duo">Andrenna Suite?</span>
-    </h2>
-    <p>Bắt đầu miễn phí. Không cần thẻ tín dụng. Nâng cấp khi bạn cần.</p>
-    <div class="cta-actions">
-      <a href="#" class="btn btn-music btn-xl">🎵 Dùng thử Andrenna Music</a>
-      <a href="#" class="btn btn-drive btn-xl">☁️ Dùng thử Andrenna Drive</a>
-      <a href="#" class="btn btn-outline-music btn-xl">📄 Xem tài liệu kỹ thuật</a>
+
+    <div class="rm-list fi">
+      <div class="rm-line"></div>
+
+      <div class="rm-item">
+        <div class="rm-dot-wrap"><div class="rm-dot rd-done"></div></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q1 2025 · Hoàn thành ✓</div>
+          <div class="rm-title">Core Infrastructure Setup</div>
+          <div class="rm-desc">Thiết lập VPS tại Việt Nam, cấu hình Nginx + SSL, đăng ký tên miền <code>andrenna.vn</code>, tích hợp Backblaze B2 cho storage, CI/CD pipeline với GitHub Actions.</div>
+          <div class="rm-chips">
+            <span class="chip chip-g">VPS Setup</span>
+            <span class="chip">Nginx + SSL</span>
+            <span class="chip chip-d">B2 Integration</span>
+            <span class="chip">CI/CD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-dot-wrap"><div class="rm-dot rd-done"></div></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q2 2025 · Hoàn thành ✓</div>
+          <div class="rm-title">MVP Launch – Andrenna Music Beta</div>
+          <div class="rm-desc">Upload nhạc lên B2, FFmpeg transcode HLS, stream qua Cloudflare CDN, waveform visualizer, hệ thống user + follow, analytics cơ bản với ClickHouse.</div>
+          <div class="rm-chips">
+            <span class="chip chip-m">Andrenna Music</span>
+            <span class="chip chip-a">HLS Streaming</span>
+            <span class="chip chip-g">FFmpeg</span>
+            <span class="chip">Analytics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-dot-wrap"><div class="rm-dot rd-done"></div></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q3 2025 · Hoàn thành ✓</div>
+          <div class="rm-title">MVP Launch – Andrenna Drive Beta</div>
+          <div class="rm-desc">Upload file lên B2 private bucket, chunked upload TUS, AES-256 encryption, signed URL cho share, preview file trong trình duyệt, tích hợp Drive ↔ Music.</div>
+          <div class="rm-chips">
+            <span class="chip chip-d">Andrenna Drive</span>
+            <span class="chip chip-m">AES-256</span>
+            <span class="chip">TUS Upload</span>
+            <span class="chip chip-g">Signed URLs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-dot-wrap"><div class="rm-dot rd-now"></div></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q4 2025 · Đang triển khai 🔵</div>
+          <div class="rm-title">Payments & Monetization</div>
+          <div class="rm-desc">Tích hợp VNPay, MoMo, ZaloPay cho subscription. Tính năng Tipping cho nghệ sĩ. Drive storage plans (free 5GB → Pro 100GB). Target 500 paying users.</div>
+          <div class="rm-chips">
+            <span class="chip chip-a">VNPay</span>
+            <span class="chip chip-a">MoMo</span>
+            <span class="chip chip-m">Tipping</span>
+            <span class="chip chip-d">Storage Plans</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-item">
+        <div class="rm-dot-wrap"><div class="rm-dot rd-next"></div></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q1 – Q2 2026 · Kế hoạch</div>
+          <div class="rm-title">AI Features & Scale</div>
+          <div class="rm-desc">Whisper AI auto-transcribe lyrics, recommendation engine dùng vector embeddings (pgvector), smart search toàn văn. Scale VPS lên server mạnh hơn, multi-region backup.</div>
+          <div class="rm-chips">
+            <span class="chip chip-m">Whisper AI</span>
+            <span class="chip chip-d">pgvector</span>
+            <span class="chip chip-g">Scale Infra</span>
+            <span class="chip">Public API v1</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- ======================================= AUTHOR ======================================= -->
+<section id="author" class="section-alt">
+  <div class="wrap-sm">
+    <div class="sec-header fi" style="text-align:center">
+      <span class="sec-num" style="display:block;text-align:center">// TÁC GIẢ</span>
+      <h2 class="sec-title">Xây dựng bởi</h2>
+    </div>
+    <div class="author-card fi">
+      <div class="author-avatar">Đ</div>
+      <div class="author-body">
+        <div class="author-name">Nguyễn Tiến Đạt</div>
+        <div class="author-nick">// The Billy Hunter</div>
+        <p class="author-bio">
+          Người sáng lập và phát triển độc lập bộ đôi sản phẩm <strong>Andrenna Music</strong> và
+          <strong>Andrenna Drive</strong>. Tập trung xây dựng hạ tầng công nghệ phục vụ thị trường
+          Việt Nam và Đông Nam Á. Ưu tiên sản phẩm thực tế, chi phí hợp lý và trải nghiệm người
+          dùng chất lượng cao.
+        </p>
+        <div class="author-links">
+          <span class="chip chip-m">Andrenna Music</span>
+          <span class="chip chip-d">Andrenna Drive</span>
+          <span class="chip chip-g">Full-stack Developer</span>
+          <span class="chip">Việt Nam 🇻🇳</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================= FOOTER ======================================= -->
 <footer>
-  <div class="container footer-inner">
+  <div class="wrap footer-inner">
     <div class="footer-logo">
-      <div class="logo-icon">A</div>
-      <span class="gradient-text-duo">Andrenna Suite</span>
+      <div class="logo-mark">A</div>
+      <span class="gduo">Andrenna Suite</span>
     </div>
     <div class="footer-links">
-      <a href="#">Andrenna Music</a>
-      <a href="#">Andrenna Drive</a>
-      <a href="#">Blog kỹ thuật</a>
-      <a href="#">Tài liệu API</a>
-      <a href="#">Trạng thái hệ thống</a>
-      <a href="#">Chính sách bảo mật</a>
-      <a href="#">Điều khoản sử dụng</a>
+      <a href="#overview">Tổng quan</a>
+      <a href="#infrastructure">Hạ tầng</a>
+      <a href="#storage">Lưu trữ</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#security">Bảo mật</a>
+      <a href="#cost">Chi phí</a>
+      <a href="#roadmap">Lộ trình</a>
     </div>
     <p class="footer-copy">
-      © 2025 Andrenna. Được xây dựng tại Việt Nam 🇻🇳 · Tất cả quyền được bảo lưu.<br />
-      Tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.
+      © 2025 Andrenna Suite · Xây dựng tại Việt Nam 🇻🇳 bởi <strong>Nguyễn Tiến Đạt (The Billy Hunter)</strong><br />
+      Tài liệu phân tích giải pháp kỹ thuật · Nội bộ · Tuân thủ Nghị định 13/2023/NĐ-CP
     </p>
   </div>
 </footer>
 
 <script>
-  /* ===== SCROLL ANIMATIONS ===== */
-  const observer = new IntersectionObserver(entries => {
+  /* ====== FADE IN OBSERVER ====== */
+  const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  /* ===== STACK TABS ===== */
-  function showStack(id, btn) {
-    document.querySelectorAll('.stack-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.remove('active-music', 'active-drive');
-    });
-    document.getElementById('stack-' + id).classList.add('active');
-    btn.classList.add(id === 'music' ? 'active-music' : 'active-drive');
+  /* ====== STACK TABS ====== */
+  function setTab(id, btn) {
+    document.querySelectorAll('.spanel').forEach(p => p.classList.remove('show'));
+    document.querySelectorAll('.stab').forEach(b => b.classList.remove('on-m','on-d','on-s'));
+    document.getElementById('spanel-' + id).classList.add('show');
+    const cls = id === 'music' ? 'on-m' : id === 'drive' ? 'on-d' : 'on-s';
+    btn.classList.add(cls);
   }
+  /* Make shared tab work */
+  document.querySelectorAll('.stab')[2] && (document.querySelectorAll('.stab')[2].onclick = function(){ setTab('shared', this); });
 
-  /* ===== COUNT-UP ANIMATION ===== */
-  function animateCount(el) {
-    const target = parseFloat(el.dataset.target);
-    const isFloat = String(target).includes('.');
-    const duration = 2000;
-    const start = performance.now();
-    function step(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const val = target * ease;
-      el.textContent = isFloat ? val.toFixed(1) : Math.round(val).toString();
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  const countObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCount(e.target);
-        countObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
-
-  /* ===== SMOOTH NAV SHRINK ===== */
+  /* ====== SMOOTH NAV ====== */
+  let lastScroll = 0;
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
-    if (window.scrollY > 60) {
-      nav.style.padding = '10px 0';
-    } else {
-      nav.style.padding = '16px 0';
-    }
+    const scroll = window.scrollY;
+    nav.style.transform = scroll > lastScroll && scroll > 80 ? 'translateY(-100%)' : 'translateY(0)';
+    nav.style.transition = 'transform .3s ease';
+    lastScroll = scroll;
   });
+
+  /* ====== ACTIVE NAV LINK ====== */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = '';
+          if (a.getAttribute('href') === '#' + e.target.id) a.style.color = 'var(--text)';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => sectionObs.observe(s));
 </script>
 </body>
 </html>
