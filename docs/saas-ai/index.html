@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SaaS & AI — Góc nhìn Frontend Developer</title>
+  <style>
+    :root {
+      --bg: #0d0f17;
+      --surface: #131721;
+      --surface2: #1a1f2e;
+      --border: #252b3b;
+      --accent: #4f8ef7;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --text: #e2e8f0;
+      --text-muted: #8892a4;
+      --text-dim: #5a6478;
+      --heading: #f8fafc;
+      --tag-saas: rgba(79,142,247,0.15);
+      --tag-ai: rgba(167,139,250,0.15);
+      --tag-code: rgba(52,211,153,0.12);
+      --code-bg: #0f1420;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ── Layout ── */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 100;
+      padding: 28px 0 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-brand {
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-brand .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-brand .title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--heading);
+      line-height: 1.4;
+    }
+
+    .sidebar-brand .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .nav-section {
+      padding: 0 16px;
+      margin-bottom: 8px;
+    }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 8px;
+      margin-bottom: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: rgba(79,142,247,0.12);
+      color: var(--accent);
+    }
+
+    .nav-item .nav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .nav-item.active .nav-dot { background: var(--accent); }
+    .nav-item:hover .nav-dot { background: var(--text-muted); }
+
+    /* ── Main ── */
+    .main {
+      margin-left: 260px;
+      flex: 1;
+      max-width: 860px;
+      padding: 60px 56px 120px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 48px 0 56px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 64px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(79,142,247,0.1);
+      border: 1px solid rgba(79,142,247,0.25);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 span.gradient-saas {
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span.gradient-ai {
+      background: linear-gradient(135deg, var(--accent2), #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.8;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .hero-tag .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 80px;
+      scroll-margin-top: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .section-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .icon-saas { background: var(--tag-saas); }
+    .icon-ai { background: var(--tag-ai); }
+    .icon-both { background: var(--tag-code); }
+    .icon-dev { background: rgba(251,191,36,0.12); }
+
+    .section-meta h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--heading);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .section-meta .section-sub {
+      font-size: 14px;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── Subsection ── */
+    .subsection {
+      margin-bottom: 40px;
+    }
+
+    .subsection h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .subsection h3.ai-border { border-left-color: var(--accent2); }
+    .subsection h3.green-border { border-left-color: var(--accent3); }
+    .subsection h3.yellow-border { border-left-color: #fbbf24; }
+
+    .subsection p {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-size: 15.5px;
+    }
+
+    .subsection p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card.ai-card:hover { border-color: var(--accent2); }
+    .card.green-card:hover { border-color: var(--accent3); }
+
+    .card-icon { font-size: 24px; margin-bottom: 12px; }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Tag ── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin: 3px 4px 3px 0;
+    }
+
+    .tag-blue { background: var(--tag-saas); color: var(--accent); border: 1px solid rgba(79,142,247,0.25); }
+    .tag-purple { background: var(--tag-ai); color: var(--accent2); border: 1px solid rgba(167,139,250,0.25); }
+    .tag-green { background: var(--tag-code); color: var(--accent3); border: 1px solid rgba(52,211,153,0.25); }
+    .tag-yellow { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+
+    /* ── Code block ── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 20px 0;
+      font-family: 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .code-dots { display: flex; gap: 6px; }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #fbbf24; }
+    .dot-g { background: #22c55e; }
+
+    .code-content {
+      padding: 20px;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+      color: #cdd6f4;
+    }
+
+    .code-content .kw { color: #89b4fa; }
+    .code-content .fn { color: #89dceb; }
+    .code-content .str { color: #a6e3a1; }
+    .code-content .cmt { color: var(--text-dim); font-style: italic; }
+    .code-content .num { color: #fab387; }
+    .code-content .var { color: #cba6f7; }
+    .code-content .op { color: #89dceb; }
+    .code-content .prop { color: #f5c2e7; }
+
+    /* ── List ── */
+    .styled-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+
+    .styled-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .styled-list li:last-child { border-bottom: none; }
+
+    .styled-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .styled-list.ai-list li::before { color: var(--accent2); }
+    .styled-list.green-list li::before { color: var(--accent3); }
+    .styled-list.yellow-list li::before { color: #fbbf24; }
+
+    .styled-list li strong { color: var(--text); font-weight: 600; }
+
+    /* ── Callout ── */
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .callout.ai { border-left-color: var(--accent2); }
+    .callout.green { border-left-color: var(--accent3); }
+    .callout.yellow { border-left-color: #fbbf24; }
+
+    .callout strong { color: var(--text); }
+
+    .callout-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .callout.ai .callout-title { color: var(--accent2); }
+    .callout.green .callout-title { color: var(--accent3); }
+    .callout.yellow .callout-title { color: #fbbf24; }
+
+    /* ── Comparison table ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    .compare-table th {
+      background: var(--surface2);
+      color: var(--heading);
+      font-weight: 700;
+      padding: 12px 16px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .compare-table td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Progress / Mental model ── */
+    .mental-model {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .mental-model-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .flow-steps {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .flow-step-circle {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .flow-step-circle::after {
+      content: '';
+      position: absolute;
+      right: -50%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .flow-step:last-child .flow-step-circle::after { display: none; }
+
+    .flow-step-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-width: 90px;
+    }
+
+    /* ── Quote ── */
+    .quote {
+      border-left: 3px solid var(--accent2);
+      padding: 12px 20px;
+      margin: 24px 0;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+      margin: 48px 0;
+    }
+
+    /* ── Progress bar ── */
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .skill-name {
+      min-width: 180px;
+      font-size: 13.5px;
+      color: var(--text);
+    }
+
+    .skill-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(to right, var(--accent), #60a5fa);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.8s ease;
+    }
+
+    .skill-fill.ai-fill {
+      background: linear-gradient(to right, var(--accent2), #f472b6);
+    }
+
+    .skill-fill.green-fill {
+      background: linear-gradient(to right, var(--accent3), #6ee7b7);
+    }
+
+    .skill-pct {
+      font-size: 12px;
+      color: var(--text-dim);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* ── Mobile toggle ── */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 16px; left: 16px;
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
+    /* ── TOC progress ── */
+    #reading-progress {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Back to top ── */
+    #back-top {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      width: 44px; height: 44px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
+    }
+
+    #back-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #back-top:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+      }
+
+      .sidebar-toggle {
+        display: flex;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 60px 24px 80px;
+      }
+
+      .hero h1 { font-size: 30px; }
+
+      .card-grid { grid-template-columns: 1fr 1fr; }
+
+      .flow-steps { gap: 8px; }
+    }
+
+    @media (max-width: 560px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 26px; }
+      .main { padding: 60px 16px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="label">Tài liệu cá nhân</div>
+    <div class="title">SaaS & AI</div>
+    <div class="subtitle">Góc nhìn Frontend Developer</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Mở đầu</div>
+    <a class="nav-item active" href="#intro">
+      <span class="nav-dot"></span> Giới thiệu
+    </a>
+    <a class="nav-item" href="#perspective">
+      <span class="nav-dot"></span> Tôi là ai
+    </a>
+  </div>
+
+  <div class="nav-section" style="margin-top:8px;">
+    <div class="nav-section-title">SaaS</div>
+    <a class="nav-item" href="#saas-what">
+      <span class="nav-dot"></span> SaaS là gì
+    </a>
+    <a class="nav-item" href="#saas-architecture">
+      <span class="nav-dot"></span> Kiến trúc từ Frontend
+    </a>
+    <a class="nav-item" href="#saas-patterns">
+      <span class="nav-dot"></span> Patterns & Kỹ thuật
+    </a>
+    <a class="nav-item" href="#saas-building">
+      <span class="nav-dot"></span> Xây dựng SaaS Frontend
+    </a>
+  </div>
+
+  <div class="nav-section" style="margin-top:8px;">
+    <div class="nav-section-title">AI</div>
+    <a class="nav-item" href="#ai-what">
+      <span class="nav-dot"></span> AI là gì (với Frontend Dev)
+    </a>
+    <a class="nav-item" href="#ai-integration">
+      <span class="nav-dot"></span> Tích hợp AI vào Web
+    </a>
+    <a class="nav-item" href="#ai-patterns">
+      <span class="nav-dot"></span> UI Patterns cho AI
+    </a>
+    <a class="nav-item" href="#ai-tools">
+      <span class="nav-dot"></span> Công cụ AI cho Dev
+    </a>
+  </div>
+
+  <div class="nav-section" style="margin-top:8px;">
+    <div class="nav-section-title">Giao thoa</div>
+    <a class="nav-item" href="#intersection">
+      <span class="nav-dot"></span> SaaS + AI = ?
+    </a>
+    <a class="nav-item" href="#mindset">
+      <span class="nav-dot"></span> Tư duy & Bài học
+    </a>
+    <a class="nav-item" href="#future">
+      <span class="nav-dot"></span> Nhìn về tương lai
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="intro">
+    <div class="hero-eyebrow">📝 Tài liệu cá nhân</div>
+    <h1>Tôi hiểu về <span class="gradient-saas">SaaS</span> và <span class="gradient-ai">AI</span> như thế nào</h1>
+    <p class="hero-desc">
+      Toàn bộ những gì tôi biết, cách tôi suy nghĩ và cách tôi tiếp cận hai lĩnh vực đang định hình lại ngành công nghệ — dưới góc nhìn của một frontend developer chuyên về HTML, CSS và JavaScript.
+    </p>
+    <div class="hero-meta">
+      <span class="hero-tag"><span class="dot" style="background:var(--accent)"></span> SaaS</span>
+      <span class="hero-tag"><span class="dot" style="background:var(--accent2)"></span> AI / LLM</span>
+      <span class="hero-tag"><span class="dot" style="background:var(--accent3)"></span> Frontend Dev</span>
+    </div>
+  </div>
+
+  <!-- TÔI LÀ AI -->
+  <section class="section" id="perspective">
+    <div class="section-header">
+      <div class="section-icon icon-dev">👨‍💻</div>
+      <div class="section-meta">
+        <h2>Tôi là ai &amp; Góc nhìn của tôi</h2>
+        <div class="section-sub">Context trước khi đọc phần còn lại</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        Tôi là một <strong>frontend developer</strong> — người làm việc với HTML, CSS và JavaScript. Đây không chỉ là công cụ, đây là ngôn ngữ tư duy của tôi. Khi nghe về một khái niệm mới, câu hỏi đầu tiên trong đầu tôi luôn là: <em>"Nó hiển thị ra sao? User tương tác như thế nào? Code phía browser trông ra sao?"</em>
+      </p>
+      <p>
+        Góc nhìn này khác với backend developer (nghĩ đến database, API, server) hay product manager (nghĩ đến market fit, metrics). Tôi là người <strong>đứng ở điểm giao giữa con người và máy móc</strong> — xây dựng thứ mà con người nhìn thấy, chạm vào và trải nghiệm.
+      </p>
+    </div>
+
+    <div class="callout yellow">
+      <div class="callout-title">⚡ Quan điểm cốt lõi</div>
+      Frontend developer không chỉ là người "code giao diện". Chúng tôi là <strong>người phiên dịch</strong> — chuyển ý tưởng thành pixel, chuyển dữ liệu thành trải nghiệm, chuyển logic thành cảm xúc của người dùng. Hiểu SaaS và AI qua lăng kính này là hiểu chúng từ <em>nơi người dùng thực sự chạm vào chúng</em>.
+    </div>
+
+    <div class="subsection">
+      <h3 class="yellow-border">Bản đồ kỹ năng của tôi</h3>
+      <div id="skill-bars">
+        <div class="skill-row">
+          <span class="skill-name">HTML / Semantic markup</span>
+          <div class="skill-bar"><div class="skill-fill" data-width="0.95"></div></div>
+          <span class="skill-pct">95%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">CSS / Layout / Animation</span>
+          <div class="skill-bar"><div class="skill-fill" data-width="0.92"></div></div>
+          <span class="skill-pct">92%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Vanilla JavaScript / DOM</span>
+          <div class="skill-bar"><div class="skill-fill" data-width="0.88"></div></div>
+          <span class="skill-pct">88%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">REST API / Fetch / Async</span>
+          <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">SaaS Product Architecture</span>
+          <div class="skill-bar"><div class="skill-fill ai-fill" data-width="0.72"></div></div>
+          <span class="skill-pct">72%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">AI API Integration (browser)</span>
+          <div class="skill-bar"><div class="skill-fill ai-fill" data-width="0.68"></div></div>
+          <span class="skill-pct">68%</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Prompt Engineering cơ bản</span>
+          <div class="skill-bar"><div class="skill-fill green-fill" data-width="0.65"></div></div>
+          <span class="skill-pct">65%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════ SAAS ═══════════════════════════════ -->
+
+  <section class="section" id="saas-what">
+    <div class="section-header">
+      <div class="section-icon icon-saas">☁️</div>
+      <div class="section-meta">
+        <h2>SaaS là gì — theo cách tôi hiểu</h2>
+        <div class="section-sub">Không phải định nghĩa giáo khoa, mà là cảm nhận thực tế</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        <strong>Software as a Service</strong> — phần mềm như một dịch vụ. Đơn giản mà nói: thay vì mua phần mềm về cài máy, bạn dùng nó qua trình duyệt và trả tiền theo tháng/năm. Figma, Notion, Slack, Google Docs — đều là SaaS.
+      </p>
+      <p>
+        Nhưng với tôi với tư cách frontend dev, SaaS không chỉ là mô hình kinh doanh. Nó là <strong>một kiểu phần mềm được thiết kế để phục vụ nhiều người dùng đồng thời, qua web, không cần cài đặt gì phía client</strong>. Và chính điều đó tạo ra một tập hợp các vấn đề kỹ thuật frontend rất đặc thù.
+      </p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🏢</div>
+        <div class="card-title">Delivery qua browser</div>
+        <div class="card-desc">Ứng dụng chạy trên server, người dùng truy cập bằng URL. Frontend là toàn bộ thứ mà browser render ra — không có client app nặng cần cài.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💳</div>
+        <div class="card-title">Subscription model</div>
+        <div class="card-desc">Thanh toán định kỳ, không mua đứt. Frontend cần xử lý trạng thái subscription: free tier, trial, pro, enterprise — mỗi tier unlock feature khác nhau.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👥</div>
+        <div class="card-title">Multi-tenancy</div>
+        <div class="card-desc">Một codebase phục vụ nhiều khách hàng (tenant). Dữ liệu của mỗi khách hàng tách biệt nhau hoàn toàn, dù chạy trên cùng infrastructure.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Continuous updates</div>
+        <div class="card-desc">Không có "phiên bản phần mềm" theo nghĩa truyền thống. Code deploy liên tục — người dùng luôn dùng version mới nhất mà không cần làm gì.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Internet-native</div>
+        <div class="card-desc">SaaS sống và chết với kết nối internet. Frontend phải xử lý trạng thái offline, slow network, và optimistic updates một cách thông minh.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Data-driven</div>
+        <div class="card-desc">Mọi hành động người dùng đều được track, phân tích. Frontend là nơi events được fire — click, scroll, submit — và gửi về analytics system.</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Ba mô hình SaaS phổ biến</h3>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Mô hình</th>
+            <th>Ví dụ</th>
+            <th>Frontend đặc trưng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag tag-blue">B2C SaaS</span></td>
+            <td>Spotify, Canva, Duolingo</td>
+            <td>UX cực kỳ đơn giản, onboarding mượt mà, freemium gate, mobile-first</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">B2B SaaS</span></td>
+            <td>Salesforce, HubSpot, Jira</td>
+            <td>Dashboard phức tạp, role-based UI, data-heavy, customization cao</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-green">Dev Tool SaaS</span></td>
+            <td>Vercel, GitHub, Stripe</td>
+            <td>Developer experience là UX, API docs đẹp, CLI + Web kết hợp</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SaaS Architecture -->
+  <section class="section" id="saas-architecture">
+    <div class="section-header">
+      <div class="section-icon icon-saas">🏗️</div>
+      <div class="section-meta">
+        <h2>Kiến trúc SaaS từ góc nhìn Frontend</h2>
+        <div class="section-sub">Tôi không cần hiểu hết backend, nhưng cần biết đủ để làm đúng</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        Khi nhìn vào một SaaS product, tôi hình dung nó như thế này: có một <strong>frontend app</strong> (thứ tôi xây dựng), giao tiếp với <strong>backend APIs</strong> (thứ tôi consume), chạy trên <strong>cloud infrastructure</strong> (thứ tôi không cần quan tâm nhiều). Nhưng ranh giới giữa các phần này ảnh hưởng rất lớn đến cách tôi code.
+      </p>
+    </div>
+
+    <div class="mental-model">
+      <div class="mental-model-title">🧭 Mental model: Luồng dữ liệu trong SaaS</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-circle" style="background:rgba(79,142,247,0.15);">🌐</div>
+          <div class="flow-step-label">Browser / HTML+CSS+JS</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle" style="background:rgba(79,142,247,0.12);">🔗</div>
+          <div class="flow-step-label">REST API / GraphQL / WebSocket</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle" style="background:rgba(79,142,247,0.09);">⚙️</div>
+          <div class="flow-step-label">Business Logic (Server)</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle" style="background:rgba(79,142,247,0.07);">🗄️</div>
+          <div class="flow-step-label">Database / Storage</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-circle" style="background:rgba(79,142,247,0.05);">☁️</div>
+          <div class="flow-step-label">Cloud Infra</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Những gì Frontend cần biết về kiến trúc SaaS</h3>
+      <ul class="styled-list">
+        <li>
+          <span><strong>Authentication &amp; Authorization:</strong> Không chỉ là login/logout. Frontend cần hiểu JWT, refresh tokens, session management. Và quan trọng hơn là <em>authorization</em> — người dùng này có quyền xem màn hình này không? Role-based access control (RBAC) thường được implement cả phía server lẫn UI.</span>
+        </li>
+        <li>
+          <span><strong>Multi-tenancy trong UI:</strong> Cùng một app nhưng tenant A thấy giao diện màu xanh với logo công ty A, tenant B thấy màu đỏ với logo công ty B. Đây là <em>white-labeling</em> hoặc <em>theming per tenant</em>. Frontend cần thiết kế CSS variables và theme system từ đầu.</span>
+        </li>
+        <li>
+          <span><strong>API Rate Limiting:</strong> SaaS backends thường có rate limit. Frontend cần handle <code>429 Too Many Requests</code> gracefully — không crash, không stuck, hiện thông báo thân thiện, retry sau.</span>
+        </li>
+        <li>
+          <span><strong>Feature Flags:</strong> Tính năng mới không phải lúc nào cũng bật cho tất cả người dùng. Frontend nhận flag từ server (hoặc từ service như LaunchDarkly) và show/hide UI tương ứng. Cực kỳ phổ biến trong SaaS.</span>
+        </li>
+        <li>
+          <span><strong>Billing State trong UI:</strong> Free tier hiện upsell banner. Trial sắp hết hiện countdown. Overage limit hiện warning. Payment failed hiện grace period modal. Frontend là người "nói chuyện" với người dùng về tiền — phải làm tinh tế, không gây panic.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>REST API — ngôn ngữ chính giữa Frontend và Backend</h3>
+      <p>Trong SaaS, frontend liên tục giao tiếp với backend qua API. Đây là vòng lặp cơ bản mà tôi lặp lại hàng trăm lần mỗi ngày:</p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — Fetch API</span>
+        </div>
+        <pre class="code-content"><span class="cmt">// Ví dụ: Lấy danh sách projects của tenant hiện tại</span>
+<span class="kw">async function</span> <span class="fn">getProjects</span>() {
+  <span class="kw">const</span> <span class="var">token</span> = localStorage.<span class="fn">getItem</span>(<span class="str">'access_token'</span>);
+
+  <span class="kw">const</span> <span class="var">res</span> = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/v1/projects'</span>, {
+    <span class="prop">headers</span>: {
+      <span class="str">'Authorization'</span>: <span class="str">`Bearer <span class="var">${token}</span>`</span>,
+      <span class="str">'X-Tenant-ID'</span>: <span class="fn">getTenantId</span>(), <span class="cmt">// Multi-tenancy header</span>
+    }
+  });
+
+  <span class="cmt">// Xử lý lỗi gracefully thay vì để crash</span>
+  <span class="kw">if</span> (res.<span class="prop">status</span> === <span class="num">401</span>) <span class="kw">return</span> <span class="fn">redirectToLogin</span>();
+  <span class="kw">if</span> (res.<span class="prop">status</span> === <span class="num">403</span>) <span class="kw">return</span> <span class="fn">showPermissionError</span>();
+  <span class="kw">if</span> (res.<span class="prop">status</span> === <span class="num">429</span>) <span class="kw">return</span> <span class="fn">showRateLimitWarning</span>();
+  <span class="kw">if</span> (!res.<span class="prop">ok</span>) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`API Error: <span class="var">${res.status}</span>`</span>);
+
+  <span class="kw">return</span> res.<span class="fn">json</span>();
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SaaS Patterns -->
+  <section class="section" id="saas-patterns">
+    <div class="section-header">
+      <div class="section-icon icon-saas">🧩</div>
+      <div class="section-meta">
+        <h2>Patterns &amp; Kỹ thuật SaaS Frontend</h2>
+        <div class="section-sub">Những pattern tôi gặp lại trong mọi SaaS product</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>1. Optimistic UI Updates</h3>
+      <p>
+        Trong SaaS, người dùng thao tác liên tục. Nếu mỗi click phải chờ server response mới update UI, trải nghiệm sẽ rất chậm. <strong>Optimistic UI</strong> là kỹ thuật update UI ngay lập tức trước khi nhận response từ server, sau đó rollback nếu request thất bại.
+      </p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — Optimistic Update</span>
+        </div>
+        <pre class="code-content"><span class="kw">async function</span> <span class="fn">toggleTodo</span>(<span class="var">id</span>, <span class="var">currentDone</span>) {
+  <span class="cmt">// 1. Update UI ngay (optimistic)</span>
+  <span class="fn">updateTodoInUI</span>(<span class="var">id</span>, { <span class="prop">done</span>: !<span class="var">currentDone</span> });
+
+  <span class="kw">try</span> {
+    <span class="cmt">// 2. Gửi request lên server</span>
+    <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/todos/<span class="var">${id}</span>`</span>, {
+      <span class="prop">method</span>: <span class="str">'PATCH'</span>,
+      <span class="prop">body</span>: JSON.<span class="fn">stringify</span>({ <span class="prop">done</span>: !<span class="var">currentDone</span> })
+    });
+    <span class="cmt">// 3. Server ok → giữ nguyên UI đã update</span>
+  } <span class="kw">catch</span> {
+    <span class="cmt">// 4. Server fail → rollback về state cũ</span>
+    <span class="fn">updateTodoInUI</span>(<span class="var">id</span>, { <span class="prop">done</span>: <span class="var">currentDone</span> });
+    <span class="fn">showToast</span>(<span class="str">'Có lỗi xảy ra, vui lòng thử lại'</span>);
+  }
+}</pre>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>2. Real-time với WebSocket / SSE</h3>
+      <p>
+        Nhiều SaaS cần real-time: Notion thấy cursor của người khác, Slack nhận tin nhắn ngay, Figma thấy team edit đồng thời. Frontend xử lý điều này qua <strong>WebSocket</strong> (bi-directional) hoặc <strong>Server-Sent Events</strong> (server push one-way).
+      </p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — WebSocket cơ bản</span>
+        </div>
+        <pre class="code-content"><span class="kw">const</span> <span class="var">ws</span> = <span class="kw">new</span> <span class="fn">WebSocket</span>(<span class="str">'wss://api.myapp.com/ws'</span>);
+
+<span class="var">ws</span>.<span class="prop">onopen</span> = () => {
+  <span class="cmt">// Gửi token để authenticate</span>
+  <span class="var">ws</span>.<span class="fn">send</span>(JSON.<span class="fn">stringify</span>({ <span class="prop">type</span>: <span class="str">'auth'</span>, <span class="prop">token</span>: <span class="fn">getToken</span>() }));
+};
+
+<span class="var">ws</span>.<span class="prop">onmessage</span> = (<span class="var">event</span>) => {
+  <span class="kw">const</span> { <span class="var">type</span>, <span class="var">payload</span> } = JSON.<span class="fn">parse</span>(<span class="var">event</span>.<span class="prop">data</span>);
+
+  <span class="kw">switch</span> (<span class="var">type</span>) {
+    <span class="kw">case</span> <span class="str">'new_message'</span>:   <span class="fn">appendMessage</span>(<span class="var">payload</span>); <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="str">'user_joined'</span>:   <span class="fn">showPresence</span>(<span class="var">payload</span>);   <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="str">'data_updated'</span>:  <span class="fn">refreshData</span>(<span class="var">payload</span>);   <span class="kw">break</span>;
+  }
+};</pre>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>3. Infinite Scroll &amp; Pagination</h3>
+      <p>SaaS thường có lượng data khổng lồ. Không ai load 10,000 records một lúc. Frontend cần chọn giữa <strong>cursor-based pagination</strong> (tốt cho real-time data) hay <strong>offset pagination</strong> (đơn giản hơn). Infinite scroll dùng <code>IntersectionObserver</code> để detect khi nào user scroll đến cuối.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>4. Permission-gated UI</h3>
+      <p>Một admin thấy nút "Xóa tài khoản người dùng". Một member thường thì không. Frontend cần một hệ thống đơn giản để check permissions trước khi render:</p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — Permission check</span>
+        </div>
+        <pre class="code-content"><span class="cmt">// User object từ server chứa permissions</span>
+<span class="kw">const</span> <span class="var">user</span> = {
+  <span class="prop">role</span>: <span class="str">'member'</span>,
+  <span class="prop">permissions</span>: [<span class="str">'read:projects'</span>, <span class="str">'write:own_tasks'</span>]
+};
+
+<span class="kw">function</span> <span class="fn">can</span>(<span class="var">permission</span>) {
+  <span class="kw">return</span> <span class="var">user</span>.<span class="prop">permissions</span>.<span class="fn">includes</span>(<span class="var">permission</span>);
+}
+
+<span class="cmt">// Trong HTML render logic:</span>
+<span class="kw">if</span> (<span class="fn">can</span>(<span class="str">'delete:users'</span>)) {
+  <span class="var">deleteBtn</span>.<span class="prop">style</span>.<span class="prop">display</span> = <span class="str">'block'</span>;
+}
+
+<span class="cmt">// ⚠️ Note: Frontend permission chỉ là UX!
+// Server PHẢI kiểm tra lại — không bao giờ trust client</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Building SaaS Frontend -->
+  <section class="section" id="saas-building">
+    <div class="section-header">
+      <div class="section-icon icon-saas">🛠️</div>
+      <div class="section-meta">
+        <h2>Xây dựng SaaS Frontend — Tư duy của tôi</h2>
+        <div class="section-sub">Cách tôi approach khi bắt đầu một SaaS product mới</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Những quyết định kiến trúc quan trọng từ ngày 1</h3>
+      <ul class="styled-list">
+        <li><strong>Design System trước tiên:</strong> SaaS cần consistency. Xây dựng component library ngay từ đầu — button, input, modal, toast — với CSS variables cho theming. Đừng hardcode màu hay font size.</li>
+        <li><strong>State Management rõ ràng:</strong> Phân biệt server state (data từ API) và client state (UI state như modal open/closed). Lẫn lộn hai loại này là nguồn gốc của rất nhiều bug.</li>
+        <li><strong>Error boundaries ở mọi nơi:</strong> Trong SaaS, một component fail không được phép crash cả app. Wrap các component quan trọng bằng error handling, hiện fallback UI thân thiện.</li>
+        <li><strong>Loading states cho mọi async action:</strong> Mọi button gọi API cần có loading state. Người dùng không được double-click và gửi 2 requests. Disable button, show spinner — làm cẩn thận.</li>
+        <li><strong>Analytics từ đầu:</strong> Track mọi hành động quan trọng — page view, feature usage, error rate. Data này là feedback loop của product team.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">💡 Nguyên tắc vàng khi build SaaS frontend</div>
+      <strong>Never trust the client.</strong> Frontend chỉ là giao diện — mọi validation, permission check, business logic quan trọng đều phải ở server. Frontend chỉ làm UX tốt hơn, không phải security layer. Một người dùng có thể mở DevTools và thay đổi bất kỳ thứ gì phía client.
+    </div>
+
+    <div class="subsection">
+      <h3>Onboarding — Bước quyết định của SaaS</h3>
+      <p>
+        Trong SaaS, onboarding là màn hình quan trọng nhất. Người dùng sign up, và họ có <strong>khoảng 5 phút</strong> để cảm nhận giá trị sản phẩm trước khi rời đi. Frontend developer phải làm cho flow này:
+      </p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Nhanh chóng</div>
+          <div class="card-desc">Không hỏi quá nhiều thông tin. Thu thập dần theo thời gian (progressive profiling). Đưa người dùng đến "aha moment" sớm nhất có thể.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Có hướng dẫn</div>
+          <div class="card-desc">Tooltip, progress bar, checklist. Người dùng mới cần tay nắm. Empty states phải có CTA rõ ràng — không được để trang trống trơn.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎁</div>
+          <div class="card-title">Có giá trị ngay</div>
+          <div class="card-desc">Cung cấp sample data, templates, demo content. Người dùng không nên thấy một app rỗng hoàn toàn khi vừa đăng ký.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════ AI ═══════════════════════════════ -->
+
+  <section class="section" id="ai-what">
+    <div class="section-header">
+      <div class="section-icon icon-ai">🤖</div>
+      <div class="section-meta">
+        <h2>AI là gì — theo cách Frontend Dev hiểu</h2>
+        <div class="section-sub">Tôi không cần biết neural network hoạt động ra sao. Tôi cần biết dùng nó như thế nào.</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        AI là một lĩnh vực rộng, nhưng với tôi với tư cách frontend developer năm 2024-2025, AI thực tế gần như đồng nghĩa với <strong>Large Language Models (LLMs)</strong> — các mô hình ngôn ngữ lớn như GPT-4, Claude, Gemini. Đây là công nghệ đã thay đổi cách tôi nghĩ về "phần mềm thông minh".
+      </p>
+    </div>
+
+    <div class="quote">
+      "AI với tôi không phải là robot hay khoa học viễn tưởng. Nó là một function cực kỳ mạnh: nhận text vào, trả text ra — nhưng text đó có thể là code, phân tích, sáng tác, dịch thuật, hay bất kỳ thứ gì có thể diễn đạt bằng ngôn ngữ."
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">Các loại AI mà Frontend Dev cần biết</h3>
+      <div class="card-grid">
+        <div class="card ai-card">
+          <div class="card-icon">💬</div>
+          <div class="card-title">LLM / Chat AI</div>
+          <div class="card-desc">GPT, Claude, Gemini. Nhận text, trả text. Dùng cho chatbot, text generation, Q&A, code completion, summarization.</div>
+        </div>
+        <div class="card ai-card">
+          <div class="card-icon">🎨</div>
+          <div class="card-title">Image Generation AI</div>
+          <div class="card-desc">DALL-E, Midjourney, Stable Diffusion. Nhận text prompt, tạo ra hình ảnh. Dùng cho asset generation, UI mockup, creative tools.</div>
+        </div>
+        <div class="card ai-card">
+          <div class="card-icon">🔍</div>
+          <div class="card-title">Embedding / Semantic Search</div>
+          <div class="card-desc">Chuyển text thành vector số. Dùng cho tìm kiếm theo nghĩa (không phải keyword), recommendation system, RAG (Retrieval Augmented Generation).</div>
+        </div>
+        <div class="card ai-card">
+          <div class="card-icon">🎙️</div>
+          <div class="card-title">Speech AI</div>
+          <div class="card-desc">Whisper (speech-to-text), TTS APIs (text-to-speech). Dùng cho voice interface, transcription, accessibility features.</div>
+        </div>
+        <div class="card ai-card">
+          <div class="card-icon">👁️</div>
+          <div class="card-title">Vision AI</div>
+          <div class="card-desc">Multimodal models nhận ảnh + text, trả về phân tích. Dùng cho image captioning, OCR thông minh, visual Q&A.</div>
+        </div>
+        <div class="card ai-card">
+          <div class="card-icon">🤔</div>
+          <div class="card-title">AI Agents</div>
+          <div class="card-desc">LLM được trao công cụ để thực thi actions — gọi API, đọc file, duyệt web. Không chỉ trả lời mà còn làm việc thay người dùng.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">LLM hoạt động như thế nào — đủ để làm Frontend</h3>
+      <p>Tôi không cần hiểu transformer architecture hay backpropagation. Nhưng tôi cần hiểu đủ để sử dụng LLM đúng cách:</p>
+      <ul class="styled-list ai-list">
+        <li><strong>Token là đơn vị tính toán:</strong> LLM không đọc từng ký tự hay từng từ — nó đọc token (~0.75 từ tiếng Anh). Giới hạn context window (như 128k tokens) quyết định bao nhiêu text có thể xử lý một lúc. Giới hạn này quan trọng khi design feature.</li>
+        <li><strong>Temperature điều chỉnh độ ngẫu nhiên:</strong> Temperature = 0 cho output nhất quán, deterministic. Temperature = 1 cho output sáng tạo, đa dạng hơn. Với code generation, dùng thấp. Với brainstorming, dùng cao hơn.</li>
+        <li><strong>LLM không có memory mặc định:</strong> Mỗi request là độc lập. Để có "conversation", frontend phải gửi toàn bộ lịch sử chat trong mỗi request. Đây là lý do tại sao conversation context có giới hạn.</li>
+        <li><strong>Hallucination là thật:</strong> LLM tự tin đưa ra thông tin sai. Frontend cần design UX để người dùng luôn verify thông tin quan trọng — đừng để AI output thành "truth" mặc định.</li>
+        <li><strong>Streaming response:</strong> LLM generate text từng token một. Thay vì chờ xong mới show, dùng streaming API để hiện text dần dần — trải nghiệm tốt hơn nhiều cho người dùng.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- AI Integration -->
+  <section class="section" id="ai-integration">
+    <div class="section-header">
+      <div class="section-icon icon-ai">🔌</div>
+      <div class="section-meta">
+        <h2>Tích hợp AI vào Web — Cách tôi làm</h2>
+        <div class="section-sub">Từ API key đến streaming response — quy trình thực tế</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">Nguyên tắc số 1: Không bao giờ gọi AI API từ browser</h3>
+      <p>
+        Đây là sai lầm cực kỳ phổ biến khi mới tích hợp AI. <strong>API keys của OpenAI, Anthropic, v.v. là secret</strong>. Nếu gọi thẳng từ browser JavaScript, bất kỳ ai cũng có thể thấy key của bạn trong DevTools Network tab và sử dụng, gây tốn tiền không giới hạn.
+      </p>
+      <div class="callout ai">
+        <div class="callout-title">🔐 Security Rule</div>
+        AI API key phải ở <strong>server-side</strong>. Frontend gọi API của <em>server của bạn</em>, server gọi AI provider. Server là proxy, là nơi bạn rate limit, auth check, log usage, và giấu secret.
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">Architecture: Frontend → Backend → AI API</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — Frontend gọi server của mình</span>
+        </div>
+        <pre class="code-content"><span class="cmt">// ✅ Đúng: Frontend gọi server của mình</span>
+<span class="kw">async function</span> <span class="fn">askAI</span>(<span class="var">userMessage</span>) {
+  <span class="kw">const</span> <span class="var">res</span> = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/ai/chat'</span>, {
+    <span class="prop">method</span>: <span class="str">'POST'</span>,
+    <span class="prop">headers</span>: {
+      <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span>,
+      <span class="str">'Authorization'</span>: <span class="str">`Bearer <span class="var">${getToken()}</span>`</span>,
+    },
+    <span class="prop">body</span>: JSON.<span class="fn">stringify</span>({ <span class="prop">message</span>: <span class="var">userMessage</span> })
+  });
+  <span class="kw">return</span> res.<span class="fn">json</span>();
+}
+
+<span class="cmt">// ❌ Sai: Gọi thẳng OpenAI từ browser (lộ API key!)</span>
+<span class="cmt">// fetch('https://api.openai.com/v1/chat/completions', {</span>
+<span class="cmt">//   headers: { 'Authorization': 'Bearer sk-...' } // ← LỘ KEY!</span>
+<span class="cmt">// })</span></pre>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">Streaming Response — Kỹ thuật quan trọng nhất</h3>
+      <p>
+        AI generation mất thời gian. Nếu chờ model generate xong 500 từ rồi mới hiện, người dùng sẽ nghĩ app bị treo. <strong>Streaming</strong> cho phép hiện text ngay khi từng token được generate — giống như ChatGPT đánh chữ ra từng chữ.
+      </p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — Xử lý Streaming response (SSE)</span>
+        </div>
+        <pre class="code-content"><span class="kw">async function</span> <span class="fn">streamAIResponse</span>(<span class="var">message</span>, <span class="var">onChunk</span>) {
+  <span class="kw">const</span> <span class="var">res</span> = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/ai/stream'</span>, {
+    <span class="prop">method</span>: <span class="str">'POST'</span>,
+    <span class="prop">body</span>: JSON.<span class="fn">stringify</span>({ <span class="prop">message</span> })
+  });
+
+  <span class="kw">const</span> <span class="var">reader</span> = res.<span class="prop">body</span>.<span class="fn">getReader</span>();
+  <span class="kw">const</span> <span class="var">decoder</span> = <span class="kw">new</span> <span class="fn">TextDecoder</span>();
+  <span class="kw">let</span> <span class="var">buffer</span> = <span class="str">''</span>;
+
+  <span class="kw">while</span> (<span class="kw">true</span>) {
+    <span class="kw">const</span> { <span class="var">done</span>, <span class="var">value</span> } = <span class="kw">await</span> <span class="var">reader</span>.<span class="fn">read</span>();
+    <span class="kw">if</span> (<span class="var">done</span>) <span class="kw">break</span>;
+
+    <span class="var">buffer</span> += <span class="var">decoder</span>.<span class="fn">decode</span>(<span class="var">value</span>);
+
+    <span class="cmt">// Parse SSE format: "data: {...}\n\n"</span>
+    <span class="kw">const</span> <span class="var">lines</span> = <span class="var">buffer</span>.<span class="fn">split</span>(<span class="str">'\n'</span>);
+    <span class="var">buffer</span> = <span class="var">lines</span>.<span class="fn">pop</span>(); <span class="cmt">// giữ lại phần chưa complete</span>
+
+    <span class="kw">for</span> (<span class="kw">const</span> <span class="var">line</span> <span class="op">of</span> <span class="var">lines</span>) {
+      <span class="kw">if</span> (<span class="var">line</span>.<span class="fn">startsWith</span>(<span class="str">'data: '</span>)) {
+        <span class="kw">const</span> <span class="var">chunk</span> = <span class="var">line</span>.<span class="fn">slice</span>(<span class="num">6</span>);
+        <span class="kw">if</span> (<span class="var">chunk</span> !== <span class="str">'[DONE]'</span>) {
+          <span class="var">onChunk</span>(JSON.<span class="fn">parse</span>(<span class="var">chunk</span>).<span class="prop">text</span>); <span class="cmt">// Gọi callback mỗi chunk</span>
+        }
+      }
+    }
+  }
+}
+
+<span class="cmt">// Sử dụng:</span>
+<span class="kw">let</span> <span class="var">fullText</span> = <span class="str">''</span>;
+<span class="kw">await</span> <span class="fn">streamAIResponse</span>(<span class="str">'Giải thích SaaS là gì?'</span>, (<span class="var">chunk</span>) => {
+  <span class="var">fullText</span> += <span class="var">chunk</span>;
+  <span class="var">outputEl</span>.<span class="prop">textContent</span> = <span class="var">fullText</span>; <span class="cmt">// Update DOM liên tục</span>
+});</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI UI Patterns -->
+  <section class="section" id="ai-patterns">
+    <div class="section-header">
+      <div class="section-icon icon-ai">✨</div>
+      <div class="section-meta">
+        <h2>UI Patterns cho tính năng AI</h2>
+        <div class="section-sub">Design thông minh cho trải nghiệm AI tốt</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">1. Typing indicator &amp; Skeleton</h3>
+      <p>Khi AI đang "suy nghĩ" (trước khi token đầu tiên đến), cần hiện loading state. Dùng skeleton screen thay vì spinner đơn giản để ước lượng hình dạng response sắp đến.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">CSS — Typing animation</span>
+        </div>
+        <pre class="code-content"><span class="cmt">/* Dấu ba chấm nhấp nháy kiểu AI typing */</span>
+<span class="prop">.ai-typing</span>::<span class="kw">after</span> {
+  <span class="prop">content</span>: <span class="str">'●●●'</span>;
+  <span class="prop">animation</span>: typing-dots <span class="num">1.4s</span> infinite;
+  <span class="prop">letter-spacing</span>: <span class="num">4px</span>;
+  <span class="prop">color</span>: <span class="str">#6b7280</span>;
+}
+
+<span class="kw">@keyframes</span> typing-dots {
+  <span class="num">0%</span>, <span class="num">60%</span>, <span class="num">100%</span> { <span class="prop">opacity</span>: <span class="num">1</span>; }
+  <span class="num">30%</span>             { <span class="prop">opacity</span>: <span class="num">0.3</span>; }
+}
+
+<span class="cmt">/* Cursor nhấp nháy khi text đang stream */</span>
+<span class="prop">.streaming-text</span>::<span class="kw">after</span> {
+  <span class="prop">content</span>: <span class="str">'▌'</span>;
+  <span class="prop">animation</span>: cursor-blink <span class="num">0.7s</span> step-end infinite;
+}
+
+<span class="kw">@keyframes</span> cursor-blink {
+  <span class="num">50%</span> { <span class="prop">opacity</span>: <span class="num">0</span>; }
+}</pre>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">2. Prompt Suggestions</h3>
+      <p>
+        Người dùng thường không biết hỏi gì hay hỏi như thế nào. Hiển thị <strong>suggested prompts</strong> như những chip nhỏ để người dùng click — giảm ngưỡng ban đầu, tăng engagement. Đây là pattern mà Notion AI, ChatGPT, và hầu hết AI tools đều dùng.
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">3. Stop Generation button</h3>
+      <p>Khi AI đang stream, luôn có nút "Stop". Người dùng đôi khi nhận ra câu trả lời không phải thứ họ cần khi mới đọc vài dòng đầu — dừng sớm tiết kiệm thời gian và tokens. Implement bằng <code>AbortController</code>.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot dot-r"></span>
+            <span class="code-dot dot-y"></span>
+            <span class="code-dot dot-g"></span>
+          </div>
+          <span class="code-lang">JavaScript — AbortController để dừng stream</span>
+        </div>
+        <pre class="code-content"><span class="kw">let</span> <span class="var">controller</span> = <span class="kw">null</span>;
+
+<span class="kw">async function</span> <span class="fn">startStream</span>(<span class="var">message</span>) {
+  <span class="var">controller</span> = <span class="kw">new</span> <span class="fn">AbortController</span>();
+
+  <span class="kw">try</span> {
+    <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/ai/stream'</span>, {
+      <span class="prop">method</span>: <span class="str">'POST'</span>,
+      <span class="prop">body</span>: JSON.<span class="fn">stringify</span>({ <span class="prop">message</span> }),
+      <span class="prop">signal</span>: <span class="var">controller</span>.<span class="prop">signal</span> <span class="cmt">// ← gắn signal vào fetch</span>
+    });
+  } <span class="kw">catch</span> (<span class="var">err</span>) {
+    <span class="kw">if</span> (<span class="var">err</span>.<span class="prop">name</span> === <span class="str">'AbortError'</span>) {
+      <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'User đã dừng generation'</span>);
+    }
+  }
+}
+
+<span class="cmt">// Nút Stop gọi:</span>
+<span class="var">stopBtn</span>.<span class="prop">onclick</span> = () => <span class="var">controller</span>?.<span class="fn">abort</span>();</pre>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">4. Feedback UI — Thumbs Up/Down</h3>
+      <p>
+        AI không phải lúc nào cũng đúng. UI cần cơ chế để người dùng report bad responses. <strong>Thumbs up/down</strong> sau mỗi AI response là standard. Collect feedback để fine-tune prompts, improve system, và track quality metrics.
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">5. Citation &amp; Source Linking</h3>
+      <p>
+        Khi AI có thể trả lời dựa trên data cụ thể (RAG — Retrieval Augmented Generation), luôn hiển thị sources. Người dùng cần biết thông tin đến từ đâu để verify. UI thường show số [1][2][3] inline và list sources ở cuối response.
+      </p>
+    </div>
+  </section>
+
+  <!-- AI Tools for Dev -->
+  <section class="section" id="ai-tools">
+    <div class="section-header">
+      <div class="section-icon icon-ai">🧰</div>
+      <div class="section-meta">
+        <h2>Công cụ AI dành cho Frontend Developer</h2>
+        <div class="section-sub">AI đã thay đổi cách tôi làm việc hàng ngày</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">AI trong workflow của tôi</h3>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Công cụ / API</th>
+            <th>Tôi dùng cho</th>
+            <th>Mức độ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GitHub Copilot</strong></td>
+            <td>Autocomplete code, generate boilerplate, explain code</td>
+            <td><span class="tag tag-green">Hàng ngày</span></td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT / Claude</strong></td>
+            <td>Debug, explain errors, brainstorm solutions, viết docs</td>
+            <td><span class="tag tag-green">Hàng ngày</span></td>
+          </tr>
+          <tr>
+            <td><strong>OpenAI API</strong></td>
+            <td>Build AI features vào product, text generation, classification</td>
+            <td><span class="tag tag-blue">Thường xuyên</span></td>
+          </tr>
+          <tr>
+            <td><strong>Whisper API</strong></td>
+            <td>Transcription, voice input features</td>
+            <td><span class="tag tag-purple">Khi cần</span></td>
+          </tr>
+          <tr>
+            <td><strong>DALL-E / Stable Diffusion</strong></td>
+            <td>Generate placeholder images, mockup assets</td>
+            <td><span class="tag tag-purple">Khi cần</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <h3 class="ai-border">Prompt Engineering cơ bản — đủ để dùng tốt</h3>
+      <p>Tôi không phải prompt engineer chuyên nghiệp. Nhưng tôi biết đủ để tận dụng AI hiệu quả trong công việc:</p>
+      <ul class="styled-list ai-list">
+        <li><strong>Cho context rõ ràng:</strong> Đừng hỏi "fix này" — hãy nói "Tôi là frontend dev, code JavaScript này bị lỗi X trên browser Chrome, đây là full error message: ..."</li>
+        <li><strong>Specify format output:</strong> "Trả lời dưới dạng JSON", "Viết dưới dạng bullet points", "Cho tôi chỉ code, không explanation". AI làm theo nếu bạn nói rõ.</li>
+        <li><strong>Chia nhỏ task phức tạp:</strong> Thay vì "Xây dựng cho tôi một app quản lý công việc", hãy hỏi từng phần: data structure trước, sau đó HTML, sau đó logic.</li>
+        <li><strong>Dùng few-shot examples:</strong> "Đây là ví dụ tôi muốn: [example]. Bây giờ làm tương tự cho [new case]."</li>
+        <li><strong>Iterate, không ngại hỏi lại:</strong> Response đầu không bao giờ hoàn hảo. Nói "Tốt nhưng cần thêm X" hoặc "Không đúng, ý tôi là Y".</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════ INTERSECTION ═══════════════════════════════ -->
+
+  <section class="section" id="intersection">
+    <div class="section-header">
+      <div class="section-icon icon-both">⚡</div>
+      <div class="section-meta">
+        <h2>SaaS + AI = AI-powered SaaS</h2>
+        <div class="section-sub">Khi hai thế giới va chạm — những gì thực sự thay đổi</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        2023-2025 là giai đoạn mà hầu hết mọi SaaS đều cố gắng tích hợp AI. Nhưng không phải cái nào cũng thành công. Tôi đã thấy đủ loại — từ AI được tích hợp thực sự có giá trị, đến "AI washing" — thêm chat GPT vào app rồi gọi là "AI-powered" mà không có gì đặc biệt.
+      </p>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-title">🎯 Khi nào AI thực sự có giá trị trong SaaS?</div>
+      AI có giá trị khi nó <strong>giảm friction</strong> cho user trong task họ đang làm — không phải khi nó là một feature được thêm vào vì trend. Notion AI giúp viết nhanh hơn. GitHub Copilot giúp code nhanh hơn. Linear AI giúp tóm tắt bug nhanh hơn. <em>Tất cả đều làm người dùng nhanh hơn ở việc họ đã làm.</em>
+    </div>
+
+    <div class="subsection">
+      <h3 class="green-border">Các patterns AI-in-SaaS mà tôi thấy hoạt động tốt</h3>
+      <div class="card-grid">
+        <div class="card green-card">
+          <div class="card-icon">📝</div>
+          <div class="card-title">AI Writing Assistant</div>
+          <div class="card-desc">Generate, rewrite, translate, summarize content. Giảm thời gian viết 60-70%. Notion, HubSpot, Linear dùng pattern này.</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-icon">🔎</div>
+          <div class="card-title">Semantic Search</div>
+          <div class="card-desc">Tìm kiếm theo nghĩa thay vì keyword exact match. "Tìm tất cả tickets liên quan đến vấn đề thanh toán" — không cần nhớ từ khóa chính xác.</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-icon">📊</div>
+          <div class="card-title">AI Insights từ Data</div>
+          <div class="card-desc">Tự động tóm tắt report, phát hiện anomaly, suggest action. Thay vì nhìn dashboard và tự suy luận, AI nói thẳng: "Doanh thu giảm 20% tuần này vì..."</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-icon">⚙️</div>
+          <div class="card-title">Natural Language Config</div>
+          <div class="card-desc">Thay vì fill form phức tạp, gõ bằng ngôn ngữ tự nhiên: "Gửi email nhắc nhở mỗi thứ 2 lúc 9am cho team sales về deals chưa update tuần qua."</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-icon">🤖</div>
+          <div class="card-title">AI Onboarding Assistant</div>
+          <div class="card-desc">Thay vì đọc docs, user hỏi trực tiếp: "Làm sao để export data ra CSV?". AI trả lời và có thể thực hiện action thay họ.</div>
+        </div>
+        <div class="card green-card">
+          <div class="card-icon">🔮</div>
+          <div class="card-title">Predictive Suggestions</div>
+          <div class="card-desc">Dự đoán bước tiếp theo của user dựa trên context: "Bạn vừa tạo project, bạn có muốn invite team members không?" — nhưng thông minh hơn nhiều.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="green-border">Frontend challenges khi build AI-powered SaaS</h3>
+      <ul class="styled-list green-list">
+        <li><strong>Latency là kẻ thù:</strong> AI calls chậm hơn regular API calls rất nhiều. Frontend cần design cho latency — skeleton loaders, progressive disclosure, streaming bất cứ khi nào có thể. User không được cảm thấy app chậm.</li>
+        <li><strong>Cost per request:</strong> AI APIs tính tiền theo token. Một button click có thể tốn vài cent. Frontend cần giới hạn: debounce, rate limiting phía client, chỉ trigger AI khi thực sự cần thiết.</li>
+        <li><strong>Inconsistent output:</strong> AI không phải database — response có thể khác nhau mỗi lần. Frontend cần robust parsing, validation, và fallback khi output không đúng format mong đợi.</li>
+        <li><strong>Context management:</strong> Chat history cần persist và manage cẩn thận. User expects AI nhớ conversation — nhưng có giới hạn context window. Frontend quyết định cắt hay summarize khi nào.</li>
+        <li><strong>Ethical UX:</strong> Rõ ràng khi content là AI-generated. Không để người dùng nghĩ họ đang nói chuyện với người thật. Không để AI output thành truth mà không có verification option.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Mindset -->
+  <section class="section" id="mindset">
+    <div class="section-header">
+      <div class="section-icon icon-dev">🧠</div>
+      <div class="section-meta">
+        <h2>Tư duy &amp; Bài học của tôi</h2>
+        <div class="section-sub">Những thứ tôi ước mình biết sớm hơn</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3 class="yellow-border">SaaS dạy tôi về product thinking</h3>
+      <p>
+        Làm với SaaS, tôi không chỉ là người code. Tôi buộc phải suy nghĩ như một product person — tại sao user làm thế này? Họ đang cố đạt được gì? Cái này có giúp họ nhanh hơn không? <strong>Frontend là interface của sản phẩm, nên frontend developer phải hiểu sản phẩm.</strong>
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3 class="yellow-border">AI dạy tôi về interface của tương lai</h3>
+      <p>
+        Trước đây, interface có nghĩa là buttons, forms, menus. Với AI, interface mới là <strong>ngôn ngữ tự nhiên</strong>. Người dùng không cần biết UI là gì — họ chỉ cần nói điều họ muốn. Điều này thay đổi cơ bản cách tôi nghĩ về UX.
+      </p>
+    </div>
+
+    <div class="callout yellow">
+      <div class="callout-title">💭 Quan sát quan trọng nhất của tôi</div>
+      <strong>SaaS là delivery model. AI là capability.</strong> Hai thứ này không conflicting, chúng complement nhau. SaaS quyết định cách phần mềm được deliver và monetize. AI quyết định mức độ thông minh phần mềm có thể có. Frontend developer giỏi trong thời đại này phải biết cả hai — không cần deep expertise, nhưng cần biết đủ để build đúng.
+    </div>
+
+    <div class="subsection">
+      <h3 class="yellow-border">10 điều tôi đã học được</h3>
+      <ul class="styled-list yellow-list">
+        <li>UX tốt không phải là đẹp — UX tốt là khi người dùng không phải đọc manual.</li>
+        <li>Mọi feature đều có chi phí ẩn: code phức tạp hơn, bug nhiều hơn, user bị confused hơn.</li>
+        <li>AI không thay thế developer — nó thay thế thời gian developer bỏ vào việc nhàm chán.</li>
+        <li>Subscription model tạo ra áp lực liên tục phải deliver value — không thể bán một lần rồi thôi.</li>
+        <li>Performance IS a feature. Trang load 3 giây không phải vấn đề kỹ thuật — đó là vấn đề business.</li>
+        <li>Security không phải thứ add vào sau — phải design từ đầu, đặc biệt với AI features.</li>
+        <li>AI output không bao giờ 100% đúng. Design UI biết điều này.</li>
+        <li>Multi-tenancy là dễ nói, khó implement đúng. Bugs ở đây có thể leak data giữa các khách hàng.</li>
+        <li>Accessibility trong SaaS là nghĩa vụ, không phải nice-to-have — đặc biệt với enterprise clients.</li>
+        <li>Ship sớm, iterate nhanh — perfect là kẻ thù của shipped.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Future -->
+  <section class="section" id="future">
+    <div class="section-header">
+      <div class="section-icon icon-both">🔭</div>
+      <div class="section-meta">
+        <h2>Nhìn về tương lai</h2>
+        <div class="section-sub">Dự đoán và chuẩn bị — từ góc nhìn của tôi hôm nay</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <p>
+        Tôi không biết tương lai trông ra sao. Không ai biết. Nhưng dựa trên những gì tôi thấy, tôi có một số dự đoán cho vài năm tới:
+      </p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🗣️</div>
+        <div class="card-title">Natural Language UI</div>
+        <div class="card-desc">Ngày càng nhiều SaaS cho phép điều khiển bằng text/voice. Frontend sẽ cần thiết kế parallel: traditional UI + conversational UI.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <div class="card-title">AI Agents trong SaaS</div>
+        <div class="card-desc">Không chỉ trả lời, AI sẽ thực hiện chuỗi actions thay user. Frontend cần design cho "agentic flows" — progress tracking, approval gates, rollback.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Hyper-personalization</div>
+        <div class="card-desc">SaaS sẽ tự thích nghi UI cho từng người dùng dựa trên behavior. Frontend sẽ phải build dynamic, adaptive interfaces.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Edge AI</div>
+        <div class="card-desc">AI models nhỏ chạy ngay trong browser (WebGPU, WASM). Không cần gọi API — private, fast, offline. Frontend dev sẽ cần biết về AI inference phía client.</div>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-title">🌱 Tôi đang chuẩn bị thế nào</div>
+      Thay vì cố đuổi theo mọi framework mới, tôi focus vào <strong>fundamentals</strong>: HTML/CSS/JS vẫn là nền tảng — mọi abstraction đều build trên đó. Hiểu <strong>how the web works</strong> ở tầng thấp giúp tôi adapt nhanh với bất kỳ tool mới nào. Và với AI — tôi dùng nó mỗi ngày, không như là gimmick, mà như là multiplier cho năng suất của mình.
+    </div>
+
+    <div class="quote">
+      "Frontend developer giỏi không phải là người biết nhiều frameworks nhất. Đó là người hiểu sâu nhất cách browser làm việc, cách người dùng suy nghĩ, và cách làm cho hai bên gặp nhau một cách tự nhiên nhất có thể."
+    </div>
+  </section>
+
+</main>
+
+<button id="back-top" aria-label="Back to top" title="Về đầu trang">↑</button>
+
+<script>
+  // ── Reading progress bar ──
+  const progressBar = document.getElementById('reading-progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  });
+
+  // ── Back to top ──
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('visible', window.scrollY > 400);
+  });
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ── Mobile sidebar toggle ──
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggleBtn = document.getElementById('sidebarToggle');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    toggleBtn.textContent = '✕';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    toggleBtn.textContent = '☰';
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // ── Nav active state on scroll ──
+  const sections = document.querySelectorAll('.section, .hero');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const sectionIds = Array.from(sections).map(s => s.id).filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(item => {
+          const href = item.getAttribute('href');
+          item.classList.toggle('active', href === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => s.id && observer.observe(s));
+
+  // ── Close sidebar on nav click (mobile) ──
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if (window.innerWidth <= 900) closeSidebar();
+    });
+  });
+
+  // ── Animate skill bars on scroll ──
+  const skillFills = document.querySelectorAll('.skill-fill');
+
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target;
+        const width = parseFloat(fill.dataset.width);
+        fill.style.transform = `scaleX(${width})`;
+        skillObserver.unobserve(fill);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  skillFills.forEach(fill => skillObserver.observe(fill));
+
+  // ── Card hover subtle parallax ──
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `translateY(-4px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
+</body>
+</html>
