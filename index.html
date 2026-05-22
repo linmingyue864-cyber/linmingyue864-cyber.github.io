@@ -74,30 +74,10 @@
           </a>
         </div>
       </div>
-      <nav class="nav" id="nav">
-        <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
-        <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
-        <a href="#ky-nang" class="nav-link">Kỹ năng</a>
-        <a href="#career-manifesto" class="nav-link">Khát vọng</a>
-        <a href="#tech-stack-profile" class="nav-link">Hành trang</a>
-        <a href="#community-endeavors" class="nav-link">Dấu ấn</a>
-        <a href="#work-philosophy" class="nav-link">Triết lý</a>
-        <a href="#hanh-trinh" class="nav-link">Hành trình</a>
-        <a href="#du-an" class="nav-link">Dự án</a>
-        <a href="#design-mindset" class="nav-link">Tư duy thiết kế</a>
-        <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
-        <a href="#design-system" class="nav-link">Hệ thống thiết kế</a>
-        <a href="#ai" class="nav-link">AI</a>
-        <a href="#ve-toi" class="nav-link">Về tôi</a>
-        <a href="#lien-he" class="nav-link">Liên hệ</a>
-      </nav>
-    </header>
-
-    <!-- STICKY NAV -->
-    <nav class="nav-sticky" id="nav-sticky">
-      <div class="nav-sticky-inner">
-        <span class="nav-sticky-name">Nguyễn Tiến Đạt</span>
-        <div class="nav-sticky-links" id="nav-sticky-links">
+      <div class="nav-scroll-wrapper">
+        <div class="scroll-trigger scroll-trigger-left" onmouseenter="startScroll('nav', -1)" onmouseleave="stopScroll()">‹</div>
+        
+        <nav class="nav" id="nav">
           <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
           <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
           <a href="#ky-nang" class="nav-link">Kỹ năng</a>
@@ -113,7 +93,40 @@
           <a href="#ai" class="nav-link">AI</a>
           <a href="#ve-toi" class="nav-link">Về tôi</a>
           <a href="#lien-he" class="nav-link">Liên hệ</a>
+        </nav>
+
+        <div class="scroll-trigger scroll-trigger-right" onmouseenter="startScroll('nav', 1)" onmouseleave="stopScroll()">›</div>
+      </div>
+    </header>
+
+    <nav class="nav-sticky" id="nav-sticky">
+      <div class="nav-sticky-inner">
+        <span class="nav-sticky-name">Nguyễn Tiến Đạt</span>
+        
+        <div class="nav-scroll-wrapper" style="flex: 1; overflow: hidden;">
+          <div class="scroll-trigger scroll-trigger-left" onmouseenter="startScroll('nav-sticky-links', -1)" onmouseleave="stopScroll()">‹</div>
+
+          <div class="nav-sticky-links" id="nav-sticky-links">
+            <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+            <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
+            <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+            <a href="#career-manifesto" class="nav-link">Khát vọng</a>
+            <a href="#tech-stack-profile" class="nav-link">Hành trang</a>
+            <a href="#community-endeavors" class="nav-link">Dấu ấn</a>
+            <a href="#work-philosophy" class="nav-link">Triết lý</a>
+            <a href="#hanh-trinh" class="nav-link">Hành trình</a>
+            <a href="#du-an" class="nav-link">Dự án</a>
+            <a href="#design-mindset" class="nav-link">Tư duy thiết kế</a>
+            <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
+            <a href="#design-system" class="nav-link">Hệ thống thiết kế</a>
+            <a href="#ai" class="nav-link">AI</a>
+            <a href="#ve-toi" class="nav-link">Về tôi</a>
+            <a href="#lien-he" class="nav-link">Liên hệ</a>
+          </div>
+
+          <div class="scroll-trigger scroll-trigger-right" onmouseenter="startScroll('nav-sticky-links', 1)" onmouseleave="stopScroll()">›</div>
         </div>
+
         <button class="hamburger" id="hamburger" aria-label="Mở menu" aria-expanded="false">
           <span class="ham-bar"></span>
           <span class="ham-bar"></span>
@@ -128,13 +141,13 @@
       <a href="#muc-tieu" class="mobile-nav-link">Mục tiêu</a>
       <a href="#ky-nang" class="mobile-nav-link">Kỹ năng</a>
       <a href="#career-manifesto" class="mobile-nav-link">Khát vọng</a>
-<a href="#tech-stack-profile" class="mobile-nav-link">Hành trang</a>
-<a href="#community-endeavors" class="mobile-nav-link">Dấu ấn</a>
-<a href="#work-philosophy" class="mobile-nav-link">Triết lý</a>
+      <a href="#tech-stack-profile" class="mobile-nav-link">Hành trang</a>
+      <a href="#community-endeavors" class="mobile-nav-link">Dấu ấn</a>
+      <a href="#work-philosophy" class="mobile-nav-link">Triết lý</a>
       <a href="#hanh-trinh" class="mobile-nav-link">Hành trình</a>
       <a href="#du-an" class="mobile-nav-link">Dự án</a>
       <a href="#design-mindset" class="mobile-nav-link">Tư duy thiết kế</a>
-      <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
+      <a href="#product-maturity" class="mobile-nav-link">Tư duy sản phẩm</a>
       <a href="#design-system" class="mobile-nav-link">Hệ thống thiết kế</a>
       <a href="#ai" class="mobile-nav-link">AI</a>
       <a href="#ve-toi" class="mobile-nav-link">Về tôi</a>
