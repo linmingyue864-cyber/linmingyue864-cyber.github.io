@@ -507,6 +507,86 @@
 
     /* =================== INLINE CODE =================== */
     code { font-family: var(--mono); font-size: .85em; background: var(--bg-2); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--music-2); }
+
+    /* =================== SCREENSHOT GALLERY =================== */
+    .gallery-tabs {
+      display: flex; gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r);
+      overflow: hidden; width: fit-content; margin-bottom: 36px;
+    }
+    .gtab {
+      padding: 9px 22px; font-size: .84rem; font-weight: 600;
+      background: var(--bg-1); color: var(--text-3);
+      border: none; cursor: pointer; font-family: var(--font); transition: all .15s;
+    }
+    .gtab.active-m { background: var(--music-bg); color: var(--music-2); }
+    .gtab.active-d { background: var(--drive-bg); color: var(--drive-2); }
+    .gpanel { display: none; }
+    .gpanel.show { display: block; }
+
+    /* Main feature screenshot (large) */
+    .ss-feature {
+      border: 1px solid var(--border-2); border-radius: var(--r-xl);
+      overflow: hidden; background: var(--bg-1);
+      margin-bottom: 16px; position: relative;
+    }
+    .ss-feature img {
+      width: 100%; display: block;
+      transition: transform .4s ease;
+    }
+    .ss-feature:hover img { transform: scale(1.01); }
+    .ss-feature-cap {
+      padding: 18px 24px; border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    }
+    .ss-cap-text {}
+    .ss-cap-title { font-size: .92rem; font-weight: 700; margin-bottom: 4px; }
+    .ss-cap-desc  { font-size: .82rem; color: var(--text-2); line-height: 1.65; }
+
+    /* Thumbnail strip */
+    .ss-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .ss-thumb {
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      overflow: hidden; cursor: pointer; background: var(--bg-1);
+      transition: border-color .15s, transform .2s;
+    }
+    .ss-thumb:hover { border-color: var(--border-2); transform: translateY(-2px); }
+    .ss-thumb.active-m { border-color: var(--music-bd); }
+    .ss-thumb.active-d { border-color: var(--drive-bd); }
+    .ss-thumb img { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; }
+    .ss-thumb-cap {
+      padding: 10px 12px; border-top: 1px solid var(--border);
+      font-size: .74rem; color: var(--text-3); font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* 2-col grid for 4 drive screenshots */
+    .ss-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 768px) { .ss-grid-2 { grid-template-columns: 1fr; } .ss-strip { grid-template-columns: 1fr 1fr; } }
+
+    .ss-card {
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      overflow: hidden; background: var(--bg-1); transition: border-color .2s, transform .2s;
+    }
+    .ss-card:hover { border-color: var(--border-2); transform: translateY(-3px); }
+    .ss-card.hl-m { border-color: var(--music-bd); }
+    .ss-card.hl-d { border-color: var(--drive-bd); }
+    .ss-img-wrap { position: relative; overflow: hidden; }
+    .ss-img-wrap img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; object-position: top; }
+    .ss-label-badge {
+      position: absolute; top: 10px; left: 10px;
+      display: flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: .68rem; font-weight: 700; backdrop-filter: blur(10px);
+    }
+    .ss-card-cap { padding: 14px 16px; }
+    .ss-card-cap strong { display: block; font-size: .88rem; margin-bottom: 4px; }
+    .ss-card-cap p { font-size: .78rem; color: var(--text-2); line-height: 1.6; margin: 0; }
+
+    /* live badge */
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
   </style>
 </head>
 <body>
@@ -555,14 +635,14 @@
       Phân tích chi tiết kiến trúc, hạ tầng và công nghệ đằng sau hai sản phẩm
       <strong>Andrenna Music</strong> (nền tảng âm nhạc số) và
       <strong>Andrenna Drive</strong> (lưu trữ đám mây). Triển khai trên máy chủ
-      Việt Nam với tên miền <code>.vn</code>, dữ liệu và CDN lưu trên <strong>Backblaze B2</strong>.
+      Việt Nam với tên miền <code>.io.vn</code>, dữ liệu và CDN lưu trên <strong>Backblaze B2</strong>.
     </p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px">
       <span class="badge badge-music">Andrenna Music</span>
       <span class="badge badge-drive">Andrenna Drive</span>
       <span class="badge badge-green">Starter Project</span>
       <span class="badge badge-amber">Backblaze B2 Free Tier</span>
-      <span class="badge badge-mono">Máy chủ .vn</span>
+      <span class="badge badge-mono">Máy chủ .io.vn · 123Host</span>
     </div>
     <div class="hero-meta">
       <div class="meta-item">
@@ -602,10 +682,15 @@
       <div class="toc-title">Tổng quan sản phẩm</div>
       <div class="toc-sub">Music vs Drive · Phân tích chức năng</div>
     </a>
+    <a href="#screenshots" class="toc-item">
+      <div class="toc-num">01.5</div>
+      <div class="toc-title">Ảnh sản phẩm thực tế</div>
+      <div class="toc-sub">Drive · Music · Giao diện live</div>
+    </a>
     <a href="#infrastructure" class="toc-item">
       <div class="toc-num">02</div>
       <div class="toc-title">Hạ tầng Việt Nam</div>
-      <div class="toc-sub">Máy chủ .vn · DNS · SSL</div>
+      <div class="toc-sub">Máy chủ .io.vn · 123Host · DNS · SSL</div>
     </a>
     <a href="#storage" class="toc-item">
       <div class="toc-num">03</div>
@@ -658,7 +743,7 @@
           <li><div class="feat-check">✓</div> Waveform visualizer & lyrics sync thời gian thực (Web Audio API)</li>
           <li><div class="feat-check">✓</div> Hệ thống follow, playlist & discovery feed thuật toán</li>
           <li><div class="feat-check">✓</div> Analytics: play count, region, demographic breakdown</li>
-          <li><div class="feat-check">✓</div> Monetization: Tipping, Pre-save campaign</li>
+          <li><div class="feat-check">✓</div> Hoàn toàn miễn phí – không giới hạn stream, không quảng cáo</li>
           <li><div class="feat-check">✓</div> Tích hợp với Andrenna Drive – lưu file master trực tiếp</li>
         </ul>
         <div class="oc-ref">
@@ -721,11 +806,11 @@
             <td class="no">80–200ms</td>
           </tr>
           <tr>
-            <td>Thanh toán nội địa</td>
-            <td class="yes-m">MoMo, VNPay, ZaloPay</td>
-            <td class="no">Thẻ quốc tế only</td>
-            <td class="yes-d">MoMo, VNPay, ZaloPay</td>
-            <td class="no">Thẻ quốc tế only</td>
+            <td>Chi phí người dùng</td>
+            <td class="yes-m">Miễn phí 100%</td>
+            <td class="no">Có gói trả phí</td>
+            <td class="yes-d">Miễn phí 100%</td>
+            <td class="no">Có gói trả phí</td>
           </tr>
           <tr>
             <td>Tuân thủ NĐ 13/2023</td>
@@ -757,13 +842,149 @@
           </tr>
           <tr>
             <td>Model kinh doanh</td>
-            <td class="yes-m">Freemium SaaS</td>
-            <td class="no">Freemium</td>
-            <td class="yes-d">Freemium SaaS</td>
-            <td class="no">Freemium</td>
+            <td class="yes-m">Free hoàn toàn</td>
+            <td class="no">Freemium (có trả phí)</td>
+            <td class="yes-d">Free hoàn toàn</td>
+            <td class="no">Freemium (có trả phí)</td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================= SCREENSHOTS ======================================= -->
+<section id="screenshots" class="section">
+  <div class="wrap">
+    <div class="sec-header fi">
+      <span class="sec-num">// 01.5 — SẢN PHẨM THỰC TẾ</span>
+      <h2 class="sec-title">Ảnh màn hình <span class="gduo">sản phẩm</span></h2>
+      <p class="sec-desc">
+        Giao diện thực tế của <strong>Andrenna Drive</strong> (<a href="https://drive.andrenna.io.vn" target="_blank" style="color:var(--drive-2);text-decoration:underline;text-underline-offset:3px">drive.andrenna.io.vn</a>)
+        và <strong>Andrenna Music</strong> (<a href="https://andrenna.io.vn" target="_blank" style="color:var(--music-2);text-decoration:underline;text-underline-offset:3px">andrenna.io.vn</a>).
+        Cả hai sản phẩm đang live và có thể truy cập ngay hôm nay.
+      </p>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="gallery-tabs fi">
+      <button class="gtab active-d" onclick="setGallery('drive', this)">☁️ Andrenna Drive</button>
+      <button class="gtab" onclick="setGallery('music', this)">🎵 Andrenna Music</button>
+    </div>
+
+    <!-- ===== DRIVE PANEL ===== -->
+    <div id="gpanel-drive" class="gpanel show fi">
+      <!-- Feature screenshot - main large image -->
+      <div class="ss-feature">
+        <img id="drive-main-img" src="assets/drive-01-all-files.png" alt="Andrenna Drive – All Files view" />
+        <div class="ss-feature-cap">
+          <div class="ss-cap-text">
+            <div class="ss-cap-title" id="drive-main-title">Giao diện quản lý file — All Files</div>
+            <div class="ss-cap-desc" id="drive-main-desc">Toàn bộ file và thư mục hiển thị theo dạng grid hoặc list. Sidebar trái với các mục All Files, Shared with me, Recent, Starred, Trash. Thanh tiến trình dung lượng hiển thị trực tiếp (12MB / 1GB used). File nhạc hiển thị icon riêng, ảnh có thumbnail trực tiếp.</div>
+          </div>
+          <div style="flex-shrink:0">
+            <span class="badge badge-drive" style="display:flex;align-items:center;gap:6px">
+              <span class="live-dot"></span>Live
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnail strip - 4 Drive screenshots -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px" class="ss-strip-drive">
+        <div class="ss-thumb active-d" onclick="selectDrive(0)" id="dthumb-0">
+          <img src="assets/drive-01-all-files.png" alt="All Files" />
+          <div class="ss-thumb-cap">📁 All Files – Grid view</div>
+        </div>
+        <div class="ss-thumb" onclick="selectDrive(1)" id="dthumb-1">
+          <img src="assets/drive-02-share.png" alt="Share dialog" />
+          <div class="ss-thumb-cap">🔗 Chia sẻ file</div>
+        </div>
+        <div class="ss-thumb" onclick="selectDrive(2)" id="dthumb-2">
+          <img src="assets/drive-03-file-detail.png" alt="File detail panel" />
+          <div class="ss-thumb-cap">📄 Chi tiết file & Workspace</div>
+        </div>
+        <div class="ss-thumb" onclick="selectDrive(3)" id="dthumb-3">
+          <img src="assets/drive-04-preview-excel.png" alt="Excel preview" />
+          <div class="ss-thumb-cap">📊 Preview Excel trực tiếp</div>
+        </div>
+      </div>
+
+      <!-- Feature callouts for Drive -->
+      <div class="ss-grid-2" style="margin-top:32px">
+        <div style="border:1px solid var(--drive-bd);border-radius:var(--r-lg);padding:22px;background:var(--drive-bg)">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--drive-2);margin-bottom:10px;font-family:var(--mono)">CHÚ Ý KỸ THUẬT · Chia sẻ</div>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.75">
+            Share dialog hỗ trợ <strong>mời người cụ thể qua email</strong> với phân quyền "Can view / Can edit" và
+            tạo <strong>public shareable link</strong> bật/tắt tức thì. URL share dạng
+            <code>drive.andrenna.io.vn/drive/s/{token}</code> — token ngắn hạn sinh bởi Signed URL trên B2.
+          </p>
+        </div>
+        <div style="border:1px solid var(--drive-bd);border-radius:var(--r-lg);padding:22px;background:var(--drive-bg)">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--drive-2);margin-bottom:10px;font-family:var(--mono)">CHÚ Ý KỸ THUẬT · File Preview</div>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.75">
+            Excel (.xls/.xlsx) render trực tiếp trong trình duyệt không cần download.
+            Panel chi tiết bên phải hiển thị <strong>Properties</strong> (Type, Size, Location, Owner, Modified, Created)
+            và <strong>Who has access</strong> với quản lý quyền inline — đúng pattern của Google Drive.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MUSIC PANEL ===== -->
+    <div id="gpanel-music" class="gpanel fi">
+      <!-- Feature screenshot - main large image -->
+      <div class="ss-feature">
+        <img id="music-main-img" src="assets/music-02-home.png" alt="Andrenna Music – Home" />
+        <div class="ss-feature-cap">
+          <div class="ss-cap-text">
+            <div class="ss-cap-title" id="music-main-title">Trang chủ — Popular Albums & Tracks</div>
+            <div class="ss-cap-desc" id="music-main-desc">Homepage hiển thị Popular albums dạng carousel có thể scroll ngang, bên dưới là Popular tracks dạng grid 3 cột. Sidebar trái đầy đủ: Home, New releases, Genres, Popular songs và Library section (Songs, Albums, Artists, History, Downloads). Tích hợp link thẳng đến Andrenna Drive.</div>
+          </div>
+          <div style="flex-shrink:0">
+            <span class="badge badge-music" style="display:flex;align-items:center;gap:6px">
+              <span class="live-dot"></span>Live
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnail strip - 3 Music screenshots -->
+      <div class="ss-strip">
+        <div class="ss-thumb" onclick="selectMusic(0)" id="mthumb-0">
+          <img src="assets/music-01-artist-page.png" alt="Artist page" />
+          <div class="ss-thumb-cap">🎤 Artist page – BTS</div>
+        </div>
+        <div class="ss-thumb active-m" onclick="selectMusic(1)" id="mthumb-1">
+          <img src="assets/music-02-home.png" alt="Home" />
+          <div class="ss-thumb-cap">🏠 Home – Albums & Tracks</div>
+        </div>
+        <div class="ss-thumb" onclick="selectMusic(2)" id="mthumb-2">
+          <img src="assets/music-03-queue.png" alt="Queue panel" />
+          <div class="ss-thumb-cap">🎧 Artist page + Queue</div>
+        </div>
+      </div>
+
+      <!-- Feature callouts for Music -->
+      <div class="ss-grid-2" style="margin-top:32px">
+        <div style="border:1px solid var(--music-bd);border-radius:var(--r-lg);padding:22px;background:var(--music-bg)">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--music-2);margin-bottom:10px;font-family:var(--mono)">CHÚ Ý KỸ THUẬT · Artist Page</div>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.75">
+            Artist page có đầy đủ tab: <strong>Discography, Similar Artists, About, Tracks, Albums, Followers</strong>.
+            Mỗi track hiển thị số thứ tự, artwork, tên bài, heart/unfavorite và thời lượng.
+            Sidebar phải hiển thị danh sách <strong>Similar artists</strong> với avatar.
+            Nút Play / Follow / More dropdown — đúng UX của Spotify/SoundCloud.
+          </p>
+        </div>
+        <div style="border:1px solid var(--music-bd);border-radius:var(--r-lg);padding:22px;background:var(--music-bg)">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--music-2);margin-bottom:10px;font-family:var(--mono)">CHÚ Ý KỸ THUẬT · Queue & Player</div>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.75">
+            Queue panel slide-in từ phải hiển thị danh sách phát tiếp theo với album art.
+            Bài đang phát highlight đỏ. Tích hợp xem <strong>YouTube MV</strong> trực tiếp trong panel (như JENNIE – like JENNIE).
+            Bottom player bar với progress bar đỏ, nút shuffle/prev/play/next/repeat và volume slider.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -773,10 +994,10 @@
   <div class="wrap">
     <div class="sec-header fi">
       <span class="sec-num">// 02 — HẠ TẦNG VIỆT NAM</span>
-      <h2 class="sec-title">Máy chủ & Tên miền <span class="gd">.vn</span></h2>
+      <h2 class="sec-title">Máy chủ & Tên miền <span class="gd">.io.vn</span></h2>
       <p class="sec-desc">
-        Toàn bộ hạ tầng ứng dụng đặt tại Việt Nam. Sử dụng tên miền <code>.vn</code> đăng ký
-        qua VNNIC để đảm bảo tuân thủ pháp lý và tối ưu latency cho người dùng nội địa.
+        Toàn bộ hạ tầng ứng dụng đặt tại Việt Nam. Sử dụng tên miền <code>.io.vn</code> đăng ký
+        tại TP.HCM qua <strong>123Host</strong> để đảm bảo tuân thủ pháp lý và tối ưu latency cho người dùng nội địa.
       </p>
     </div>
 
@@ -814,20 +1035,20 @@
         <div class="ic-head">
           <div class="ic-icon">🌐</div>
           <div>
-            <div class="ic-name">Tên miền .vn</div>
-            <div class="ic-sub">Đăng ký qua VNNIC / PAVIETNAM</div>
+            <div class="ic-name">Tên miền .io.vn</div>
+            <div class="ic-sub">Đăng ký tại TP.HCM qua 123Host</div>
           </div>
         </div>
         <p class="ic-desc">
-          <code>andrenna.vn</code> — tên miền chính. Đăng ký qua PAVIETNAM hoặc VNPT.
-          Hai subdomain chính: <code>music.andrenna.vn</code> và <code>drive.andrenna.vn</code>.
+          <code>andrenna.io.vn</code> — tên miền chính, đăng ký tại <strong>123Host</strong> (TP.HCM).
+          Hai subdomain thực tế đang live: <code>andrenna.io.vn</code> (Music) và <code>drive.andrenna.io.vn</code> (Drive).
           DNS quản lý qua Cloudflare để tận dụng anycast routing.
         </p>
         <div class="ic-chips">
-          <span class="chip chip-m">andrenna.vn</span>
-          <span class="chip chip-m">music.andrenna.vn</span>
-          <span class="chip chip-d">drive.andrenna.vn</span>
-          <span class="chip">PAVIETNAM</span>
+          <span class="chip chip-m">andrenna.io.vn</span>
+          <span class="chip chip-d">drive.andrenna.io.vn</span>
+          <span class="chip chip-g">123Host</span>
+          <span class="chip">TP.HCM</span>
         </div>
       </div>
 
@@ -930,13 +1151,13 @@
         </div>
         <div class="code-lang">nginx</div>
       </div>
-<pre><span class="cm"># Andrenna Music – music.andrenna.vn</span>
+<pre><span class="cm"># Andrenna Music – andrenna.io.vn</span>
 <span class="kw">server</span> {
     <span class="fn">listen</span> <span class="num">443</span> ssl http2;
-    <span class="fn">server_name</span> <span class="str">music.andrenna.vn</span>;
+    <span class="fn">server_name</span> <span class="str">andrenna.io.vn</span>;
 
-    <span class="fn">ssl_certificate</span>     /etc/letsencrypt/live/andrenna.vn/fullchain.pem;
-    <span class="fn">ssl_certificate_key</span> /etc/letsencrypt/live/andrenna.vn/privkey.pem;
+    <span class="fn">ssl_certificate</span>     /etc/letsencrypt/live/andrenna.io.vn/fullchain.pem;
+    <span class="fn">ssl_certificate_key</span> /etc/letsencrypt/live/andrenna.io.vn/privkey.pem;
     <span class="fn">ssl_protocols</span>       TLSv1.2 TLSv1.3;
     <span class="fn">add_header</span>          Strict-Transport-Security <span class="str">"max-age=31536000"</span> always;
 
@@ -1095,7 +1316,7 @@
 
 <span class="cm">// Public CDN URL (qua Cloudflare) cho media công khai như nhạc stream</span>
 <span class="kw">export const</span> <span class="fn">cdnUrl</span> = (key: <span class="pk">string</span>) =>
-  <span class="str">`https://cdn.andrenna.vn/<span class="num">${key}</span>`</span>; <span class="cm">// Cloudflare custom domain trỏ vào B2</span></pre>
+  <span class="str">`https://cdn.andrenna.io.vn/<span class="num">${key}</span>`</span>; <span class="cm">// Cloudflare custom domain trỏ vào B2</span></pre>
     </div>
 
     <div class="callout callout-warn fi">
@@ -1124,7 +1345,7 @@
 │   ├── <span class="str">tracks/{trackId}/</span>
 │   │   ├── master.m3u8       <span class="cm"># HLS playlist</span>
 │   │   ├── 128k/             <span class="cm"># Segment files .ts (128kbps)</span>
-│   │   ├── 320k/             <span class="cm"># Segment files .ts (320kbps – Pro users)</span>
+│   │   ├── 320k/             <span class="cm"># Segment files .ts (320kbps – miễn phí)</span>
 │   │   └── artwork.webp      <span class="cm"># Cover art (WebP optimized)</span>
 │   └── <span class="str">waveforms/{trackId}.json</span>  <span class="cm"># Pre-computed waveform data</span>
 └── <span class="fn">shared/</span>
@@ -1154,9 +1375,9 @@
       <div class="diagram-title">Kiến trúc hệ thống Andrenna Suite (Starter)</div>
       <div class="diagram-rows">
         <div class="diagram-row">
-          <div class="dbox dbox-m">music.andrenna.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+          <div class="dbox dbox-m">andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
           <div class="darrow"></div>
-          <div class="dbox dbox-d">drive.andrenna.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
+          <div class="dbox dbox-d">drive.andrenna.io.vn<br/><small style="font-weight:400;font-size:.7em">Next.js Frontend</small></div>
         </div>
         <div style="text-align:center;font-size:.8rem;color:var(--text-3);padding:6px 0;">↓ HTTPS via Cloudflare + Nginx</div>
         <div class="diagram-row">
@@ -1488,7 +1709,7 @@
             <div class="cost-row-val cost-paid">~400.000 VNĐ/tháng</div>
           </div>
           <div class="cost-row">
-            <div class="cost-row-label">Tên miền andrenna.vn</div>
+            <div class="cost-row-label">Tên miền andrenna.io.vn (123Host, TP.HCM)</div>
             <div class="cost-row-val cost-paid">~25.000 VNĐ/tháng</div>
           </div>
           <div class="cost-row">
@@ -1611,7 +1832,7 @@
         <div class="rm-content">
           <div class="rm-quarter">Q1 2025 · Hoàn thành ✓</div>
           <div class="rm-title">Core Infrastructure Setup</div>
-          <div class="rm-desc">Thiết lập VPS tại Việt Nam, cấu hình Nginx + SSL, đăng ký tên miền <code>andrenna.vn</code>, tích hợp Backblaze B2 cho storage, CI/CD pipeline với GitHub Actions.</div>
+          <div class="rm-desc">Thiết lập VPS tại Việt Nam, cấu hình Nginx + SSL, đăng ký tên miền <code>andrenna.io.vn</code> qua <strong>123Host</strong> (TP.HCM), tích hợp Backblaze B2 cho storage, CI/CD pipeline với GitHub Actions.</div>
           <div class="rm-chips">
             <span class="chip chip-g">VPS Setup</span>
             <span class="chip">Nginx + SSL</span>
@@ -1655,13 +1876,13 @@
         <div class="rm-dot-wrap"><div class="rm-dot rd-now"></div></div>
         <div class="rm-content">
           <div class="rm-quarter">Q4 2025 · Đang triển khai 🔵</div>
-          <div class="rm-title">Payments & Monetization</div>
-          <div class="rm-desc">Tích hợp VNPay, MoMo, ZaloPay cho subscription. Tính năng Tipping cho nghệ sĩ. Drive storage plans (free 5GB → Pro 100GB). Target 500 paying users.</div>
+          <div class="rm-title">AI Features & Open API</div>
+          <div class="rm-desc">Whisper AI auto-transcribe lyrics, recommendation engine dùng vector embeddings (pgvector), smart search toàn văn cho Drive, auto-tagging nhạc. Public API v1 cho developers. Cả hai sản phẩm vẫn hoàn toàn miễn phí.</div>
           <div class="rm-chips">
-            <span class="chip chip-a">VNPay</span>
-            <span class="chip chip-a">MoMo</span>
-            <span class="chip chip-m">Tipping</span>
-            <span class="chip chip-d">Storage Plans</span>
+            <span class="chip chip-m">Whisper AI</span>
+            <span class="chip chip-d">pgvector</span>
+            <span class="chip chip-g">Free forever</span>
+            <span class="chip">Public API v1</span>
           </div>
         </div>
       </div>
@@ -1744,6 +1965,75 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  /* ====== GALLERY TABS ====== */
+  const driveData = [
+    {
+      src: 'assets/drive-01-all-files.png',
+      title: 'Giao diện quản lý file — All Files',
+      desc: 'Toàn bộ file và thư mục hiển thị theo dạng grid hoặc list. Sidebar trái với All Files, Shared with me, Recent, Starred, Trash. Thanh tiến trình dung lượng (12MB / 1GB). File nhạc có icon riêng, ảnh có thumbnail trực tiếp.'
+    },
+    {
+      src: 'assets/drive-02-share.png',
+      title: 'Share dialog — Chia sẻ file linh hoạt',
+      desc: 'Mời người dùng cụ thể qua email với phân quyền "Can view / Can edit". Toggle public shareable link tức thì. URL dạng drive.andrenna.io.vn/drive/s/{token} — Signed URL có thời hạn sinh từ Backblaze B2.'
+    },
+    {
+      src: 'assets/drive-03-file-detail.png',
+      title: 'Panel chi tiết file & Workspace switcher',
+      desc: 'Panel phải hiển thị Properties (Type, Size, Location, Owner, Modified, Created) và Who has access với nút Manage Access. Workspace switcher dưới sidebar cho phép chuyển giữa Default (Personal) và team workspace "con mèo con" (2 members).'
+    },
+    {
+      src: 'assets/drive-04-preview-excel.png',
+      title: 'Preview Excel trực tiếp trong trình duyệt',
+      desc: 'File .xls/.xlsx render ngay trong browser không cần download hay cài Office. Header bar với Share, Download và tên file. Pager hiển thị trang (1/12). Đây là tính năng differentiator so với Google Drive – không cần chuyển sang Google Sheets.'
+    }
+  ];
+
+  const musicData = [
+    {
+      src: 'assets/music-01-artist-page.png',
+      title: 'Artist page — BTS Discography',
+      desc: 'Trang nghệ sĩ với ảnh, tag thể loại (k-pop), bio đầy đủ, nút Play / Follow / More. Tab Discography / Similar Artists / About / Tracks / Albums / Followers. Popular songs dạng danh sách có số thứ tự, và Similar Artists sidebar.'
+    },
+    {
+      src: 'assets/music-02-home.png',
+      title: 'Trang chủ — Popular Albums & Tracks',
+      desc: 'Homepage hiển thị Popular albums dạng horizontal carousel scroll được, bên dưới Popular tracks grid 3 cột. Sidebar trái đầy đủ với Library section. Link trực tiếp đến Andrenna Drive tích hợp ngay trong navigation sidebar.'
+    },
+    {
+      src: 'assets/music-03-queue.png',
+      title: 'Artist page + Queue panel + YouTube MV',
+      desc: 'Queue panel slide-in từ phải liệt kê bài sắp phát, bài đang phát highlight đỏ. Tích hợp xem YouTube MV embedded trực tiếp trong panel. Bottom player bar với progress bar đỏ, shuffle / prev / play / next / repeat, volume slider và timestamp.'
+    }
+  ];
+
+  function selectDrive(idx) {
+    const d = driveData[idx];
+    document.getElementById('drive-main-img').src = d.src;
+    document.getElementById('drive-main-title').textContent = d.title;
+    document.getElementById('drive-main-desc').textContent = d.desc;
+    document.querySelectorAll('[id^="dthumb-"]').forEach((t, i) => {
+      t.classList.toggle('active-d', i === idx);
+    });
+  }
+
+  function selectMusic(idx) {
+    const d = musicData[idx];
+    document.getElementById('music-main-img').src = d.src;
+    document.getElementById('music-main-title').textContent = d.title;
+    document.getElementById('music-main-desc').textContent = d.desc;
+    document.querySelectorAll('[id^="mthumb-"]').forEach((t, i) => {
+      t.classList.toggle('active-m', i === idx);
+    });
+  }
+
+  function setGallery(id, btn) {
+    document.querySelectorAll('.gpanel').forEach(p => p.classList.remove('show'));
+    document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active-m', 'active-d'));
+    document.getElementById('gpanel-' + id).classList.add('show');
+    btn.classList.add(id === 'music' ? 'active-m' : 'active-d');
+  }
 
   /* ====== STACK TABS ====== */
   function setTab(id, btn) {
