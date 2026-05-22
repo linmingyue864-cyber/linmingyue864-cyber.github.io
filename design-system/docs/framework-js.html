@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BHDS JS Framework — BHDS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231473E6'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='14' font-family='Inter,sans-serif' font-weight='700'>B</text></svg>" />
+</head>
+<body>
+  <div class="shell">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="index.html">
+        <div class="sidebar-logo-mark"><svg viewBox="0 0 16 16"><path d="M2 2h5.5a4.5 4.5 0 0 1 0 9H2V2zm2 2v5h3.5a2.5 2.5 0 0 0 0-5H4zm0 5v3h3.5a1.5 1.5 0 1 0 0-3H4z"/></svg></div>
+        <div class="sidebar-logo-text"><span class="sidebar-logo-name">BHDS</span><span class="sidebar-logo-version">v1.0.0 · Nguyễn Tiến Đạt</span></div>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Bắt đầu</div>
+          <a class="sidebar-item" href="index.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5L1.5 7H3v7.5h4V11h2v3.5h4V7h1.5L8 1.5z"/></svg>Giới thiệu</a>
+          <a class="sidebar-item" href="principles.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 4.5a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm1 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 7.5z"/></svg>Nguyên tắc</a>
+          <a class="sidebar-item" href="branding.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l1.8 4.2 4.2.8-3 3 .7 4.3L8 11.5l-3.7 1.8.7-4.3-3-3 4.2-.8L8 1z"/></svg>Thương hiệu</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Nền tảng</div>
+          <a class="sidebar-item" href="colors.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM2.5 8a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"/><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="8" cy="11" r="1.5"/></svg>Màu sắc</a>
+          <a class="sidebar-item" href="typography.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3z"/></svg>Kiểu chữ</a>
+          <a class="sidebar-item" href="spacing.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 3h14v1H1zm0 9h14v1H1zM4 7h8v2H4z"/></svg>Khoảng cách</a>
+          <a class="sidebar-item" href="icons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>Biểu tượng</a>
+          <a class="sidebar-item" href="motion.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm-1 5.5V5l4 3-4 3V9.5l2-1.5-2-1.5z"/></svg>Chuyển động</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Thành phần</div>
+          <a class="sidebar-item" href="components.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5v7L8 15l7-3.5v-7L8 1zm0 1.8 5 2.5v5.4l-5 2.5-5-2.5V5.3l5-2.5z"/></svg>Tất cả thành phần</a>
+          <a class="sidebar-item" href="buttons.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="8" rx="2"/></svg>Button</a>
+          <a class="sidebar-item" href="forms.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="4" width="14" height="2" rx="1"/><rect x="1" y="8" width="10" height="2" rx="1"/><rect x="1" y="12" width="7" height="2" rx="1"/></svg>Form & Input</a>
+          <a class="sidebar-item" href="navigation.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 4h14v1.5H1zm0 5.5h14V11H1zM5 7h6v1.5H5z"/></svg>Điều hướng</a>
+          <a class="sidebar-item" href="feedback.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM7 5h2v4H7V5zm0 5h2v2H7v-2z"/></svg>Phản hồi</a>
+          <a class="sidebar-item" href="data.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v2h8V4H4zm0 4v2h8V8H4zm0 4v1h8v-1H4z"/></svg>Dữ liệu</a>
+          <a class="sidebar-item" href="modals.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 3V2h6v1"/></svg>Hộp thoại</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Mẫu SaaS</div>
+          <a class="sidebar-item" href="patterns.html"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="4" rx="1"/><rect x="9" y="1" width="6" height="4" rx="1"/><rect x="1" y="7" width="6" height="8" rx="1"/><rect x="9" y="7" width="6" height="4" rx="1"/></svg>Mẫu giao diện</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Tài nguyên</div>
+          <a class="sidebar-item" href="tokens.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L1 4.5V8c0 3.3 2.9 6.4 7 7 4.1-.6 7-3.7 7-7V4.5L8 1z"/></svg>Design Tokens</a>
+          <a class="sidebar-item" href="changelog.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v1h8V4H4zm0 3v1h8V7H4zm0 3v1h5v-1H4z"/></svg>Nhật ký thay đổi</a>
+        </div>
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Framework</div>
+          <a class="sidebar-item" href="framework-css.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3zm9 5.5 2 2-2 2v-1.5H8V9.5h3V8z"/></svg>BHDS CSS</a>
+          <a class="sidebar-item active" href="framework-js.html"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm5.5 8.5c0 .8.6 1.5 1.5 1.5s1.5-.7 1.5-1.5V6h-1v4.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5v-.5h-1v.5zm-3.2.5c.4.6 1 1 1.9 1 1 0 1.7-.6 1.7-1.5 0-.8-.5-1.2-1.2-1.5l-.3-.2c-.4-.2-.7-.3-.7-.6 0-.3.2-.5.5-.5.3 0 .5.2.7.5l.8-.5C8.4 7.3 7.8 7 7 7c-.9 0-1.6.6-1.6 1.5 0 .7.4 1.2 1.1 1.5l.3.1c.4.2.7.3.7.6 0 .3-.2.5-.5.5-.4 0-.7-.2-.9-.6l-.8.4z"/></svg>BHDS JS</a>
+        </div>
+      </nav>
+      <div class="sidebar-footer">© 2025 Nguyễn Tiến Đạt</div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="hamburger" id="hamburger" aria-label="Mở menu">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><rect y="2" width="18" height="2" rx="1"/><rect y="8" width="18" height="2" rx="1"/><rect y="14" width="18" height="2" rx="1"/></svg>
+        </button>
+        <div class="topbar-breadcrumb">
+          <span>BHDS</span><span>›</span><span>Framework</span><span>›</span><span class="current">BHDS JS</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện" title="Giao diện sáng/tối">
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="page-content">
+
+        <div class="page-header">
+          <div class="page-eyebrow">Framework</div>
+          <h1 class="page-title">BHDS JS Framework</h1>
+          <p class="page-desc">Thư viện JavaScript thuần, không phụ thuộc — cung cấp tương tác cho mọi component trong BHDS. Hoạt động hoàn toàn qua thuộc tính <code>data-*</code>, không cần viết thêm JS.</p>
+        </div>
+
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:48px;">
+          <div style="padding:20px;background:var(--color-neutral-50);border:1px solid var(--border-default);border-radius:10px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--color-brand-500);margin-bottom:4px;">0</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">Phụ thuộc</div>
+          </div>
+          <div style="padding:20px;background:var(--color-neutral-50);border:1px solid var(--border-default);border-radius:10px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--color-brand-500);margin-bottom:4px;">~4KB</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">Kích thước (gzip)</div>
+          </div>
+          <div style="padding:20px;background:var(--color-neutral-50);border:1px solid var(--border-default);border-radius:10px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--color-brand-500);margin-bottom:4px;">8</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">Module tích hợp</div>
+          </div>
+          <div style="padding:20px;background:var(--color-neutral-50);border:1px solid var(--border-default);border-radius:10px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--color-brand-500);margin-bottom:4px;">ES2019</div>
+            <div style="font-size:12px;color:var(--text-tertiary);">Chuẩn ngôn ngữ</div>
+          </div>
+        </div>
+
+        <!-- Cài đặt -->
+        <div class="section">
+          <h2 class="section-title">Cài đặt</h2>
+          <p class="section-desc">Thêm script trước thẻ <code>&lt;/body&gt;</code>. BHDS JS tự động khởi tạo tất cả component khi DOM sẵn sàng.</p>
+          <div class="code-block">
+            <div class="code-block-header"><span class="code-block-lang">HTML</span><button class="code-block-copy" data-copy='&lt;!-- Đặt trước &lt;/body&gt; --&gt;
+&lt;script src="bhds.js"&gt;&lt;/script&gt;'>Sao chép</button></div>
+            <pre><code><span style="color:var(--color-neutral-600);">&lt;!-- Đặt trước &lt;/body&gt; --&gt;</span>
+&lt;<span style="color:#1473E6;">script</span> <span style="color:#12B76A;">src</span>=<span style="color:#F59E0B;">"bhds.js"</span>&gt;&lt;/<span style="color:#1473E6;">script</span>&gt;</code></pre>
+          </div>
+
+          <p style="font-size:13px;color:var(--text-secondary);margin-top:24px;margin-bottom:12px;">Hoặc import dạng ES Module:</p>
+          <div class="code-block">
+            <div class="code-block-header"><span class="code-block-lang">JavaScript</span><button class="code-block-copy" data-copy="import BHDS from './bhds.js';
+
+// Tự động init tất cả component
+BHDS.init();
+
+// Hoặc init riêng từng module
+BHDS.initTabs();
+BHDS.initModals();
+BHDS.initToast();">Sao chép</button></div>
+            <pre><code><span style="color:#8B5CF6;">import</span> BHDS <span style="color:#8B5CF6;">from</span> <span style="color:#F59E0B;">'./bhds.js'</span>;
+
+<span style="color:var(--color-neutral-600);">// Tự động init tất cả component</span>
+BHDS.<span style="color:#1473E6;">init</span>();
+
+<span style="color:var(--color-neutral-600);">// Hoặc init riêng từng module</span>
+BHDS.<span style="color:#1473E6;">initTabs</span>();
+BHDS.<span style="color:#1473E6;">initModals</span>();
+BHDS.<span style="color:#1473E6;">initToast</span>();</code></pre>
+          </div>
+        </div>
+
+        <!-- Data Attributes API -->
+        <div class="section">
+          <h2 class="section-title">Data Attributes API</h2>
+          <p class="section-desc">Tất cả component có thể kích hoạt chỉ bằng thuộc tính HTML — không cần viết JavaScript.</p>
+
+          <div style="display:flex;flex-direction:column;gap:32px;margin-top:24px;">
+
+            <!-- Tabs -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">Tabs</h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">HTML</span><button class="code-block-copy" data-copy='&lt;div data-tabs&gt;
+  &lt;button data-tab-trigger&gt;Tab 1&lt;/button&gt;
+  &lt;button data-tab-trigger&gt;Tab 2&lt;/button&gt;
+
+  &lt;div data-tab-panel&gt;Nội dung 1&lt;/div&gt;
+  &lt;div data-tab-panel&gt;Nội dung 2&lt;/div&gt;
+&lt;/div&gt;'>Sao chép</button></div>
+                <pre><code>&lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">data-tabs</span>&gt;
+  &lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-tab-trigger</span>&gt;Tab 1&lt;/<span style="color:#1473E6;">button</span>&gt;
+  &lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-tab-trigger</span>&gt;Tab 2&lt;/<span style="color:#1473E6;">button</span>&gt;
+
+  &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">data-tab-panel</span>&gt;Nội dung 1&lt;/<span style="color:#1473E6;">div</span>&gt;
+  &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">data-tab-panel</span>&gt;Nội dung 2&lt;/<span style="color:#1473E6;">div</span>&gt;
+&lt;/<span style="color:#1473E6;">div</span>&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- Accordion -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">Accordion</h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">HTML</span><button class="code-block-copy" data-copy='&lt;div data-accordion-item&gt;
+  &lt;button data-accordion-trigger&gt;Câu hỏi&lt;/button&gt;
+  &lt;div data-accordion-panel&gt;Nội dung trả lời&lt;/div&gt;
+&lt;/div&gt;'>Sao chép</button></div>
+                <pre><code>&lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">data-accordion-item</span>&gt;
+  &lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-accordion-trigger</span>&gt;Câu hỏi&lt;/<span style="color:#1473E6;">button</span>&gt;
+  &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">data-accordion-panel</span>&gt;Nội dung trả lời&lt;/<span style="color:#1473E6;">div</span>&gt;
+&lt;/<span style="color:#1473E6;">div</span>&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- Modal -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">Modal</h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">HTML</span><button class="code-block-copy" data-copy='&lt;!-- Nút mở --&gt;
+&lt;button data-modal-open="myModal"&gt;Mở modal&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class="modal-backdrop" id="myModal"&gt;
+  &lt;div class="modal"&gt;
+    &lt;div class="modal-header"&gt;
+      &lt;h3&gt;Tiêu đề&lt;/h3&gt;
+      &lt;button data-modal-close&gt;&times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="modal-body"&gt;Nội dung&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;'>Sao chép</button></div>
+                <pre><code><span style="color:var(--color-neutral-600);">&lt;!-- Nút mở --&gt;</span>
+&lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-modal-open</span>=<span style="color:#F59E0B;">"myModal"</span>&gt;Mở modal&lt;/<span style="color:#1473E6;">button</span>&gt;
+
+<span style="color:var(--color-neutral-600);">&lt;!-- Modal --&gt;</span>
+&lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">class</span>=<span style="color:#F59E0B;">"modal-backdrop"</span> <span style="color:#12B76A;">id</span>=<span style="color:#F59E0B;">"myModal"</span>&gt;
+  &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">class</span>=<span style="color:#F59E0B;">"modal"</span>&gt;
+    &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">class</span>=<span style="color:#F59E0B;">"modal-header"</span>&gt;
+      &lt;<span style="color:#1473E6;">h3</span>&gt;Tiêu đề&lt;/<span style="color:#1473E6;">h3</span>&gt;
+      &lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-modal-close</span>&gt;&times;&lt;/<span style="color:#1473E6;">button</span>&gt;
+    &lt;/<span style="color:#1473E6;">div</span>&gt;
+    &lt;<span style="color:#1473E6;">div</span> <span style="color:#12B76A;">class</span>=<span style="color:#F59E0B;">"modal-body"</span>&gt;Nội dung&lt;/<span style="color:#1473E6;">div</span>&gt;
+  &lt;/<span style="color:#1473E6;">div</span>&gt;
+&lt;/<span style="color:#1473E6;">div</span>&gt;</code></pre>
+              </div>
+            </div>
+
+            <!-- Copy -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;">Copy to Clipboard</h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">HTML</span><button class="code-block-copy" data-copy='&lt;button data-copy="văn bản cần sao chép"&gt;Sao chép&lt;/button&gt;'>Sao chép</button></div>
+                <pre><code>&lt;<span style="color:#1473E6;">button</span> <span style="color:#12B76A;">data-copy</span>=<span style="color:#F59E0B;">"văn bản cần sao chép"</span>&gt;Sao chép&lt;/<span style="color:#1473E6;">button</span>&gt;</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- JavaScript API -->
+        <div class="section">
+          <h2 class="section-title">JavaScript API</h2>
+          <p class="section-desc">Dùng API programmatic khi cần điều khiển component từ code.</p>
+
+          <div style="display:flex;flex-direction:column;gap:24px;margin-top:24px;">
+
+            <!-- showToast -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+                <code style="background:var(--color-brand-50);color:var(--color-brand-700);padding:2px 8px;border-radius:4px;font-size:13px;">showToast()</code>
+              </h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">JavaScript</span><button class="code-block-copy" data-copy="// Hiển thị toast thông báo
+showToast('Đã lưu thành công!', 'success');
+showToast('Có lỗi xảy ra', 'danger');
+showToast('Cảnh báo: token hết hạn', 'warning');
+showToast('Đang xử lý...', 'info');
+
+// Tham số: showToast(message, type, duration?)
+// type: 'info' | 'success' | 'warning' | 'danger'
+// duration: ms (mặc định 3000)">Sao chép</button></div>
+                <pre><code><span style="color:var(--color-neutral-600);">// Hiển thị toast thông báo</span>
+<span style="color:#1473E6;">showToast</span>(<span style="color:#F59E0B;">'Đã lưu thành công!'</span>, <span style="color:#F59E0B;">'success'</span>);
+<span style="color:#1473E6;">showToast</span>(<span style="color:#F59E0B;">'Có lỗi xảy ra'</span>, <span style="color:#F59E0B;">'danger'</span>);
+<span style="color:#1473E6;">showToast</span>(<span style="color:#F59E0B;">'Cảnh báo: token hết hạn'</span>, <span style="color:#F59E0B;">'warning'</span>);
+<span style="color:#1473E6;">showToast</span>(<span style="color:#F59E0B;">'Đang xử lý...'</span>, <span style="color:#F59E0B;">'info'</span>);
+
+<span style="color:var(--color-neutral-600);">// Tham số: showToast(message, type, duration?)</span>
+<span style="color:var(--color-neutral-600);">// type: 'info' | 'success' | 'warning' | 'danger'</span>
+<span style="color:var(--color-neutral-600);">// duration: ms (mặc định 3000)</span></code></pre>
+              </div>
+              <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;">
+                <button class="btn btn-sm btn-secondary" onclick="showToast('Đã lưu thành công!','success')">Demo Success</button>
+                <button class="btn btn-sm btn-secondary" onclick="showToast('Có lỗi xảy ra','danger')">Demo Danger</button>
+                <button class="btn btn-sm btn-secondary" onclick="showToast('Cảnh báo: dữ liệu chưa đồng bộ','warning')">Demo Warning</button>
+                <button class="btn btn-sm btn-secondary" onclick="showToast('Đang tải dữ liệu...','info')">Demo Info</button>
+              </div>
+            </div>
+
+            <!-- BHDS.openModal / closeModal -->
+            <div>
+              <h3 style="font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+                <code style="background:var(--color-brand-50);color:var(--color-brand-700);padding:2px 8px;border-radius:4px;font-size:13px;">BHDS.openModal() / closeModal()</code>
+              </h3>
+              <div class="code-block">
+                <div class="code-block-header"><span class="code-block-lang">JavaScript</span><button class="code-block-copy" data-copy="// Mở modal theo ID
+BHDS.openModal('confirmModal');
+
+// Đóng modal theo ID
+BHDS.closeModal('confirmModal');
+
+// Đóng tất cả modal đang mở
+BHDS.closeAllModals();">Sao chép</button></div>
+                <pre><code><span style="color:var(--color-neutral-600);">// Mở modal theo ID</span>
+BHDS.<span style="color:#1473E6;">openModal</span>(<span style="color:#F59E0B;">'confirmModal'</span>);
+
+<span style="color:var(--color-neutral-600);">// Đóng modal theo ID</span>
+BHDS.<span style="color:#1473E6;">closeModal</span>(<span style="color:#F59E0B;">'confirmModal'</span>);
+
+<span style="color:var(--color-neutral-600);">// Đóng tất cả modal đang mở</span>
+BHDS.<span style="color:#1473E6;">closeAllModals</span>();</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Event System -->
+        <div class="section">
+          <h2 class="section-title">Hệ thống sự kiện</h2>
+          <p class="section-desc">BHDS JS phát ra custom event trên từng component để bạn có thể lắng nghe và phản ứng.</p>
+
+          <div class="table-wrap" style="margin-top:24px;">
+            <table>
+              <thead><tr><th>Sự kiện</th><th>Phần tử</th><th>Detail</th></tr></thead>
+              <tbody>
+                <tr><td><code>bhds:tab:change</code></td><td><code>[data-tabs]</code></td><td><code>{ index, trigger, panel }</code></td></tr>
+                <tr><td><code>bhds:accordion:open</code></td><td><code>[data-accordion-item]</code></td><td><code>{ item, panel }</code></td></tr>
+                <tr><td><code>bhds:accordion:close</code></td><td><code>[data-accordion-item]</code></td><td><code>{ item, panel }</code></td></tr>
+                <tr><td><code>bhds:modal:open</code></td><td><code>.modal-backdrop</code></td><td><code>{ id }</code></td></tr>
+                <tr><td><code>bhds:modal:close</code></td><td><code>.modal-backdrop</code></td><td><code>{ id }</code></td></tr>
+                <tr><td><code>bhds:theme:change</code></td><td><code>document</code></td><td><code>{ theme: 'light' | 'dark' }</code></td></tr>
+                <tr><td><code>bhds:toast:show</code></td><td><code>document</code></td><td><code>{ message, type }</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top:20px;">
+            <div class="code-block">
+              <div class="code-block-header"><span class="code-block-lang">JavaScript</span><button class="code-block-copy" data-copy="// Lắng nghe khi tab thay đổi
+document.querySelector('[data-tabs]').addEventListener('bhds:tab:change', e => {
+  console.log('Tab mới:', e.detail.index);
+});
+
+// Lắng nghe khi theme đổi
+document.addEventListener('bhds:theme:change', e => {
+  console.log('Theme hiện tại:', e.detail.theme);
+});
+
+// Lắng nghe khi modal mở
+document.getElementById('myModal').addEventListener('bhds:modal:open', () => {
+  // Tải dữ liệu khi modal mở
+  fetchData();
+});">Sao chép</button></div>
+              <pre><code><span style="color:var(--color-neutral-600);">// Lắng nghe khi tab thay đổi</span>
+document.<span style="color:#1473E6;">querySelector</span>(<span style="color:#F59E0B;">'[data-tabs]'</span>).<span style="color:#1473E6;">addEventListener</span>(<span style="color:#F59E0B;">'bhds:tab:change'</span>, e =&gt; {
+  console.<span style="color:#1473E6;">log</span>(<span style="color:#F59E0B;">'Tab mới:'</span>, e.detail.index);
+});
+
+<span style="color:var(--color-neutral-600);">// Lắng nghe khi theme đổi</span>
+document.<span style="color:#1473E6;">addEventListener</span>(<span style="color:#F59E0B;">'bhds:theme:change'</span>, e =&gt; {
+  console.<span style="color:#1473E6;">log</span>(<span style="color:#F59E0B;">'Theme hiện tại:'</span>, e.detail.theme);
+});
+
+<span style="color:var(--color-neutral-600);">// Lắng nghe khi modal mở</span>
+document.<span style="color:#1473E6;">getElementById</span>(<span style="color:#F59E0B;">'myModal'</span>).<span style="color:#1473E6;">addEventListener</span>(<span style="color:#F59E0B;">'bhds:modal:open'</span>, () =&gt; {
+  <span style="color:var(--color-neutral-600);">// Tải dữ liệu khi modal mở</span>
+  <span style="color:#1473E6;">fetchData</span>();
+});</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plugin System -->
+        <div class="section">
+          <h2 class="section-title">Hệ thống Plugin</h2>
+          <p class="section-desc">Mở rộng BHDS JS bằng cách đăng ký plugin. Plugin có thể thêm component mới, ghi đè hành vi, hoặc tích hợp thư viện bên ngoài.</p>
+          <div class="code-block">
+            <div class="code-block-header"><span class="code-block-lang">JavaScript</span><button class="code-block-copy" data-copy="// Tạo plugin
+const MyPlugin = {
+  name: 'my-plugin',
+  install(BHDS) {
+    // Thêm method mới
+    BHDS.showConfirm = function(message, onConfirm) {
+      // Logic hiển thị confirm dialog
+    };
+
+    // Lắng nghe sự kiện BHDS
+    document.addEventListener('bhds:modal:open', e => {
+      console.log('Modal mở:', e.detail.id);
+    });
+  }
+};
+
+// Đăng ký plugin
+BHDS.use(MyPlugin);
+
+// Khởi tạo sau khi tất cả plugin đã đăng ký
+BHDS.init();
+
+// Sử dụng method từ plugin
+BHDS.showConfirm('Bạn có chắc?', () => deleteItem());">Sao chép</button></div>
+            <pre><code><span style="color:var(--color-neutral-600);">// Tạo plugin</span>
+<span style="color:#8B5CF6;">const</span> MyPlugin = {
+  name: <span style="color:#F59E0B;">'my-plugin'</span>,
+  <span style="color:#1473E6;">install</span>(BHDS) {
+    <span style="color:var(--color-neutral-600);">// Thêm method mới</span>
+    BHDS.<span style="color:#1473E6;">showConfirm</span> = <span style="color:#8B5CF6;">function</span>(message, onConfirm) {
+      <span style="color:var(--color-neutral-600);">// Logic hiển thị confirm dialog</span>
+    };
+
+    <span style="color:var(--color-neutral-600);">// Lắng nghe sự kiện BHDS</span>
+    document.<span style="color:#1473E6;">addEventListener</span>(<span style="color:#F59E0B;">'bhds:modal:open'</span>, e =&gt; {
+      console.<span style="color:#1473E6;">log</span>(<span style="color:#F59E0B;">'Modal mở:'</span>, e.detail.id);
+    });
+  }
+};
+
+<span style="color:var(--color-neutral-600);">// Đăng ký plugin</span>
+BHDS.<span style="color:#1473E6;">use</span>(MyPlugin);
+
+<span style="color:var(--color-neutral-600);">// Khởi tạo sau khi tất cả plugin đã đăng ký</span>
+BHDS.<span style="color:#1473E6;">init</span>();
+
+<span style="color:var(--color-neutral-600);">// Sử dụng method từ plugin</span>
+BHDS.<span style="color:#1473E6;">showConfirm</span>(<span style="color:#F59E0B;">'Bạn có chắc?'</span>, () =&gt; <span style="color:#1473E6;">deleteItem</span>());</code></pre>
+          </div>
+        </div>
+
+        <!-- Module summary -->
+        <div class="section">
+          <h2 class="section-title">Tóm tắt module</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Module</th><th>Kích hoạt</th><th>API</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Theme</strong></td><td>Tự động</td><td><code>BHDS.setTheme('dark')</code></td></tr>
+                <tr><td><strong>Sidebar</strong></td><td><code>#sidebar</code></td><td>—</td></tr>
+                <tr><td><strong>Active Nav</strong></td><td>Tự động theo URL</td><td>—</td></tr>
+                <tr><td><strong>Tabs</strong></td><td><code>data-tabs</code></td><td><code>BHDS.activateTab(el, index)</code></td></tr>
+                <tr><td><strong>Accordion</strong></td><td><code>data-accordion-item</code></td><td><code>BHDS.toggleAccordion(item)</code></td></tr>
+                <tr><td><strong>Modal</strong></td><td><code>data-modal-open</code></td><td><code>BHDS.openModal(id)</code></td></tr>
+                <tr><td><strong>Toast</strong></td><td>API call</td><td><code>showToast(msg, type)</code></td></tr>
+                <tr><td><strong>Copy</strong></td><td><code>data-copy</code></td><td>—</td></tr>
+                <tr><td><strong>Progress</strong></td><td><code>data-value</code></td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:48px;padding:24px;background:var(--color-brand-50);border:1px solid var(--color-brand-200);border-radius:12px;display:flex;gap:16px;align-items:center;">
+          <svg width="32" height="32" viewBox="0 0 16 16" fill="var(--color-brand-500)"><path d="M2 3h12v1.5H9.25V13h-1.5V4.5H2V3zm9 5.5 2 2-2 2v-1.5H8V9.5h3V8z"/></svg>
+          <div>
+            <div style="font-weight:600;margin-bottom:4px;">Kết hợp với BHDS CSS</div>
+            <div style="font-size:13px;color:var(--text-secondary);">BHDS JS được thiết kế để chạy cùng <a href="framework-css.html">BHDS CSS Framework</a>. Dùng cả hai để có trải nghiệm tối ưu nhất.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
