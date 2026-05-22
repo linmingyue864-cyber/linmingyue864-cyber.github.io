@@ -250,6 +250,36 @@ ul {
   color: var(--primary);
 }
 
+/* ===== TỐI ƯU RESPONSIVE CHO MENU DESKTOP CÓ NHIỀU LINK ===== */
+@media (min-width: 1024px) {
+  /* 1. Mở rộng tối đa chiều rộng của thanh menu inner container */
+  .nav, #nav, .nav-sticky, #nav-sticky-links {
+    max-width: 1400px !important; /* Đẩy rộng sang 2 bên màn hình thay vì bóp hẹp */
+    width: 95% !important;
+    display: flex !important;
+    flex-direction: row !important; /* Ép buộc tất cả phải nằm trên một hàng */
+    flex-wrap: nowrap !important;   /* Tuyệt đối không cho phép xuống hàng */
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 20px !important;
+  }
+
+  /* 2. Gom toàn bộ link vào một khối flex layout riêng nếu có */
+  .nav-links-container, [class*="-links"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 12px !important; /* Thu nhỏ khoảng cách giữa các chữ (khoảng 12px - 14px là vừa đẹp) */
+  }
+
+  /* 3. Tinh chỉnh lại kích thước chữ và khoảng cách đệm của từng thẻ <a> */
+  .nav-link, .nav-sticky a {
+    font-size: 0.85rem !important; /* Thu nhỏ font chữ xuống một chút để nhét vừa chuỗi link dài */
+    padding: 6px 8px !important;  /* Giảm padding left/right để tiết kiệm không gian nằm ngang */
+    white-space: nowrap !important; /* Cấm chữ bên trong link tự ý xuống dòng */
+  }
+}
+
 /* ===== HAMBURGER ===== */
 .hamburger {
   display: none;
