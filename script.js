@@ -310,3 +310,17 @@ document.querySelectorAll('.color-swatch').forEach(swatch => {
   });
 });
 
+let scrollInterval = null;
+
+function startScroll(elementId, direction) {
+  const menu = document.getElementById(elementId);
+  if (!menu) return;
+  clearInterval(scrollInterval);
+  scrollInterval = setInterval(() => {
+    menu.scrollLeft += direction * 4; // Số 4 là tốc độ trượt
+  }, 10);
+}
+
+function stopScroll() {
+  clearInterval(scrollInterval);
+}
