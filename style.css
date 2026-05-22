@@ -234,10 +234,10 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 900px;
+  max-width: 100%; /* Cho phép nở rộng hết cỡ theo màn hình máy tính */
   margin: 0 auto;
   height: 52px;
-  gap: 8px;
+  gap: 16px;
 }
 
 .nav-sticky-name {
@@ -250,16 +250,30 @@ ul {
 
 .nav-sticky-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
+  flex-wrap: nowrap; /* Tuyệt đối không cho rớt hàng */
+  gap: 4px;
   align-items: center;
+  overflow-x: auto;  /* Kích hoạt trượt trái phải */
+  -webkit-overflow-scrolling: touch;
+  flex: 1;           /* Chiếm trọn không gian còn lại để hiển thị menu */
+}
+
+/* Ẩn thanh cuộn của Sticky Links */
+.nav-sticky-links::-webkit-scrollbar {
+  display: none;
+}
+.nav-sticky-links {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .nav-sticky .nav-link {
   color: var(--text-muted);
   border-radius: var(--radius-sm);
-  padding: 7px 13px;
-  font-size: 0.82rem;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  white-space: nowrap; /* Ép text nằm trên một đường thẳng */
+  flex-shrink: 0;      /* Giữ nguyên kích thước chữ */
 }
 
 .nav-sticky .nav-link:hover,
