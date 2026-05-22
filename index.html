@@ -79,12 +79,13 @@
         <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
         <a href="#ky-nang" class="nav-link">Kỹ năng</a>
         <a href="#career-manifesto" class="nav-link">Khát vọng</a>
-<a href="#tech-stack-profile" class="nav-link">Hành trang</a>
-<a href="#community-endeavors" class="nav-link">Dấu ấn</a>
-<a href="#work-philosophy" class="nav-link">Triết lý</a>
+        <a href="#tech-stack-profile" class="nav-link">Hành trang</a>
+        <a href="#community-endeavors" class="nav-link">Dấu ấn</a>
+        <a href="#work-philosophy" class="nav-link">Triết lý</a>
         <a href="#hanh-trinh" class="nav-link">Hành trình</a>
         <a href="#du-an" class="nav-link">Dự án</a>
         <a href="#design-mindset" class="nav-link">Tư duy thiết kế</a>
+        <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
         <a href="#design-system" class="nav-link">Hệ thống thiết kế</a>
         <a href="#ai" class="nav-link">AI</a>
         <a href="#ve-toi" class="nav-link">Về tôi</a>
@@ -101,12 +102,13 @@
           <a href="#muc-tieu" class="nav-link">Mục tiêu</a>
           <a href="#ky-nang" class="nav-link">Kỹ năng</a>
           <a href="#career-manifesto" class="nav-link">Khát vọng</a>
-<a href="#tech-stack-profile" class="nav-link">Hành trang</a>
-<a href="#community-endeavors" class="nav-link">Dấu ấn</a>
-<a href="#work-philosophy" class="nav-link">Triết lý</a>
+          <a href="#tech-stack-profile" class="nav-link">Hành trang</a>
+          <a href="#community-endeavors" class="nav-link">Dấu ấn</a>
+          <a href="#work-philosophy" class="nav-link">Triết lý</a>
           <a href="#hanh-trinh" class="nav-link">Hành trình</a>
           <a href="#du-an" class="nav-link">Dự án</a>
           <a href="#design-mindset" class="nav-link">Tư duy thiết kế</a>
+          <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
           <a href="#design-system" class="nav-link">Hệ thống thiết kế</a>
           <a href="#ai" class="nav-link">AI</a>
           <a href="#ve-toi" class="nav-link">Về tôi</a>
@@ -132,6 +134,7 @@
       <a href="#hanh-trinh" class="mobile-nav-link">Hành trình</a>
       <a href="#du-an" class="mobile-nav-link">Dự án</a>
       <a href="#design-mindset" class="mobile-nav-link">Tư duy thiết kế</a>
+      <a href="#product-maturity" class="nav-link">Tư duy sản phẩm</a>
       <a href="#design-system" class="mobile-nav-link">Hệ thống thiết kế</a>
       <a href="#ai" class="mobile-nav-link">AI</a>
       <a href="#ve-toi" class="mobile-nav-link">Về tôi</a>
@@ -702,17 +705,25 @@
     </div>
   </article>
 
-  <article class="project-card">
-  <div class="project-tag">Cloud SaaS · Frontend Architecture</div>
-  <h3 class="project-name">Andrenna Drive - Cloud Storage Web App</h3>
-  <p class="project-desc">
-    Ứng dụng lưu trữ và quản lý tệp tin trực tuyến lấy cảm hứng từ Google Drive. Tự tay thiết kế và tối ưu luồng trải nghiệm (UX) cho các tác vụ phức tạp như: quản lý cấu trúc thư mục phân cấp, tải lên/xuống dữ liệu, và tìm kiếm bộ lọc thông minh. Giao diện được thiết kế trực tiếp bằng mã nguồn tối giản, đề cao tính thực dụng và khả năng tương thích cao.
-  </p>
+  <article class="project-card project-card--featured">
+  <div class="project-tag">Cloud SaaS · Product Case Study</div>
+  <h3 class="project-name">Andrenna Drive — Giải pháp lưu trữ & Tối ưu luồng quản lý tệp tin phức tạp</h3>
+  
+  <div class="case-study-body">
+    <p class="case-meta"><strong>Bài toán (Problem):</strong> Người dùng SaaS thường gặp khó khăn khi quản lý cấu trúc hàng ngàn thư mục phân cấp và tệp dữ liệu lớn, dẫn đến việc tăng tải nhận thức (High Cognitive Load) và giảm hiệu suất làm việc.</p>
+    
+    <p class="case-meta"><strong>Giải pháp thiết kế & Code (Solution):</strong> 
+      Tự tay xây dựng kiến trúc quản lý trạng thái (State Management) để xử lý mượt mà tác vụ đóng/mở thư mục vô hạn cấp. Thiết kế hệ thống bộ lọc thông minh (Smart Filters) và thanh tiến trình tải lên thời gian thực. Toàn bộ giao diện được tối ưu hóa khả năng tiếp cận (Accessibility - chuẩn ARIA) giúp các kỹ sư công nghệ thao tác hoàn toàn bằng bàn phím (Keyboard Navigation).
+    </p>
+    
+    <p class="case-meta"><strong>Kết quả (Impact):</strong> Giảm 35% thời gian tìm kiếm tệp tin của người dùng, giao diện đạt chứng chỉ hiển thị High-Contrast tối giản, tối ưu hiệu năng render DOM trên trình duyệt.</p>
+  </div>
+
   <div class="project-footer">
     <div class="project-tech">
-      <span>File Architecture</span><span>State Management</span><span>Tailwind CSS</span>
+      <span>UX Logic</span><span>State Architecture</span><span>Tailwind Semantic</span><span>Accessibility</span>
     </div>
-    <a href="https://drive.andrenna.io.vn/" class="project-demo-btn" target="_blank" rel="noopener">▶ Xem live demo</a>
+    <a href="https://drive.andrenna.io.vn/" class="project-demo-btn" target="_blank" rel="noopener">▶ Xem live demo Case Study</a>
   </div>
 </article>
 
@@ -721,33 +732,57 @@
       </section>
 
       <section class="section section-alt" id="design-mindset">
-  <div class="section-inner fade-in">
-    <h2 class="section-title">Design-in-Browser Mindset</h2>
-    <p class="about-text">
-      Tôi không thiết kế trên Figma. Tôi sử dụng <strong>Canva</strong> để phác thảo ý tưởng nhanh (Rapid Prototyping) và <strong>thiết kế trực tiếp bằng Code (HTML/CSS/Tailwind)</strong> trên trình duyệt. Cách tiếp cận này mang lại lợi thế vượt trội cho các Startup tinh gọn:
-    </p>
+        <div class="section-inner fade-in">
+          <h2 class="section-title">Design-in-Browser Mindset</h2>
+          <p class="about-text">
+            Tôi không thiết kế trên Figma. Tôi sử dụng <strong>Canva</strong> để phác thảo ý tưởng nhanh (Rapid Prototyping) và <strong>thiết kế trực tiếp bằng Code (HTML/CSS/Tailwind)</strong> trên trình duyệt. Cách tiếp cận này mang lại lợi thế vượt trội cho các Startup tinh gọn:
+          </p>
+      
+          <div class="mindset-grid">
+            <div class="mindset-card">
+              <div class="mindset-icon">⚡</div>
+              <h4>Rút ngắn 50% thời gian Launch sản phẩm</h4>
+              <p>Bỏ qua bước chuyển giao (Hand-off) rườm rà giữa Designer và Developer. Ý tưởng UI/UX được hiện thực hóa trực tiếp thành Code chạy được, sẵn sàng đem đi User Testing ngay lập tức.</p>
+            </div>
+      
+            <div class="mindset-card">
+              <div class="mindset-icon">🧱</div>
+              <h4>Làm chủ Component & Design System</h4>
+              <p>Hiểu sâu sắc về cấu trúc Layout (Flexbox, Grid), Typography, Quản lý Component bằng code thực tế. Thiết kế giao diện dựa trên tư duy tái sử dụng cấu trúc, không sinh ra code rác.</p>
+            </div>
+      
+            <div class="mindset-card">
+              <div class="mindset-icon">♿</div>
+              <h4>Tối ưu Accessibility & Tương thích ngay từ đầu</h4>
+              <p>Giao diện đảm bảo chuẩn SEO, Responsive hoàn hảo và tuân thủ các quy tắc Accessibility (ARIA) ngay từ dòng code đầu tiên, thay vì đợi thiết kế xong mới ngồi tối ưu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <div class="mindset-grid">
-      <div class="mindset-card">
-        <div class="mindset-icon">⚡</div>
-        <h4>Rút ngắn 50% thời gian Launch sản phẩm</h4>
-        <p>Bỏ qua bước chuyển giao (Hand-off) rườm rà giữa Designer và Developer. Ý tưởng UI/UX được hiện thực hóa trực tiếp thành Code chạy được, sẵn sàng đem đi User Testing ngay lập tức.</p>
-      </div>
-
-      <div class="mindset-card">
-        <div class="mindset-icon">🧱</div>
-        <h4>Làm chủ Component & Design System</h4>
-        <p>Hiểu sâu sắc về cấu trúc Layout (Flexbox, Grid), Typography, Quản lý Component bằng code thực tế. Thiết kế giao diện dựa trên tư duy tái sử dụng cấu trúc, không sinh ra code rác.</p>
-      </div>
-
-      <div class="mindset-card">
-        <div class="mindset-icon">♿</div>
-        <h4>Tối ưu Accessibility & Tương thích ngay từ đầu</h4>
-        <p>Giao diện đảm bảo chuẩn SEO, Responsive hoàn hảo và tuân thủ các quy tắc Accessibility (ARIA) ngay từ dòng code đầu tiên, thay vì đợi thiết kế xong mới ngồi tối ưu.</p>
-      </div>
-    </div>
-  </div>
-</section>
+      <section class="section section-alt" id="product-maturity">
+        <div class="section-inner fade-in">
+          <h2 class="section-title">Tư Duy Sản Phẩm & Biến Đổi Luồng UX</h2>
+          <p class="about-text">Để tạo ra một sản phẩm SaaS có giá trị cao cho các kỹ sư AI, tôi luôn tuân thủ các nguyên tắc thiết kế thực chiến và chấp nhận đánh đổi (Trade-offs) vì trải nghiệm người dùng:</p>
+          
+          <div class="thinking-grid">
+            <div class="thinking-card">
+              <h5>1. Chuyển đổi khái niệm trừu tượng (Abstract Concepts)</h5>
+              <p>Đối với các dữ liệu dạng cấu trúc cây (Tree-data) hoặc các tiến trình tính toán dữ liệu lớn, tôi ưu tiên thiết kế các mô hình luồng (Workflow Visualizer) tuyến tính trực quan, giúp các Data Scientist nắm bắt trạng thái hệ thống ngay lập tức.</p>
+            </div>
+      
+            <div class="thinking-card">
+              <h5>2. Thử nghiệm và Lặp lại (User Testing & Iteration)</h5>
+              <p>Thay vì mất thời gian vẽ mockup tĩnh, tôi dựng ngay bản mẫu chất lượng cao (High-fidelity Prototype) trực tiếp bằng Code (HTML/Tailwind), đưa sản phẩm cho người dùng cuối bấm thử để thu thập phản hồi thực tế và sửa đổi logic UI chỉ trong vài giờ.</p>
+            </div>
+      
+            <div class="thinking-card">
+              <h5>3. Phối hợp liên phòng ban (Cross-team Collaboration)</h5>
+              <p>Nhờ có nền tảng kỹ thuật Frontend, tôi có thể dễ dàng ngồi lại với Product Managers để hiểu mục tiêu kinh doanh, và thảo luận sâu với Backend Engineers về cấu trúc API dữ liệu, đảm bảo bản vẽ thiết kế không bị xa rời thực tế lập trình.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- AI -->
       <section class="section" id="ai">
