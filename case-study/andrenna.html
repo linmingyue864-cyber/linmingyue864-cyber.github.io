@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phân tích Giải pháp Kỹ thuật · Andrenna Suite</title>
-  <meta name="description" content="Tài liệu phân tích giải pháp kỹ thuật dự án Andrenna – Andrenna Music (SoundCloud-like) & Andrenna Drive (Google Drive-like). Hạ tầng Việt Nam, lưu trữ Backblaze B2." />
+  <title>Technical Solution Analysis · Andrenna Suite</title>
+  <meta name="description" content="Technical solution analysis for the Andrenna project — Andrenna Music (SoundCloud-like) & Andrenna Drive (Google Drive-like). Vietnam infrastructure, Backblaze B2 storage." />
   <meta name="author" content="Nguyễn Tiến Đạt (The Billy Hunter)" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -600,18 +600,18 @@
         <span>Andrenna</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#overview">Tổng quan</a></li>
-        <li><a href="#infrastructure">Hạ tầng</a></li>
-        <li><a href="#storage">Lưu trữ</a></li>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#infrastructure">Infrastructure</a></li>
+        <li><a href="#storage">Storage</a></li>
         <li><a href="#stack">Tech Stack</a></li>
-        <li><a href="#security">Bảo mật</a></li>
-        <li><a href="#cost">Chi phí</a></li>
-        <li><a href="#roadmap">Lộ trình</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#cost">Costs</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
       </ul>
     </div>
     <div class="nav-right">
-      <a href="https://tiendatweb.vercel.app/case-study/andrenna.html" target="_blank" class="btn btn-ghost">Case Study gốc ↗</a>
-      <a href="#author" class="btn btn-primary">Tác giả</a>
+      <a href="https://tiendatweb.vercel.app/case-study/andrenna.html" target="_blank" class="btn btn-ghost">Original Case Study ↗</a>
+      <a href="#author" class="btn btn-primary">Author</a>
     </div>
   </div>
 </nav>
@@ -623,50 +623,49 @@
   <div class="hero-glow-d"></div>
   <div class="wrap">
     <div class="hero-eyebrow">
-      <span class="badge badge-mono">Phân tích kỹ thuật</span>
+      <span class="badge badge-mono">Technical Analysis</span>
       <span></span>
-      Tài liệu nội bộ · Nguyễn Tiến Đạt
+      Internal Documentation · Nguyễn Tiến Đạt
     </div>
     <h1>
-      Giải pháp kỹ thuật<br />
+      Technical Solution<br />
       <span class="gduo">Andrenna Suite</span>
     </h1>
     <p class="hero-desc">
-      Phân tích chi tiết kiến trúc, hạ tầng và công nghệ đằng sau hai sản phẩm
-      <strong>Andrenna Music</strong> (nền tảng âm nhạc số) và
-      <strong>Andrenna Drive</strong> (lưu trữ đám mây). Triển khai trên máy chủ
-      Việt Nam với tên miền <code>.io.vn</code>, dữ liệu và CDN lưu trên <strong>Backblaze B2</strong>.
+      A detailed analysis of the architecture, infrastructure, and technology behind two products:
+      <strong>Andrenna Music</strong> (digital music platform) and
+      <strong>Andrenna Drive</strong> (cloud storage). Deployed on Vietnamese servers with <code>.io.vn</code> domains, data and CDN hosted on <strong>Backblaze B2</strong>.
     </p>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px">
       <span class="badge badge-music">Andrenna Music</span>
       <span class="badge badge-drive">Andrenna Drive</span>
       <span class="badge badge-green">Starter Project</span>
       <span class="badge badge-amber">Backblaze B2 Free Tier</span>
-      <span class="badge badge-mono">Máy chủ .io.vn · 123Host</span>
+      <span class="badge badge-mono">Server .io.vn · 123Host</span>
     </div>
     <div class="hero-meta">
       <div class="meta-item">
         <div class="meta-dot"></div>
         <div>
-          <div class="meta-label">Trạng thái</div>
-          <div class="meta-val">Đang phát triển</div>
+          <div class="meta-label">Status</div>
+          <div class="meta-val">In Development</div>
         </div>
       </div>
       <div class="meta-item">
         <div>
-          <div class="meta-label">Tác giả</div>
+          <div class="meta-label">Author</div>
           <div class="meta-val">Nguyễn Tiến Đạt · The Billy Hunter</div>
         </div>
       </div>
       <div class="meta-item">
         <div>
-          <div class="meta-label">Phiên bản tài liệu</div>
+          <div class="meta-label">Doc Version</div>
           <div class="meta-val" style="font-family:var(--mono)">v1.0.0 · 2025</div>
         </div>
       </div>
       <div class="meta-item">
         <div>
-          <div class="meta-label">Giai đoạn</div>
+          <div class="meta-label">Stage</div>
           <div class="meta-val">Starter / MVP</div>
         </div>
       </div>
@@ -679,22 +678,22 @@
   <div class="toc-grid">
     <a href="#overview" class="toc-item">
       <div class="toc-num">01</div>
-      <div class="toc-title">Tổng quan sản phẩm</div>
-      <div class="toc-sub">Music vs Drive · Phân tích chức năng</div>
+      <div class="toc-title">Product Overview</div>
+      <div class="toc-sub">Music vs Drive · Feature Analysis</div>
     </a>
     <a href="#screenshots" class="toc-item">
       <div class="toc-num">01.5</div>
-      <div class="toc-title">Ảnh sản phẩm thực tế</div>
-      <div class="toc-sub">Drive · Music · Giao diện live</div>
+      <div class="toc-title">Real Product Screenshots</div>
+      <div class="toc-sub">Drive · Music · Live Interface</div>
     </a>
     <a href="#infrastructure" class="toc-item">
       <div class="toc-num">02</div>
-      <div class="toc-title">Hạ tầng Việt Nam</div>
-      <div class="toc-sub">Máy chủ .io.vn · 123Host · DNS · SSL</div>
+      <div class="toc-title">Vietnam Infrastructure</div>
+      <div class="toc-sub">Server .io.vn · 123Host · DNS · SSL</div>
     </a>
     <a href="#storage" class="toc-item">
       <div class="toc-num">03</div>
-      <div class="toc-title">Lưu trữ & CDN</div>
+      <div class="toc-title">Storage & CDN</div>
       <div class="toc-sub">Backblaze B2 · Cloudflare · HLS</div>
     </a>
     <a href="#stack" class="toc-item">
@@ -704,13 +703,13 @@
     </a>
     <a href="#security" class="toc-item">
       <div class="toc-num">05</div>
-      <div class="toc-title">Bảo mật & Tuân thủ</div>
-      <div class="toc-sub">AES-256 · JWT · NĐ 13/2023</div>
+      <div class="toc-title">Security & Compliance</div>
+      <div class="toc-sub">AES-256 · JWT · Decree 13/2023</div>
     </a>
     <a href="#cost" class="toc-item">
       <div class="toc-num">06</div>
-      <div class="toc-title">Phân tích chi phí</div>
-      <div class="toc-sub">B2 Free Tier · Tối ưu starter</div>
+      <div class="toc-title">Cost Analysis</div>
+      <div class="toc-sub">B2 Free Tier · Starter Optimization</div>
     </a>
   </div>
 </div>
@@ -719,11 +718,11 @@
 <section id="overview" class="section">
   <div class="wrap">
     <div class="sec-header fi">
-      <span class="sec-num">// 01 — TỔNG QUAN SẢN PHẨM</span>
-      <h2 class="sec-title">Andrenna Suite: <span class="gduo">Bộ đôi SaaS</span></h2>
+      <span class="sec-num">// 01 — PRODUCT OVERVIEW</span>
+      <h2 class="sec-title">Andrenna Suite: <span class="gduo">A SaaS Duo</span></h2>
       <p class="sec-desc">
-        Andrenna là hai sản phẩm độc lập nhưng chia sẻ chung hạ tầng, hệ thống xác thực và lưu trữ.
-        Cùng một tài khoản, cùng một hệ sinh thái. Giao diện hoàn toàn bằng tiếng Anh.
+        Andrenna consists of two independent products sharing common infrastructure, authentication, and storage.
+        One account, one ecosystem. Interface is fully in English.
       </p>
     </div>
 
@@ -734,21 +733,21 @@
         <div class="oc-label"><span class="badge badge-music">Andrenna Music</span></div>
         <h3 class="oc-title"><span class="gm">Andrenna Music</span></h3>
         <p class="oc-desc">
-          Nền tảng stream và phân phối âm nhạc số dành cho nghệ sĩ độc lập, nhà sản xuất và label nhỏ
-          tại Việt Nam và Đông Nam Á. Được xây dựng lại từ đầu với trải nghiệm người dùng ưu tiên
-          latency thấp cho khu vực SEA.
+          A digital music streaming and distribution platform for independent artists, producers, and small labels
+          in Vietnam and Southeast Asia. Built from scratch with a user experience prioritizing
+          low latency for the SEA region.
         </p>
         <ul class="oc-features">
-          <li><div class="feat-check">✓</div> Upload, stream & phân phối nhạc với adaptive bitrate (HLS)</li>
-          <li><div class="feat-check">✓</div> Waveform visualizer & lyrics sync thời gian thực (Web Audio API)</li>
-          <li><div class="feat-check">✓</div> Hệ thống follow, playlist & discovery feed thuật toán</li>
+          <li><div class="feat-check">✓</div> Upload, stream & distribute music with adaptive bitrate (HLS)</li>
+          <li><div class="feat-check">✓</div> Waveform visualizer & real-time lyrics sync (Web Audio API)</li>
+          <li><div class="feat-check">✓</div> Follow system, playlist & algorithmic discovery feed</li>
           <li><div class="feat-check">✓</div> Analytics: play count, region, demographic breakdown</li>
-          <li><div class="feat-check">✓</div> Hoàn toàn miễn phí – không giới hạn stream, không quảng cáo</li>
-          <li><div class="feat-check">✓</div> Tích hợp với Andrenna Drive – lưu file master trực tiếp</li>
+          <li><div class="feat-check">✓</div> Completely free – unlimited streaming, no ads</li>
+          <li><div class="feat-check">✓</div> Integrated with Andrenna Drive – store master files directly</li>
         </ul>
         <div class="oc-ref">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-          Tương tự SoundCloud – tập trung thị trường Việt Nam & SEA
+          Similar to SoundCloud – focused on Vietnam & SEA market
         </div>
       </div>
       <!-- Drive -->
@@ -757,33 +756,33 @@
         <div class="oc-label"><span class="badge badge-drive">Andrenna Drive</span></div>
         <h3 class="oc-title"><span class="gd">Andrenna Drive</span></h3>
         <p class="oc-desc">
-          Dịch vụ lưu trữ đám mây được tối ưu cho nội dung sáng tạo: nhạc, video, file thiết kế.
-          Mã hóa end-to-end, chia sẻ link thông minh, preview trực tiếp trên trình duyệt. Dữ liệu
-          đặt tại Việt Nam, tuân thủ NĐ 13/2023/NĐ-CP.
+          A cloud storage service optimized for creative content: music, video, design files.
+          End-to-end encryption, smart link sharing, direct browser preview. Data
+          hosted in Vietnam, compliant with Decree 13/2023/NĐ-CP.
         </p>
         <ul class="oc-features">
-          <li><div class="feat-check">✓</div> Lưu trữ mã hóa AES-256, zero-knowledge tùy chọn</li>
-          <li><div class="feat-check">✓</div> Preview trực tiếp: audio, video, PDF, PSD, SVG, Office</li>
-          <li><div class="feat-check">✓</div> Chia sẻ link có quyền hạn & thời hạn (expiry)</li>
-          <li><div class="feat-check">✓</div> Version control – rollback file về phiên bản cũ</li>
-          <li><div class="feat-check">✓</div> Chunked upload (TUS protocol) cho file lớn ổn định</li>
-          <li><div class="feat-check">✓</div> Sync desktop & mobile, offline access</li>
+          <li><div class="feat-check">✓</div> AES-256 encrypted storage, optional zero-knowledge</li>
+          <li><div class="feat-check">✓</div> Direct browser preview: audio, video, PDF, PSD, SVG, Office</li>
+          <li><div class="feat-check">✓</div> Permission-based & expiring link sharing</li>
+          <li><div class="feat-check">✓</div> Version control – rollback files to previous versions</li>
+          <li><div class="feat-check">✓</div> Chunked upload (TUS protocol) for stable large file transfers</li>
+          <li><div class="feat-check">✓</div> Desktop & mobile sync, offline access</li>
         </ul>
         <div class="oc-ref">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-          Tương tự Google Drive – data center Việt Nam, bảo mật cao hơn
+          Similar to Google Drive – Vietnam data center, higher security
         </div>
       </div>
     </div>
 
     <div class="divider-sm"></div>
 
-    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--text-2)">So sánh với các nền tảng tham chiếu</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--text-2)">Comparison with reference platforms</h3>
     <div class="fi" style="overflow-x:auto">
       <table class="cmp-table">
         <thead>
           <tr>
-            <th>Tiêu chí</th>
+            <th>Criteria</th>
             <th class="hm">Andrenna Music</th>
             <th>SoundCloud</th>
             <th class="hd">Andrenna Drive</th>
@@ -793,38 +792,38 @@
         <tbody>
           <tr>
             <td>Data center</td>
-            <td class="yes-m">Việt Nam (.vn)</td>
+            <td class="yes-m">Vietnam (.vn)</td>
             <td class="no">Berlin / USA</td>
-            <td class="yes-d">Việt Nam (.vn)</td>
+            <td class="yes-d">Vietnam (.vn)</td>
             <td class="no">USA / Multi-region</td>
           </tr>
           <tr>
-            <td>Latency SEA</td>
-            <td class="yes-m">&lt; 50ms (nội địa)</td>
+            <td>SEA Latency</td>
+            <td class="yes-m">&lt; 50ms (domestic)</td>
             <td class="no">150–300ms</td>
-            <td class="yes-d">&lt; 50ms (nội địa)</td>
+            <td class="yes-d">&lt; 50ms (domestic)</td>
             <td class="no">80–200ms</td>
           </tr>
           <tr>
-            <td>Chi phí người dùng</td>
-            <td class="yes-m">Miễn phí 100%</td>
-            <td class="no">Có gói trả phí</td>
-            <td class="yes-d">Miễn phí 100%</td>
-            <td class="no">Có gói trả phí</td>
+            <td>User cost</td>
+            <td class="yes-m">100% Free</td>
+            <td class="no">Has paid tiers</td>
+            <td class="yes-d">100% Free</td>
+            <td class="no">Has paid tiers</td>
           </tr>
           <tr>
-            <td>Tuân thủ NĐ 13/2023</td>
-            <td class="yes-m">✓ Có</td>
-            <td class="no">✗ Không</td>
-            <td class="yes-d">✓ Có</td>
-            <td class="no">Một phần</td>
+            <td>Decree 13/2023 Compliance</td>
+            <td class="yes-m">✓ Yes</td>
+            <td class="no">✗ No</td>
+            <td class="yes-d">✓ Yes</td>
+            <td class="no">Partial</td>
           </tr>
           <tr>
             <td>E2E Encryption</td>
             <td class="yes-m">AES-256 (media)</td>
-            <td class="no">Không</td>
+            <td class="no">No</td>
             <td class="yes-d">AES-256 + ZKE</td>
-            <td class="no">Không (Google có key)</td>
+            <td class="no">No (Google holds key)</td>
           </tr>
           <tr>
             <td>Object Storage</td>
@@ -834,18 +833,18 @@
             <td class="no">Google Cloud Storage</td>
           </tr>
           <tr>
-            <td>Ngôn ngữ giao diện</td>
+            <td>Interface language</td>
             <td class="yes-m">English</td>
             <td class="no">English / Multi</td>
             <td class="yes-d">English</td>
             <td class="no">Multi-lang</td>
           </tr>
           <tr>
-            <td>Model kinh doanh</td>
-            <td class="yes-m">Free hoàn toàn</td>
-            <td class="no">Freemium (có trả phí)</td>
-            <td class="yes-d">Free hoàn toàn</td>
-            <td class="no">Freemium (có trả phí)</td>
+            <td>Business model</td>
+            <td class="yes-m">Completely free</td>
+            <td class="no">Freemium (paid tiers)</td>
+            <td class="yes-d">Completely free</td>
+            <td class="no">Freemium (paid tiers)</td>
           </tr>
         </tbody>
       </table>
@@ -993,7 +992,7 @@
 <section id="infrastructure" class="section-alt">
   <div class="wrap">
     <div class="sec-header fi">
-      <span class="sec-num">// 02 — HẠ TẦNG VIỆT NAM</span>
+      <span class="sec-num">// 02 — VIETNAM INFRASTRUCTURE</span>
       <h2 class="sec-title">Máy chủ & Tên miền <span class="gd">.io.vn</span></h2>
       <p class="sec-desc">
         Toàn bộ hạ tầng ứng dụng đặt tại Việt Nam. Sử dụng tên miền <code>.io.vn</code> đăng ký
@@ -1184,7 +1183,7 @@
 <section id="storage" class="section">
   <div class="wrap">
     <div class="sec-header fi">
-      <span class="sec-num">// 03 — LƯU TRỮ & CDN</span>
+      <span class="sec-num">// 03 — STORAGE & CDN</span>
       <h2 class="sec-title">Backblaze B2 + <span class="gd">Cloudflare CDN</span></h2>
       <p class="sec-desc">
         Toàn bộ media (file nhạc, artwork, video, file người dùng upload) và CDN đều lưu trên
